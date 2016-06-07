@@ -1,8 +1,9 @@
 package xyz.brassgoggledcoders.moarlibs.wrappers.players;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryEnderChest;
@@ -21,16 +22,15 @@ import xyz.brassgoggledcoders.moarlibs.api.IContainerHolder;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class EntityPlayerMPWrapper extends EntityPlayerMP
+public class EntityPlayerSPWrapper extends EntityPlayerSP
 {
-	protected EntityPlayerMP entityPlayer;
+	protected EntityPlayerSP entityPlayer;
 	protected IContainerHolder containerHolder;
 	protected IBlockContainer blockContainer;
 
-	public EntityPlayerMPWrapper(EntityPlayerMP entityPlayer, IContainerHolder containerHolder)
+	public EntityPlayerSPWrapper(EntityPlayerSP entityPlayer, IContainerHolder containerHolder)
 	{
-		super(entityPlayer.mcServer, entityPlayer.getServerWorld(), entityPlayer.getGameProfile(),
-				entityPlayer.interactionManager);
+		super(Minecraft.getMinecraft(), entityPlayer.worldObj, entityPlayer.connection, entityPlayer.getStatFileWriter());
 		this.entityPlayer = entityPlayer;
 		this.containerHolder = containerHolder;
 		this.blockContainer = containerHolder.getBlockContainer();
@@ -162,7 +162,6 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP
 	{
 		return this.getEntityPlayer().hasCapability(capability, facing);
 	}
-
 
 	public EntityPlayer getEntityPlayer()
 	{

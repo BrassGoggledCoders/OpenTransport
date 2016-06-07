@@ -15,6 +15,8 @@ public interface IBlockContainer
 
 	RenderType getRenderType();
 
+	IInteraction getIInteraction();
+
 	ITileContainer getTileContainer();
 
 	NBTTagCompound writeToNBT(NBTTagCompound tagCompound);
