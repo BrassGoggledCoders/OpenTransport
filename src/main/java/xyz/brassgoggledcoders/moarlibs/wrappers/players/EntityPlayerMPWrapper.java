@@ -1,7 +1,7 @@
 package xyz.brassgoggledcoders.moarlibs.wrappers.players;
 
 import net.minecraft.entity.player.EntityPlayerMP;
-import xyz.brassgoggledcoders.moarlibs.blocks.IBlockContainer;
+import xyz.brassgoggledcoders.moarlibs.api.IBlockContainer;
 
 public class EntityPlayerMPWrapper extends EntityPlayerMP
 {
