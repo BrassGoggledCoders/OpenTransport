@@ -7,6 +7,7 @@ import xyz.brassgoggledcoders.boilerplate.module.ModuleBase;
 import xyz.brassgoggledcoders.moarlibs.api.IBlockContainer;
 import xyz.brassgoggledcoders.moarlibs.blocks.BlockContainerBase;
 import xyz.brassgoggledcoders.moarlibs.interactions.EnderChestInteraction;
+import xyz.brassgoggledcoders.moarlibs.registries.BlockContainerRegistry;
 
 @Module
 public class VanillaModule extends ModuleBase
@@ -23,5 +24,6 @@ public class VanillaModule extends ModuleBase
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		ENDER_CHEST = new BlockContainerBase(Blocks.ENDER_CHEST).setClickInteraction(new EnderChestInteraction());
+		BlockContainerRegistry.registerContainer(ENDER_CHEST);
 	}
 }
