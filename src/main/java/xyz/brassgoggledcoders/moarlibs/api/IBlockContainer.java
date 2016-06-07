@@ -15,7 +15,7 @@ public interface IBlockContainer
 
 	RenderType getRenderType();
 
-	IInteraction getIInteraction();
+	IInteraction getClickInteraction();
 
 	ITileContainer getTileContainer();
 
