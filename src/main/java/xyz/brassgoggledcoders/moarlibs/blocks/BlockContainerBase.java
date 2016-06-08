@@ -84,13 +84,14 @@ public class BlockContainerBase implements IBlockContainer
 	}
 
 	@Override
-	public void onInteract(EntityPlayer entityPlayer, IHolderEntity entity)
+	public boolean onInteract(EntityPlayer entityPlayer, IHolderEntity entity)
 	{
 		EntityPlayer entityPlayerWrapper = MoarLibs.proxy.getEntityPlayerWrapper(entityPlayer, entity);
 		if(getClickInteraction() != null)
 		{
-			this.clickInteraction.interact(entityPlayerWrapper, this);
+			return this.clickInteraction.interact(entityPlayerWrapper, this);
 		}
+		return false;
 	}
 
 	@Override

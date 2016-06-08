@@ -18,7 +18,7 @@ public interface IBlockContainer
 
 	IInteraction getClickInteraction();
 
-	void onInteract(EntityPlayer entityPlayer, IHolderEntity entity);
+	boolean onInteract(EntityPlayer entityPlayer, IHolderEntity entity);
 
 	ITileContainer getTileContainer();
 
