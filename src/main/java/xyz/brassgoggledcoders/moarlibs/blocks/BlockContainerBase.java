@@ -2,8 +2,11 @@ package xyz.brassgoggledcoders.moarlibs.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import xyz.brassgoggledcoders.moarlibs.MoarLibs;
 import xyz.brassgoggledcoders.moarlibs.api.IBlockContainer;
+import xyz.brassgoggledcoders.moarlibs.api.IHolderEntity;
 import xyz.brassgoggledcoders.moarlibs.api.IInteraction;
 import xyz.brassgoggledcoders.moarlibs.api.ITileContainer;
 import xyz.brassgoggledcoders.moarlibs.renderers.RenderType;
@@ -78,6 +81,16 @@ public class BlockContainerBase implements IBlockContainer
 	public IInteraction getClickInteraction()
 	{
 		return clickInteraction;
+	}
+
+	@Override
+	public void onInteract(EntityPlayer entityPlayer, IHolderEntity entity)
+	{
+		EntityPlayer entityPlayerWrapper = MoarLibs.proxy.getEntityPlayerWrapper(entityPlayer, entity);
+		if(getClickInteraction() != null)
+		{
+			this.clickInteraction.interact(entityPlayerWrapper, this);
+		}
 	}
 
 	@Override

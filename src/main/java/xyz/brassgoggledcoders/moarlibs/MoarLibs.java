@@ -23,7 +23,7 @@ public class MoarLibs extends BoilerplateModBase
 
 	@SidedProxy(clientSide = "xyz.brassgoggledcoders.moarlibs.proxies.ClientProxy",
 			serverSide = "xyz.brassgoggledcoders.moarlibs.proxies.CommonProxy")
-	public static CommonProxy commonProxy;
+	public static CommonProxy proxy;
 
 	public MoarLibs()
 	{

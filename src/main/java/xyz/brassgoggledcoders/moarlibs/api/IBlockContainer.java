@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.moarlibs.api;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import xyz.brassgoggledcoders.moarlibs.renderers.RenderType;
 
@@ -16,6 +17,8 @@ public interface IBlockContainer
 	RenderType getRenderType();
 
 	IInteraction getClickInteraction();
+
+	void onInteract(EntityPlayer entityPlayer, IHolderEntity entity);
 
 	ITileContainer getTileContainer();
 
