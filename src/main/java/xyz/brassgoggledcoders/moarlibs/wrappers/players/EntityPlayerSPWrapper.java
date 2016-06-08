@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import xyz.brassgoggledcoders.moarlibs.MoarLibs;
 import xyz.brassgoggledcoders.moarlibs.api.IBlockContainer;
-import xyz.brassgoggledcoders.moarlibs.api.IContainerHolder;
+import xyz.brassgoggledcoders.moarlibs.api.IHolderEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,10 +25,10 @@ import javax.annotation.Nullable;
 public class EntityPlayerSPWrapper extends EntityPlayerSP
 {
 	protected EntityPlayerSP entityPlayer;
-	protected IContainerHolder containerHolder;
+	protected IHolderEntity containerHolder;
 	protected IBlockContainer blockContainer;
 
-	public EntityPlayerSPWrapper(EntityPlayerSP entityPlayer, IContainerHolder containerHolder)
+	public EntityPlayerSPWrapper(EntityPlayerSP entityPlayer, IHolderEntity containerHolder)
 	{
 		super(Minecraft.getMinecraft(), entityPlayer.worldObj, entityPlayer.connection, entityPlayer.getStatFileWriter());
 		this.entityPlayer = entityPlayer;

@@ -2,7 +2,7 @@ package xyz.brassgoggledcoders.moarlibs.api;
 
 import net.minecraft.entity.Entity;
 
-public interface IContainerHolder<T extends Entity>
+public interface IHolderEntity<T extends Entity>
 {
 	T getEntity();
 
