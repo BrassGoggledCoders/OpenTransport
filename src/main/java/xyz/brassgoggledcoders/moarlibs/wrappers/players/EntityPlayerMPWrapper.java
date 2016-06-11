@@ -35,6 +35,7 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP
 		this.containerHolder = containerHolder;
 		this.blockContainer = containerHolder.getBlockContainer();
 		this.worldObj = entityPlayer.worldObj;
+		this.connection = entityPlayer.connection;
 	}
 
 	@Override
