@@ -18,4 +18,9 @@ public class BlockContainerRegistry
 	{
 		return blockContainerMap.get(name);
 	}
+
+	public static Map<String, IBlockContainer> getAllBlockContainers()
+	{
+		return blockContainerMap;
+	}
 }
