@@ -4,9 +4,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import xyz.brassgoggledcoders.moarlibs.renderers.RenderType;
 
-public interface IBlockContainer
+import java.io.Serializable;
+
+public interface IBlockContainer extends Serializable
 {
 	Block getBlock();
 
@@ -20,7 +24,13 @@ public interface IBlockContainer
 
 	boolean onInteract(EntityPlayer entityPlayer, IHolderEntity entity);
 
-	ITileContainer getTileContainer();
+	void tick();
+
+	void setWorld(World world);
+
+	boolean hasTileEntity();
+
+	TileEntity getTileEntity();
 
 	NBTTagCompound writeToNBT(NBTTagCompound tagCompound);
 

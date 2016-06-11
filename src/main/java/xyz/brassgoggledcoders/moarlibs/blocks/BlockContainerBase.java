@@ -4,19 +4,23 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ITickable;
+import net.minecraft.world.World;
 import xyz.brassgoggledcoders.moarlibs.MoarLibs;
 import xyz.brassgoggledcoders.moarlibs.api.IBlockContainer;
 import xyz.brassgoggledcoders.moarlibs.api.IHolderEntity;
 import xyz.brassgoggledcoders.moarlibs.api.IInteraction;
-import xyz.brassgoggledcoders.moarlibs.api.ITileContainer;
 import xyz.brassgoggledcoders.moarlibs.renderers.RenderType;
 
 public class BlockContainerBase implements IBlockContainer
 {
 	Block block;
 	IBlockState blockState;
+	TileEntity tileEntity;
+	boolean hasTileEntity;
+	World world;
 	String unlocalizedName;
-	ITileContainer tileContainer;
 	IInteraction clickInteraction;
 	RenderType renderType = RenderType.VMC;
 
@@ -24,7 +28,7 @@ public class BlockContainerBase implements IBlockContainer
 	{
 		this.block = block;
 		this.blockState = block.getDefaultState();
-		this.unlocalizedName = block.getUnlocalizedName();
+		this.unlocalizedName = block.getUnlocalizedName().replaceFirst("tile.", "");
 	}
 
 	public BlockContainerBase setBlock(Block block)
@@ -43,7 +47,7 @@ public class BlockContainerBase implements IBlockContainer
 
 	public BlockContainerBase setUnlocalizedName(String name)
 	{
-		this.unlocalizedName = name;
+		this.unlocalizedName = name.replaceFirst("tile.", "");
 		return this;
 	}
 
@@ -87,25 +91,49 @@ public class BlockContainerBase implements IBlockContainer
 	public boolean onInteract(EntityPlayer entityPlayer, IHolderEntity entity)
 	{
 		EntityPlayer entityPlayerWrapper = MoarLibs.proxy.getEntityPlayerWrapper(entityPlayer, entity);
-		if(getClickInteraction() != null)
-		{
-			return this.clickInteraction.interact(entityPlayerWrapper, this);
-		}
-		return false;
+		return this.getClickInteraction() != null && this.getClickInteraction().interact(entityPlayerWrapper, this);
 	}
 
 	@Override
-	public ITileContainer getTileContainer()
+	public void tick()
 	{
-		return tileContainer;
+		if(world != null && this.getTileEntity() != null)
+		{
+			if(this.getTileEntity() instanceof ITickable)
+			{
+				((ITickable) this.getTileEntity()).update();
+			}
+		}
+	}
+
+	@Override
+	public void setWorld(World world)
+	{
+		this.world = world;
+	}
+
+	@Override
+	public boolean hasTileEntity()
+	{
+		return hasTileEntity;
+	}
+
+	@Override
+	public TileEntity getTileEntity()
+	{
+		if(this.tileEntity == null)
+		{
+			this.tileEntity = this.getBlock().createTileEntity(this.world, this.getBlockState());
+		}
+		return this.tileEntity;
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
 	{
-		if(tileContainer != null)
+		if(world != null && this.getTileEntity() != null)
 		{
-			tileContainer.writeToNBT(tagCompound);
+			tagCompound.setTag("TILE_DATA", this.getTileEntity().writeToNBT(new NBTTagCompound()));
 		}
 		return tagCompound;
 	}
@@ -113,9 +141,12 @@ public class BlockContainerBase implements IBlockContainer
 	@Override
 	public void readFromNBT(NBTTagCompound tagCompound)
 	{
-		if(tileContainer != null)
+		if(world != null && this.getTileEntity() != null)
 		{
-			tileContainer.readFromNBT(tagCompound);
+			if(tagCompound.hasKey("TILE_DATA"))
+			{
+				this.getTileEntity().readFromNBT(tagCompound.getCompoundTag("TILE_DATA"));
+			}
 		}
 	}
 }
