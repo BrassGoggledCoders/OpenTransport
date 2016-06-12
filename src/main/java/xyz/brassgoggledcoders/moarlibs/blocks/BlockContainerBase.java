@@ -149,4 +149,11 @@ public class BlockContainerBase implements IBlockContainer
 			}
 		}
 	}
+
+	@Override
+	public IBlockContainer copy()
+	{
+		//TODO: Implement proper copy.
+		return this;
+	}
 }

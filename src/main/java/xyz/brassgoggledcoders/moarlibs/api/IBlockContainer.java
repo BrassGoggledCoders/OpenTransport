@@ -8,9 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.moarlibs.renderers.RenderType;
 
-import java.io.Serializable;
-
-public interface IBlockContainer extends Serializable
+public interface IBlockContainer
 {
 	Block getBlock();
 
@@ -35,4 +33,6 @@ public interface IBlockContainer extends Serializable
 	NBTTagCompound writeToNBT(NBTTagCompound tagCompound);
 
 	void readFromNBT(NBTTagCompound tagCompound);
+
+	IBlockContainer copy();
 }

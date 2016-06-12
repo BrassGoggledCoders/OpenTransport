@@ -1,6 +1,5 @@
 package xyz.brassgoggledcoders.moarlibs.registries;
 
-import org.apache.commons.lang3.SerializationUtils;
 import xyz.brassgoggledcoders.moarlibs.api.IBlockContainer;
 
 import java.util.HashMap;
@@ -19,7 +18,7 @@ public class BlockContainerRegistry
 	{
 		if(blockContainerMap.containsKey(name))
 		{
-			return SerializationUtils.clone(blockContainerMap.get(name));
+			return blockContainerMap.get(name).copy();
 		}
 		return null;
 	}
