@@ -45,6 +45,50 @@ dependencies {
     compile "xyz.brassgoggledcoders.boilerplate:Boilerplate:${minecraft_version}-${boilerplate_version}:deobf"
 }
 
+task getLibraries {
+    def libsFolder = new File('libs')
+    if (!libsFolder.isDirectory()) {
+        libsFolder.mkdirs()
+    }
+
+    def downloads = new ArrayList<Tuple>();
+
+    def ironchest = 'ironchest-' + minecraft_version + '-' + ironchest_version + '.jar'
+    def ironchestSource = 'http://minecraft.curseforge.com/projects/iron-chests/files/2306186/download'
+
+    downloads.add(new Tuple(ironchest, ironchestSource))
+
+    libsFolder.listFiles().each { file ->
+        def isInDownloadList = false;
+        downloads.each {download ->
+            if(file.name.equals(download.get(0).toString())) {
+                isInDownloadList = true;
+            }
+        }
+        if(!isInDownloadList || file.size() < 5) {
+            println "Deleting file " + file.name
+            file.delete();
+        }
+    }
+
+    downloads.each{download ->
+        def fileLocation = new File('libs', download.get(0).toString())
+        if(!fileLocation.exists())  {
+            def downloadString = download.get(1).toString()
+            if(downloadString.contains(" ")) {
+                downloadString = downloadString.replace(" ", "%20");
+            }
+            println "Downloading " + download.get(0).toString()
+            fileLocation.withOutputStream { out ->
+                new URL(downloadString).withInputStream { from ->
+                    out << from;
+                }
+            }
+        }
+    }
+}
+
+
 compileJava {
     sourceCompatibility = 1.7
     targetCompatibility = 1.7
