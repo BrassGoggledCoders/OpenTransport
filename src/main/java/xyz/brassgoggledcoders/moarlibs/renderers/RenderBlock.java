@@ -12,13 +12,8 @@ public class RenderBlock
 {
 	public void renderEntity(Entity entity, IBlockContainer blockContainer, float partialTicks)
 	{
-		TileEntity tileEntity = null;
-		if(blockContainer.getTileContainer() != null)
-		{
-			tileEntity = blockContainer.getTileContainer().getTileEntity();
-		}
-
-		this.render(blockContainer.getRenderType(), blockContainer.getBlockState(), tileEntity, entity.getBrightness(partialTicks));
+		this.render(blockContainer.getRenderType(), blockContainer.getBlockState(), blockContainer.getTileEntity(),
+				entity.getBrightness(partialTicks));
 	}
 
 	private void render(RenderType type, IBlockState blockState, TileEntity tileEntity, float brightness)
