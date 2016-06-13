@@ -1,7 +1,11 @@
 package xyz.brassgoggledcoders.moarlibs.proxies;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.IThreadListener;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import xyz.brassgoggledcoders.moarlibs.api.IHolderEntity;
 import xyz.brassgoggledcoders.moarlibs.wrappers.player.EntityPlayerSPWrapper;
 
@@ -16,4 +20,17 @@ public class ClientProxy extends CommonProxy
 		}
 		return super.getEntityPlayerWrapper(entityPlayer, containerHolder);
 	}
+
+	@Override
+	public World getWorld(MessageContext ctx)
+	{
+		return Minecraft.getMinecraft().theWorld;
+	}
+
+	@Override
+	public IThreadListener getIThreadListener(MessageContext messageContext)
+	{
+		return Minecraft.getMinecraft();
+	}
+
 }
