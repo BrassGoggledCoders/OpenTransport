@@ -11,12 +11,13 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.boilerplate.BoilerplateModBase;
 import xyz.brassgoggledcoders.moarlibs.proxies.CommonProxy;
 
-@Mod(modid = MoarLibs.MODID, name = MoarLibs.MODNAME, version = MoarLibs.VERSION)
+@Mod(modid = MoarLibs.MODID, name = MoarLibs.MODNAME, version = MoarLibs.VERSION, dependencies = MoarLibs.DEPENDENCIES)
 public class MoarLibs extends BoilerplateModBase
 {
 	public static final String MODID = "moarlibs";
 	public static final String MODNAME = "MoarLibs";
 	public static final String VERSION = "@VERSION@";
+	public static final String DEPENDENCIES = "after:IronChest;";
 
 	@Instance(MoarLibs.MODID)
 	public static MoarLibs INSTANCE;
