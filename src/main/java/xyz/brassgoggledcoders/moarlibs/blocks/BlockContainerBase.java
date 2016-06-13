@@ -23,6 +23,7 @@ public class BlockContainerBase implements IBlockContainer
 	String unlocalizedName;
 	IInteraction clickInteraction;
 	RenderType renderType = RenderType.VMC;
+	boolean isDirty;
 
 	public BlockContainerBase(Block block)
 	{
@@ -54,6 +55,12 @@ public class BlockContainerBase implements IBlockContainer
 	public BlockContainerBase setClickInteraction(IInteraction interaction)
 	{
 		this.clickInteraction = interaction;
+		return this;
+	}
+
+	public BlockContainerBase setRenderType(RenderType renderType)
+	{
+		this.renderType = renderType;
 		return this;
 	}
 
@@ -107,6 +114,12 @@ public class BlockContainerBase implements IBlockContainer
 	}
 
 	@Override
+	public void markDirty()
+	{
+		isDirty = true;
+	}
+
+	@Override
 	public void setWorld(World world)
 	{
 		this.world = world;
@@ -153,7 +166,9 @@ public class BlockContainerBase implements IBlockContainer
 	@Override
 	public IBlockContainer copy()
 	{
-		//TODO: Implement proper copy.
-		return this;
+		BlockContainerBase copyBlockContainer = new BlockContainerBase(this.getBlock());
+		copyBlockContainer.setBlockState(this.getBlockState()).setClickInteraction(this.getClickInteraction())
+				.setUnlocalizedName(this.getUnlocalizedName()).setRenderType(this.getRenderType()).setWorld(this.world);
+		return copyBlockContainer;
 	}
 }

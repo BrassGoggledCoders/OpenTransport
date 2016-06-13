@@ -24,6 +24,8 @@ public interface IBlockContainer
 
 	void tick();
 
+	void markDirty();
+
 	void setWorld(World world);
 
 	boolean hasTileEntity();

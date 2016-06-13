@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import xyz.brassgoggledcoders.moarlibs.MoarLibs;
 import xyz.brassgoggledcoders.moarlibs.api.IHolderEntity;
-import xyz.brassgoggledcoders.moarlibs.wrappers.players.EntityPlayerMPWrapper;
+import xyz.brassgoggledcoders.moarlibs.wrappers.player.EntityPlayerMPWrapper;
 
 public class CommonProxy
 {

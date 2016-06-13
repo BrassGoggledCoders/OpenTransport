@@ -3,7 +3,7 @@ package xyz.brassgoggledcoders.moarlibs.proxies;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import xyz.brassgoggledcoders.moarlibs.api.IHolderEntity;
-import xyz.brassgoggledcoders.moarlibs.wrappers.players.EntityPlayerSPWrapper;
+import xyz.brassgoggledcoders.moarlibs.wrappers.player.EntityPlayerSPWrapper;
 
 public class ClientProxy extends CommonProxy
 {
