@@ -49,7 +49,7 @@ public class HolderUpdatePacket implements IMessage
 		@Override
 		public IMessage onMessage(final HolderUpdatePacket message, final MessageContext ctx)
 		{
-			IThreadListener mainThread = OpenTransport.proxy.getIThreadListener(ctx);
+			IThreadListener mainThread = OpenTransport.PROXY.getIThreadListener(ctx);
 			mainThread.addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
@@ -67,7 +67,7 @@ public class HolderUpdatePacket implements IMessage
 
 	public IHolderEntity getHolderEntityFromMessage(MessageContext messageContext)
 	{
-		World world = OpenTransport.proxy.getWorld(messageContext);
+		World world = OpenTransport.PROXY.getWorld(messageContext);
 		if(world != null)
 		{
 			Entity entity = world.getEntityByID(this.entityID);

@@ -31,4 +31,9 @@ public class CommonProxy
 	{
 		return (WorldServer)messageContext.getServerHandler().playerEntity.getEntityWorld();
 	}
+
+	public void registerEntityRenders()
+	{
+
+	}
 }

@@ -97,7 +97,7 @@ public class BlockContainerBase implements IBlockContainer
 	@Override
 	public boolean onInteract(EntityPlayer entityPlayer, IHolderEntity entity)
 	{
-		EntityPlayer entityPlayerWrapper = OpenTransport.proxy.getEntityPlayerWrapper(entityPlayer, entity);
+		EntityPlayer entityPlayerWrapper = OpenTransport.PROXY.getEntityPlayerWrapper(entityPlayer, entity);
 		return this.getClickInteraction() != null && this.getClickInteraction().interact(entityPlayerWrapper, this);
 	}
 

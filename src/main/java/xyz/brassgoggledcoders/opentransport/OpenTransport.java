@@ -24,7 +24,7 @@ public class OpenTransport extends BoilerplateModBase
 
 	@SidedProxy(clientSide = "xyz.brassgoggledcoders.opentransport.proxies.ClientProxy",
 			serverSide = "xyz.brassgoggledcoders.opentransport.proxies.CommonProxy")
-	public static CommonProxy proxy;
+	public static CommonProxy PROXY;
 
 	public OpenTransport()
 	{
@@ -35,6 +35,7 @@ public class OpenTransport extends BoilerplateModBase
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		super.preInit(event);
+		PROXY.registerEntityRenders();
 	}
 
 	@EventHandler
