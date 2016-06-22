@@ -25,10 +25,10 @@ repositories {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "${minecraft_version}-${moarlibs_version}." + System.getenv("bamboo_buildNumber")
+version = "${minecraft_version}-${opentransport_version}." + System.getenv("bamboo_buildNumber")
 
-group= "xyz.brassgoggledcoders.moarlibs"
-archivesBaseName = "MoarLibs"
+group= "xyz.brassgoggledcoders.opentransport"
+archivesBaseName = "OpenTransport"
 
 minecraft {
     version = "${minecraft_version}-${forge_version}-${minecraft_version}"
@@ -38,7 +38,7 @@ minecraft {
     useDepAts = true
 
     replace "@VERSION@", project.version
-    replaceIn "MoarLibs.java"
+    replaceIn "OpenTransport.java"
 }
 
 dependencies {
@@ -145,21 +145,21 @@ task("uploadJars", dependsOn: "reobf") {
                         project {
                             name project.archivesBaseName
                             packaging 'jar'
-                            description 'MoarLibs'
+                            description project.archivesBaseName
                             url ''
                             scm {
-                                url 'https://github.com/BrassGoggledCoders/MoarLibs'
-                                connection 'scm:git:git@github.com:BrassGoggledCoders/MoarLibs.git'
-                                developerConnection 'scm:git:git@github.com:BrassGoggledCoders/MoarLibs.git'
+                                url 'https://github.com/BrassGoggledCoders/OpenTransport'
+                                connection 'scm:git:git@github.com:BrassGoggledCoders/OpenTransport.git'
+                                developerConnection 'scm:git:git@github.com:BrassGoggledCoders/OpenTransport.git'
                             }
                             issueManagement {
                                 system 'github'
-                                url 'https://github.com/BrassGoggledCoders/MoarLibs/issues'
+                                url 'https://github.com/BrassGoggledCoders/OpenTransport/issues'
                             }
                             licenses {
                                 license {
                                     name 'MIT'
-                                    url 'https://github.com/BrassGoggledCoders/MoarLibs/blob/master/LICENSE'
+                                    url 'https://github.com/BrassGoggledCoders/OpenTransport/blob/master/LICENSE'
                                     distribution 'repo'
                                 }
                             }
