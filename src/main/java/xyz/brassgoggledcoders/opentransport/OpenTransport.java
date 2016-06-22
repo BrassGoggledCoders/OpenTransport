@@ -8,7 +8,9 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.relauncher.Side;
 import xyz.brassgoggledcoders.boilerplate.BoilerplateModBase;
+import xyz.brassgoggledcoders.opentransport.network.HolderUpdatePacket;
 import xyz.brassgoggledcoders.opentransport.proxies.CommonProxy;
 
 @Mod(modid = OpenTransport.MODID, name = OpenTransport.MODNAME, version = OpenTransport.VERSION, dependencies = OpenTransport.DEPENDENCIES)
@@ -42,6 +44,8 @@ public class OpenTransport extends BoilerplateModBase
 	public void init(FMLInitializationEvent event)
 	{
 		super.init(event);
+		this.getPacketHandler().registerPacket(HolderUpdatePacket.Handler.class,
+				HolderUpdatePacket.class, Side.CLIENT);
 	}
 
 	@EventHandler
