@@ -28,7 +28,7 @@ public class OpenTransport extends BoilerplateModBase
 	@SidedProxy(clientSide = "xyz.brassgoggledcoders.opentransport.proxies.ClientProxy",
 			serverSide = "xyz.brassgoggledcoders.opentransport.proxies.CommonProxy")
 	public static CommonProxy PROXY;
-	
+
 	public static TransportTypeHandler TRANSPORTTYPEHANDLER;
 
 	public OpenTransport()
@@ -52,8 +52,7 @@ public class OpenTransport extends BoilerplateModBase
 	public void init(FMLInitializationEvent event)
 	{
 		super.init(event);
-		this.getPacketHandler().registerPacket(HolderUpdatePacket.Handler.class,
-				HolderUpdatePacket.class, Side.CLIENT);
+		this.getPacketHandler().registerPacket(HolderUpdatePacket.Handler.class, HolderUpdatePacket.class, Side.CLIENT);
 	}
 
 	@EventHandler

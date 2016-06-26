@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.opentransport.api.transporttypes;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 
@@ -14,7 +15,14 @@ public interface ITransportType<E extends Entity>
 	@Nonnull
 	Class<E> getBaseEntity();
 
+	@Nonnull
+	CreativeTabs getCreativeTab();
+
 	void registerItems(Map<String, IBlockContainer> blockContainers);
 
 	void registerEntities();
+
+	void setIsActive(boolean isActive);
+
+	boolean getIsActive();
 }
