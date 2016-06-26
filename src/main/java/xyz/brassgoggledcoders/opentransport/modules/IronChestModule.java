@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.opentransport.modules;
 import cpw.mods.ironchest.BlockIronChest;
 import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.IronChestType;
+import net.minecraft.block.Block;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.boilerplate.module.Module;
 import xyz.brassgoggledcoders.boilerplate.module.ModuleBase;
@@ -38,11 +39,13 @@ public class IronChestModule extends ModuleBase
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		IRON_CHESTS = new IBlockContainer[IronChestType.values().length];
+		Block ironChest = IronChest.ironChestBlock;
 		for(int i = 0; i < IRON_CHESTS.length; i++)
 		{
-			IRON_CHESTS[i] = new BlockContainerBase(IronChest.ironChestBlock).setRenderType(RenderType.TESR)
-					.setBlockState(IronChest.ironChestBlock.getDefaultState().withProperty(BlockIronChest.VARIANT_PROP,
-							IronChestType.values()[i]));
+			IronChestType type = IronChestType.values()[i];
+			IRON_CHESTS[i] = new BlockContainerBase(ironChest).setRenderType(RenderType.TESR)
+					.setUnlocalizedName(ironChest.getUnlocalizedName() + "." + type.toString().toLowerCase())
+					.setBlockState(ironChest.getDefaultState().withProperty(BlockIronChest.VARIANT_PROP, type));
 			BlockContainerRegistry.registerContainer(IRON_CHESTS[i]);
 		}
 	}
