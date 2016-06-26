@@ -62,12 +62,15 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 	@Override
 	public IBlockContainer getBlockContainer()
 	{
-		if(blockContainer == null)
+		if(this.blockContainer == null)
 		{
 			String containerName = this.dataManager.get(BLOCK_CONTAINER_NAME);
-			blockContainer = BlockContainerRegistry.getBlockContainer(containerName);
+			this.blockContainer = BlockContainerRegistry.getBlockContainer(containerName);
+			if(this.blockContainer !=  null) {
+				this.blockContainer.setHolder(this);
+			}
 		}
-		return blockContainer;
+		return this.blockContainer;
 	}
 
 	@Override
@@ -75,6 +78,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 	{
 		this.dataManager.set(BLOCK_CONTAINER_NAME, blockContainer.getUnlocalizedName());
 		this.blockContainer = blockContainer;
+		this.blockContainer.setHolder(this);
 	}
 
 	public void setItemBoat(@Nonnull ItemStack itemBoatStack)
@@ -88,7 +92,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 	@Override
 	public boolean processInitialInteract(@Nonnull EntityPlayer entityPlayer, @Nullable ItemStack stack, EnumHand hand)
 	{
-		return this.getBlockContainer() != null && this.getBlockContainer().onInteract(entityPlayer, this);
+		return this.getBlockContainer() != null && this.getBlockContainer().onInteract(entityPlayer);
 	}
 
 	@Override
@@ -120,6 +124,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 		this.dataManager.set(BLOCK_CONTAINER_NAME, nbtTagCompound.getString("CONTAINER_NAME"));
 		this.setBlockContainer(BlockContainerRegistry.getBlockContainer(nbtTagCompound.getString("CONTAINER_NAME")));
 		this.setItemBoat(ItemStack.loadItemStackFromNBT(nbtTagCompound.getCompoundTag("ITEM_BOAT")));
+		blockContainer.setHolder(this);
 		blockContainer.readFromNBT(nbtTagCompound.getCompoundTag("CONTAINER"));
 	}
 }

@@ -12,17 +12,19 @@ import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IInteraction;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
+import xyz.brassgoggledcoders.opentransport.wrappers.world.WorldWrapper;
 
 public class BlockContainerBase implements IBlockContainer
 {
 	Block block;
 	IBlockState blockState;
 	TileEntity tileEntity;
-	boolean hasTileEntity;
 	World world;
+	boolean hasTileEntity;
 	String unlocalizedName;
 	IInteraction clickInteraction;
 	RenderType renderType = RenderType.VMC;
+	IHolderEntity holderEntity;
 	boolean isDirty;
 
 	public BlockContainerBase(Block block)
@@ -95,21 +97,16 @@ public class BlockContainerBase implements IBlockContainer
 	}
 
 	@Override
-	public boolean onInteract(EntityPlayer entityPlayer, IHolderEntity entity)
+	public boolean onInteract(EntityPlayer entityPlayer)
 	{
-		EntityPlayer entityPlayerWrapper = OpenTransport.PROXY.getEntityPlayerWrapper(entityPlayer, entity);
+		EntityPlayer entityPlayerWrapper = OpenTransport.PROXY.getEntityPlayerWrapper(entityPlayer, this.holderEntity);
 		return this.getClickInteraction() != null && this.getClickInteraction().interact(entityPlayerWrapper, this);
 	}
 
 	@Override
-	public void tick()
-	{
-		if(world != null && this.getTileEntity() != null)
-		{
-			if(this.getTileEntity() instanceof ITickable)
-			{
-				((ITickable) this.getTileEntity()).update();
-			}
+	public void tick() {
+		if(this.getTileEntity() instanceof ITickable) {
+			((ITickable) this.getTileEntity()).update();
 		}
 	}
 
@@ -120,9 +117,10 @@ public class BlockContainerBase implements IBlockContainer
 	}
 
 	@Override
-	public void setWorld(World world)
+	public void setHolder(IHolderEntity holderEntity)
 	{
-		this.world = world;
+		this.holderEntity = holderEntity;
+		this.world = new WorldWrapper(holderEntity);
 	}
 
 	@Override
@@ -137,6 +135,7 @@ public class BlockContainerBase implements IBlockContainer
 		if(this.tileEntity == null)
 		{
 			this.tileEntity = this.getBlock().createTileEntity(this.world, this.getBlockState());
+			this.tileEntity.setWorldObj(this.world);
 		}
 		return this.tileEntity;
 	}
@@ -168,7 +167,7 @@ public class BlockContainerBase implements IBlockContainer
 	{
 		BlockContainerBase copyBlockContainer = new BlockContainerBase(this.getBlock());
 		copyBlockContainer.setBlockState(this.getBlockState()).setClickInteraction(this.getClickInteraction())
-				.setUnlocalizedName(this.getUnlocalizedName()).setRenderType(this.getRenderType()).setWorld(this.world);
+				.setUnlocalizedName(this.getUnlocalizedName()).setRenderType(this.getRenderType());
 		return copyBlockContainer;
 	}
 }
