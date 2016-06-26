@@ -2,8 +2,8 @@ package xyz.brassgoggledcoders.opentransport;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -12,6 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import xyz.brassgoggledcoders.boilerplate.BoilerplateModBase;
 import xyz.brassgoggledcoders.opentransport.network.HolderUpdatePacket;
 import xyz.brassgoggledcoders.opentransport.proxies.CommonProxy;
+import xyz.brassgoggledcoders.opentransport.transport.TransportTypeHandler;
 
 @Mod(modid = OpenTransport.MODID, name = OpenTransport.MODNAME, version = OpenTransport.VERSION, dependencies = OpenTransport.DEPENDENCIES)
 public class OpenTransport extends BoilerplateModBase
@@ -27,6 +28,8 @@ public class OpenTransport extends BoilerplateModBase
 	@SidedProxy(clientSide = "xyz.brassgoggledcoders.opentransport.proxies.ClientProxy",
 			serverSide = "xyz.brassgoggledcoders.opentransport.proxies.CommonProxy")
 	public static CommonProxy PROXY;
+	
+	public static TransportTypeHandler TRANSPORTTYPEHANDLER;
 
 	public OpenTransport()
 	{
@@ -37,6 +40,11 @@ public class OpenTransport extends BoilerplateModBase
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		super.preInit(event);
+	}
+
+	@Override
+	public void modPreInit(FMLPreInitializationEvent event) {
+		TRANSPORTTYPEHANDLER = new TransportTypeHandler(event);
 		PROXY.registerEntityRenders();
 	}
 

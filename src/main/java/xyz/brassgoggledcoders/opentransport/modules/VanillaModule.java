@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.boilerplate.module.Module;
 import xyz.brassgoggledcoders.boilerplate.module.ModuleBase;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.api.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.blocks.BlockContainerBase;
 import xyz.brassgoggledcoders.opentransport.interactions.EnderChestInteraction;
 import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;

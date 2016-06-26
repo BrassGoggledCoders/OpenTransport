@@ -1,6 +1,6 @@
 package xyz.brassgoggledcoders.opentransport.registries;
 
-import xyz.brassgoggledcoders.opentransport.api.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 
 import java.util.HashMap;
 import java.util.Map;

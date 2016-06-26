@@ -8,9 +8,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.api.IBlockContainer;
-import xyz.brassgoggledcoders.opentransport.api.IHolderEntity;
-import xyz.brassgoggledcoders.opentransport.api.IInteraction;
+import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
+import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IInteraction;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
 
 public class BlockContainerBase implements IBlockContainer

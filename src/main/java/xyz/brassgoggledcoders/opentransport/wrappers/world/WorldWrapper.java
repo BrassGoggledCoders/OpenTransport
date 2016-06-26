@@ -16,8 +16,8 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
-import xyz.brassgoggledcoders.opentransport.api.IBlockContainer;
-import xyz.brassgoggledcoders.opentransport.api.IHolderEntity;
+import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

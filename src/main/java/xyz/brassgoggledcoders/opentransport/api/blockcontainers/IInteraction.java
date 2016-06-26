@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.opentransport.api;
+package xyz.brassgoggledcoders.opentransport.api.blockcontainers;
 
 import net.minecraft.entity.player.EntityPlayer;
 

@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.opentransport.api;
+package xyz.brassgoggledcoders.opentransport.api.blockcontainers;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
 
 public interface IBlockContainer

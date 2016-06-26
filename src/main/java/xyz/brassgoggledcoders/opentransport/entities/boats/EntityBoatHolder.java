@@ -12,8 +12,8 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import xyz.brassgoggledcoders.opentransport.api.IBlockContainer;
-import xyz.brassgoggledcoders.opentransport.api.IHolderEntity;
+import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.items.boats.ItemBoatHolder;
 import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
 

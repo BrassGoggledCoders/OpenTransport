@@ -9,7 +9,7 @@ import xyz.brassgoggledcoders.boilerplate.module.ModuleBase;
 import xyz.brassgoggledcoders.boilerplate.module.dependencies.IDependency;
 import xyz.brassgoggledcoders.boilerplate.module.dependencies.ModDependency;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.api.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.blocks.BlockContainerBase;
 import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderType;

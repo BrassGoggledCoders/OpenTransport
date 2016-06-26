@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
-import xyz.brassgoggledcoders.opentransport.api.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 
 public class RenderBlock
 {
