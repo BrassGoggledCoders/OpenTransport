@@ -1,9 +1,11 @@
 package xyz.brassgoggledcoders.opentransport.entities.boats;
 
 import com.google.common.base.Optional;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,7 +13,9 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import xyz.brassgoggledcoders.boilerplate.client.guis.IOpenableGUI;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.items.boats.ItemBoatHolder;
@@ -20,7 +24,7 @@ import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<EntityBoatHolder>
+public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<EntityBoatHolder>, IOpenableGUI
 {
 	IBlockContainer blockContainer;
 	private static final DataParameter<String> BLOCK_CONTAINER_NAME =
@@ -90,9 +94,9 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 	}
 
 	@Override
-	public boolean processInitialInteract(@Nonnull EntityPlayer entityPlayer, @Nullable ItemStack stack, EnumHand hand)
+	public boolean processInitialInteract(@Nonnull EntityPlayer entityPlayer, @Nullable ItemStack itemStack, EnumHand hand)
 	{
-		return this.getBlockContainer() != null && this.getBlockContainer().onInteract(entityPlayer);
+		return this.getBlockContainer() != null && this.getBlockContainer().onInteract(entityPlayer, hand, itemStack);
 	}
 
 	@Override
@@ -126,5 +130,15 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 		this.setItemBoat(ItemStack.loadItemStackFromNBT(nbtTagCompound.getCompoundTag("ITEM_BOAT")));
 		blockContainer.setHolder(this);
 		blockContainer.readFromNBT(nbtTagCompound.getCompoundTag("CONTAINER"));
+	}
+
+	@Override
+	public Gui getClientGuiElement(int ID, EntityPlayer player, World world, BlockPos blockPos) {
+		return this.getBlockContainer().getInterface().getGUI(player, this, this.getBlockContainer());
+	}
+
+	@Override
+	public Container getServerGuiElement(int ID, EntityPlayer player, World world, BlockPos blockPos) {
+		return this.getBlockContainer().getInterface().getContainer(player, this, this.getBlockContainer());
 	}
 }

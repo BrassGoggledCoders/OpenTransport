@@ -3,17 +3,24 @@ package xyz.brassgoggledcoders.opentransport.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IGuiInterface;
-import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IInteraction;
+import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
+import xyz.brassgoggledcoders.opentransport.interactions.BaseInteraction;
+import xyz.brassgoggledcoders.opentransport.interfaces.BaseInterface;
+import xyz.brassgoggledcoders.opentransport.network.HolderUpdatePacket;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
 import xyz.brassgoggledcoders.opentransport.wrappers.world.WorldWrapper;
+
+import javax.annotation.Nonnull;
 
 public class BlockContainerBase implements IBlockContainer
 {
@@ -23,8 +30,8 @@ public class BlockContainerBase implements IBlockContainer
 	World world;
 	boolean hasTileEntity;
 	String unlocalizedName;
-	IInteraction clickInteraction;
-	IGuiInterface guiInterface;
+	IInteraction clickInteraction = new BaseInteraction();
+	IGuiInterface guiInterface = new BaseInterface();
 	RenderType renderType = RenderType.VMC;
 	IHolderEntity holderEntity;
 	boolean isDirty;
@@ -75,45 +82,56 @@ public class BlockContainerBase implements IBlockContainer
 	}
 
 	@Override
+	@Nonnull
 	public Block getBlock()
 	{
 		return block;
 	}
 
 	@Override
+	@Nonnull
 	public IBlockState getBlockState()
 	{
 		return blockState;
 	}
 
 	@Override
+	@Nonnull
 	public String getUnlocalizedName()
 	{
 		return unlocalizedName;
 	}
 
 	@Override
+	@Nonnull
 	public RenderType getRenderType()
 	{
 		return renderType;
 	}
 
 	@Override
+	@Nonnull
 	public IInteraction getClickInteraction()
 	{
 		return clickInteraction;
 	}
 
 	@Override
+	@Nonnull
 	public IGuiInterface getInterface() {
 		return guiInterface;
 	}
 
 	@Override
-	public boolean onInteract(EntityPlayer entityPlayer)
+	public boolean onInteract(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack)
 	{
+		boolean result;
+		this.updateBlockContainer();
 		EntityPlayer entityPlayerWrapper = OpenTransport.PROXY.getEntityPlayerWrapper(entityPlayer, this.holderEntity);
-		return this.getClickInteraction() != null && this.getClickInteraction().interact(entityPlayerWrapper, this);
+		result = this.getClickInteraction().interact(entityPlayerWrapper, hand, itemStack, this.holderEntity, this);
+		OpenTransport.PROXY.resetPlayer(entityPlayer);
+		this.updateBlockContainer();
+		return result;
 	}
 
 	@Override
@@ -180,7 +198,13 @@ public class BlockContainerBase implements IBlockContainer
 	{
 		BlockContainerBase copyBlockContainer = new BlockContainerBase(this.getBlock());
 		copyBlockContainer.setBlockState(this.getBlockState()).setClickInteraction(this.getClickInteraction())
-				.setUnlocalizedName(this.getUnlocalizedName()).setRenderType(this.getRenderType());
+				.setGuiInterface(this.guiInterface).setRenderType(this.getRenderType())
+				.setUnlocalizedName(this.getUnlocalizedName());
 		return copyBlockContainer;
+	}
+
+	private void updateBlockContainer() {
+		OpenTransport.INSTANCE.getPacketHandler().sendToAllAround(new HolderUpdatePacket(this.holderEntity),
+				this.holderEntity.getEntity());
 	}
 }
