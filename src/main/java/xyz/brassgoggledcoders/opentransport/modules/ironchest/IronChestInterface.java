@@ -15,14 +15,15 @@ public class IronChestInterface implements IGuiInterface {
 	@Override
 	public Gui getGUI(EntityPlayer entityPlayer, IHolderEntity holderEntity, IBlockContainer blockContainer) {
 		GUIChest guiChest = GUIChest.GUI.buildGUI(this.getType(blockContainer), entityPlayer.inventory,
-				(TileEntityIronChest)blockContainer.getTileEntity());
+				(TileEntityIronChest) blockContainer.getTileEntity());
 		guiChest.inventorySlots = getContainer(entityPlayer, holderEntity, blockContainer);
 		return guiChest;
 	}
 
 	@Override
-	public Container getContainer(EntityPlayer entityPlayer, IHolderEntity holderEntity, IBlockContainer blockContainer) {
-		TileEntityIronChest ironChest = (TileEntityIronChest)blockContainer.getTileEntity();
+	public Container getContainer(EntityPlayer entityPlayer, IHolderEntity holderEntity,
+			IBlockContainer blockContainer) {
+		TileEntityIronChest ironChest = (TileEntityIronChest) blockContainer.getTileEntity();
 		return new ContainerIronChestEntity(entityPlayer.inventory, holderEntity, ironChest, getType(blockContainer));
 	}
 

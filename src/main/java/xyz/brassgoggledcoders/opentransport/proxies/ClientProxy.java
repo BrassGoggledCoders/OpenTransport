@@ -12,39 +12,32 @@ import xyz.brassgoggledcoders.opentransport.entities.boats.EntityBoatHolder;
 import xyz.brassgoggledcoders.opentransport.renderers.boats.RenderHolderBoat;
 import xyz.brassgoggledcoders.opentransport.wrappers.player.EntityPlayerSPWrapper;
 
-public class ClientProxy extends CommonProxy
-{
+public class ClientProxy extends CommonProxy {
 	@Override
-	public EntityPlayer getEntityPlayerWrapper(EntityPlayer entityPlayer, IHolderEntity containerHolder)
-	{
-		if(entityPlayer instanceof EntityPlayerSP)
-		{
-			return new EntityPlayerSPWrapper((EntityPlayerSP)entityPlayer, containerHolder);
+	public EntityPlayer getEntityPlayerWrapper(EntityPlayer entityPlayer, IHolderEntity containerHolder) {
+		if(entityPlayer instanceof EntityPlayerSP) {
+			return new EntityPlayerSPWrapper((EntityPlayerSP) entityPlayer, containerHolder);
 		}
 		return super.getEntityPlayerWrapper(entityPlayer, containerHolder);
 	}
 
 	@Override
-	public void resetPlayer(EntityPlayer player)
-	{
+	public void resetPlayer(EntityPlayer player) {
 
 	}
 
 	@Override
-	public World getWorld(MessageContext ctx)
-	{
+	public World getWorld(MessageContext ctx) {
 		return Minecraft.getMinecraft().theWorld;
 	}
 
 	@Override
-	public IThreadListener getIThreadListener(MessageContext messageContext)
-	{
+	public IThreadListener getIThreadListener(MessageContext messageContext) {
 		return Minecraft.getMinecraft();
 	}
 
 	@Override
-	public void registerEntityRenders()
-	{
+	public void registerEntityRenders() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityBoatHolder.class, RenderHolderBoat.Factory.INSTANCE);
 	}
 }

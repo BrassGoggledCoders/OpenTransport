@@ -8,18 +8,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 
-public class RenderBlock
-{
-	public void renderEntity(Entity entity, IBlockContainer blockContainer, float partialTicks)
-	{
+public class RenderBlock {
+	public void renderEntity(Entity entity, IBlockContainer blockContainer, float partialTicks) {
 		this.render(blockContainer.getRenderType(), blockContainer.getBlockState(), blockContainer.getTileEntity(),
 				entity.getBrightness(partialTicks));
 	}
 
-	private void render(RenderType type, IBlockState blockState, TileEntity tileEntity, float brightness)
-	{
-		switch(type)
-		{
+	private void render(RenderType type, IBlockState blockState, TileEntity tileEntity, float brightness) {
+		switch(type) {
 			case VMC:
 				this.renderVMC(blockState, brightness);
 				break;
@@ -35,15 +31,13 @@ public class RenderBlock
 		}
 	}
 
-	public void renderVMC(IBlockState blockState, float brightness)
-	{
+	public void renderVMC(IBlockState blockState, float brightness) {
 		GlStateManager.pushMatrix();
 		Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlockBrightness(blockState, brightness);
 		GlStateManager.popMatrix();
 	}
 
-	public void renderTESR(TileEntity tileEntity)
-	{
+	public void renderTESR(TileEntity tileEntity) {
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(90F, 0F, 1F, 0F);
 		TileEntityRendererDispatcher.instance.renderTileEntityAt(tileEntity, 0, 0, 0, 0.0F);

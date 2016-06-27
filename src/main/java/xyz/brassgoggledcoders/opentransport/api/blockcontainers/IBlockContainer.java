@@ -12,8 +12,7 @@ import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
 
 import javax.annotation.Nonnull;
 
-public interface IBlockContainer
-{
+public interface IBlockContainer {
 	@Nonnull
 	Block getBlock();
 

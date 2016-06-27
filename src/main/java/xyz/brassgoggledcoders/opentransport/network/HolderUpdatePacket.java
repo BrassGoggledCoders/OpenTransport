@@ -12,74 +12,63 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
-public class HolderUpdatePacket implements IMessage
-{
+public class HolderUpdatePacket implements IMessage {
 	public int entityID;
 	public IHolderEntity holderEntity;
 	public NBTTagCompound nbtTagCompound;
 
-	public HolderUpdatePacket()
-	{
+	public HolderUpdatePacket() {
 
 	}
 
-	public HolderUpdatePacket(IHolderEntity holderEntity)
-	{
+	public HolderUpdatePacket(IHolderEntity holderEntity) {
 		this.entityID = holderEntity.getEntity().getEntityId();
 		this.holderEntity = holderEntity;
 		this.nbtTagCompound = holderEntity.getBlockContainer().writeToNBT(new NBTTagCompound());
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf)
-	{
+	public void fromBytes(ByteBuf buf) {
 		this.entityID = buf.readInt();
 		this.nbtTagCompound = ByteBufUtils.readTag(buf);
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf)
-	{
+	public void toBytes(ByteBuf buf) {
 		buf.writeInt(this.entityID);
 		ByteBufUtils.writeTag(buf, this.nbtTagCompound);
 	}
 
-	public static class Handler implements IMessageHandler<HolderUpdatePacket, IMessage>
-	{
+	public IHolderEntity getHolderEntityFromMessage(MessageContext messageContext) {
+		World world = OpenTransport.PROXY.getWorld(messageContext);
+		if(world != null) {
+			Entity entity = world.getEntityByID(this.entityID);
+			if(entity instanceof IHolderEntity) {
+				return (IHolderEntity) entity;
+			}
+		}
+		else {
+			OpenTransport.INSTANCE.getLogger().devInfo("The world was null");
+		}
+
+		return null;
+	}
+
+	public static class Handler implements IMessageHandler<HolderUpdatePacket, IMessage> {
 		@Override
-		public IMessage onMessage(final HolderUpdatePacket message, final MessageContext ctx)
-		{
+		public IMessage onMessage(final HolderUpdatePacket message, final MessageContext ctx) {
 			IThreadListener mainThread = OpenTransport.PROXY.getIThreadListener(ctx);
 			mainThread.addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
 					IHolderEntity holderEntity = message.getHolderEntityFromMessage(ctx);
 
-					if(holderEntity != null)
-					{
+					if(holderEntity != null) {
 						holderEntity.getBlockContainer().readFromNBT(message.nbtTagCompound);
 					}
 				}
 			});
 			return null;
 		}
-	}
-
-	public IHolderEntity getHolderEntityFromMessage(MessageContext messageContext)
-	{
-		World world = OpenTransport.PROXY.getWorld(messageContext);
-		if(world != null)
-		{
-			Entity entity = world.getEntityByID(this.entityID);
-			if(entity instanceof IHolderEntity)
-			{
-				return (IHolderEntity)entity;
-			}
-		} else
-		{
-			OpenTransport.INSTANCE.getLogger().devInfo("The world was null");
-		}
-
-		return null;
 	}
 }

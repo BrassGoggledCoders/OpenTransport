@@ -11,26 +11,22 @@ import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import java.util.List;
 
 @Module(mod = OpenTransport.MODID)
-public class IronChestModule extends ModuleBase
-{
+public class IronChestModule extends ModuleBase {
 	public static IBlockContainer[] IRON_CHESTS;
 
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		return "Iron Chest";
 	}
 
 	@Override
-	public List<IDependency> getDependencies(List<IDependency> dependencies)
-	{
+	public List<IDependency> getDependencies(List<IDependency> dependencies) {
 		dependencies.add(new ModDependency("IronChest"));
 		return dependencies;
 	}
 
 	@Override
-	public void preInit(FMLPreInitializationEvent event)
-	{
+	public void preInit(FMLPreInitializationEvent event) {
 		IronChestBlockContainers.preInit(event);
 	}
 }

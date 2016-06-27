@@ -22,8 +22,7 @@ import xyz.brassgoggledcoders.opentransport.wrappers.world.WorldWrapper;
 
 import javax.annotation.Nonnull;
 
-public class BlockContainerBase implements IBlockContainer
-{
+public class BlockContainerBase implements IBlockContainer {
 	Block block;
 	IBlockState blockState;
 	TileEntity tileEntity;
@@ -36,83 +35,71 @@ public class BlockContainerBase implements IBlockContainer
 	IHolderEntity holderEntity;
 	boolean isDirty;
 
-	public BlockContainerBase(Block block)
-	{
+	public BlockContainerBase(Block block) {
 		this.block = block;
 		this.blockState = block.getDefaultState();
 		this.unlocalizedName = block.getUnlocalizedName().replaceFirst("tile.", "");
 	}
 
-	public BlockContainerBase setBlock(Block block)
-	{
+	public BlockContainerBase setBlock(Block block) {
 		this.block = block;
 		this.blockState = block.getDefaultState();
 		return this;
 	}
 
-	public BlockContainerBase setBlockState(IBlockState blockState)
-	{
+	public BlockContainerBase setBlockState(IBlockState blockState) {
 		this.block = blockState.getBlock();
 		this.blockState = blockState;
 		return this;
 	}
 
-	public BlockContainerBase setUnlocalizedName(String name)
-	{
+	public BlockContainerBase setUnlocalizedName(String name) {
 		this.unlocalizedName = name.replaceFirst("tile.", "");
 		return this;
 	}
 
-	public BlockContainerBase setClickInteraction(IInteraction interaction)
-	{
+	public BlockContainerBase setClickInteraction(IInteraction interaction) {
 		this.clickInteraction = interaction;
 		return this;
 	}
 
-	public BlockContainerBase setGuiInterface(IGuiInterface guiInterface)
-	{
+	public BlockContainerBase setGuiInterface(IGuiInterface guiInterface) {
 		this.guiInterface = guiInterface;
 		return this;
 	}
 
-	public BlockContainerBase setRenderType(RenderType renderType)
-	{
+	public BlockContainerBase setRenderType(RenderType renderType) {
 		this.renderType = renderType;
 		return this;
 	}
 
 	@Override
 	@Nonnull
-	public Block getBlock()
-	{
+	public Block getBlock() {
 		return block;
 	}
 
 	@Override
 	@Nonnull
-	public IBlockState getBlockState()
-	{
+	public IBlockState getBlockState() {
 		return blockState;
 	}
 
 	@Override
 	@Nonnull
-	public String getUnlocalizedName()
-	{
+	public String getUnlocalizedName() {
 		return unlocalizedName;
 	}
 
 	@Override
 	@Nonnull
-	public RenderType getRenderType()
-	{
+	public RenderType getRenderType() {
 		return renderType;
 	}
 
 	@Override
 	@Nonnull
-	public IInteraction getClickInteraction()
-	{
+	public IInteraction getClickInteraction() {
 		return clickInteraction;
 	}
 
@@ -123,8 +110,7 @@ public class BlockContainerBase implements IBlockContainer
 	}
 
 	@Override
-	public boolean onInteract(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack)
-	{
+	public boolean onInteract(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack) {
 		boolean result;
 		this.updateBlockContainer();
 		EntityPlayer entityPlayerWrapper = OpenTransport.PROXY.getEntityPlayerWrapper(entityPlayer, this.holderEntity);
@@ -142,29 +128,24 @@ public class BlockContainerBase implements IBlockContainer
 	}
 
 	@Override
-	public void markDirty()
-	{
+	public void markDirty() {
 		isDirty = true;
 	}
 
 	@Override
-	public void setHolder(IHolderEntity holderEntity)
-	{
+	public void setHolder(IHolderEntity holderEntity) {
 		this.holderEntity = holderEntity;
 		this.world = new WorldWrapper(holderEntity);
 	}
 
 	@Override
-	public boolean hasTileEntity()
-	{
+	public boolean hasTileEntity() {
 		return hasTileEntity;
 	}
 
 	@Override
-	public TileEntity getTileEntity()
-	{
-		if(this.tileEntity == null)
-		{
+	public TileEntity getTileEntity() {
+		if(this.tileEntity == null) {
 			this.tileEntity = this.getBlock().createTileEntity(this.world, this.getBlockState());
 			this.tileEntity.setWorldObj(this.world);
 		}
@@ -172,30 +153,24 @@ public class BlockContainerBase implements IBlockContainer
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
-	{
-		if(world != null && this.getTileEntity() != null)
-		{
+	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+		if(world != null && this.getTileEntity() != null) {
 			tagCompound.setTag("TILE_DATA", this.getTileEntity().writeToNBT(new NBTTagCompound()));
 		}
 		return tagCompound;
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound tagCompound)
-	{
-		if(world != null && this.getTileEntity() != null)
-		{
-			if(tagCompound.hasKey("TILE_DATA"))
-			{
+	public void readFromNBT(NBTTagCompound tagCompound) {
+		if(world != null && this.getTileEntity() != null) {
+			if(tagCompound.hasKey("TILE_DATA")) {
 				this.getTileEntity().readFromNBT(tagCompound.getCompoundTag("TILE_DATA"));
 			}
 		}
 	}
 
 	@Override
-	public IBlockContainer copy()
-	{
+	public IBlockContainer copy() {
 		BlockContainerBase copyBlockContainer = new BlockContainerBase(this.getBlock());
 		copyBlockContainer.setBlockState(this.getBlockState()).setClickInteraction(this.getClickInteraction())
 				.setGuiInterface(this.guiInterface).setRenderType(this.getRenderType())
@@ -204,7 +179,7 @@ public class BlockContainerBase implements IBlockContainer
 	}
 
 	private void updateBlockContainer() {
-		OpenTransport.INSTANCE.getPacketHandler().sendToAllAround(new HolderUpdatePacket(this.holderEntity),
-				this.holderEntity.getEntity());
+		OpenTransport.INSTANCE.getPacketHandler()
+				.sendToAllAround(new HolderUpdatePacket(this.holderEntity), this.holderEntity.getEntity());
 	}
 }

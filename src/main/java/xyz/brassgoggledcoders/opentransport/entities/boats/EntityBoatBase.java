@@ -10,34 +10,32 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class EntityBoatBase extends EntityBoat
-{
-	public EntityBoatBase(World world)
-	{
+public class EntityBoatBase extends EntityBoat {
+	public EntityBoatBase(World world) {
 		super(world);
 	}
 
 	@Override
-	public boolean canPassengerSteer()
-	{
+	public boolean canPassengerSteer() {
 		return true;
 	}
 
 	@Override
-	public boolean isBeingRidden()
-	{
+	public boolean isBeingRidden() {
 		return false;
 	}
 
 	@Override
-	public boolean processInitialInteract(@Nonnull EntityPlayer player, @Nullable ItemStack stack, EnumHand hand)
-	{
+	public boolean processInitialInteract(
+			@Nonnull
+					EntityPlayer player,
+			@Nullable
+					ItemStack stack, EnumHand hand) {
 		return true;
 	}
 
 	@Override
-	protected boolean canFitPassenger(Entity passenger)
-	{
+	protected boolean canFitPassenger(Entity passenger) {
 		return false;
 	}
 }

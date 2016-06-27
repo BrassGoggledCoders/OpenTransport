@@ -12,12 +12,10 @@ import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
 
 public class IronChestBlockContainers {
-	public static void preInit(FMLPreInitializationEvent event)
-	{
+	public static void preInit(FMLPreInitializationEvent event) {
 		IBlockContainer[] IRON_CHESTS = new IBlockContainer[IronChestType.values().length];
 		Block ironChest = IronChest.ironChestBlock;
-		for(int i = 0; i < IRON_CHESTS.length; i++)
-		{
+		for(int i = 0; i < IRON_CHESTS.length; i++) {
 			IronChestType type = IronChestType.values()[i];
 			IRON_CHESTS[i] = new BlockContainerBase(ironChest).setRenderType(RenderType.TESR)
 					.setUnlocalizedName(ironChest.getUnlocalizedName() + "." + type.toString().toLowerCase())

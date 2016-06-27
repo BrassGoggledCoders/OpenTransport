@@ -13,20 +13,19 @@ public class ContainerIronChestEntity extends ContainerIronChest {
 	private IHolderEntity holderEntity;
 
 	public ContainerIronChestEntity(IInventory playerInventory, IHolderEntity holderEntity, TileEntityIronChest chest,
-			IronChestType type)
-	{
-		super(playerInventory, chest, type,	ContainerSize.values()[type.ordinal()].xSize,
+			IronChestType type) {
+		super(playerInventory, chest, type, ContainerSize.values()[type.ordinal()].xSize,
 				ContainerSize.values()[type.ordinal()].ySize);
 		this.holderEntity = holderEntity;
 	}
 
-	public boolean canInteractWith(@Nonnull EntityPlayer entityPlayer)
-	{
+	public boolean canInteractWith(
+			@Nonnull
+					EntityPlayer entityPlayer) {
 		return holderEntity.isUseableByPlayer(entityPlayer);
 	}
 
-	public enum ContainerSize
-	{
+	public enum ContainerSize {
 		IRON(184, 202),
 		GOLD(184, 256),
 		DIAMOND(238, 256),
@@ -39,8 +38,7 @@ public class ContainerIronChestEntity extends ContainerIronChest {
 		public int xSize;
 		public int ySize;
 
-		ContainerSize(int xSize, int ySize)
-		{
+		ContainerSize(int xSize, int ySize) {
 			this.xSize = xSize;
 			this.ySize = ySize;
 		}

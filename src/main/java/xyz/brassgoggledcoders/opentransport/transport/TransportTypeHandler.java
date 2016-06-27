@@ -18,7 +18,7 @@ public class TransportTypeHandler {
 	public TransportTypeHandler(FMLPreInitializationEvent event) {
 		transportTypes = ClassLoading.getInstances(event.getAsmData(), TransportType.class, ITransportType.class);
 
-		for(ITransportType transportType: this.getTransportTypes()) {
+		for(ITransportType transportType : this.getTransportTypes()) {
 			this.getConfig().addEntry(transportType.getName(), new TransportTypeEntry(transportType));
 			transportType.setIsActive(this.getConfig().getBoolean(transportType.getName(), true));
 			if(transportType.getIsActive()) {

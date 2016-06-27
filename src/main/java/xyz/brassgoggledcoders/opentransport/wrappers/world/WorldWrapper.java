@@ -23,51 +23,51 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class WorldWrapper extends World
-{
+public class WorldWrapper extends World {
 	private IHolderEntity entity;
 	private BlockPos originPos = new BlockPos(0, 0, 0);
 
-	public WorldWrapper(IHolderEntity entity)
-	{
+	public WorldWrapper(IHolderEntity entity) {
 		this(entity.getEntity().worldObj, entity);
 	}
 
-	protected WorldWrapper(World world, IHolderEntity entity)
-	{
+	protected WorldWrapper(World world, IHolderEntity entity) {
 		super(world.getSaveHandler(), world.getWorldInfo(), world.provider, world.theProfiler, world.isRemote);
 		this.entity = entity;
 	}
 
 	@Override
 	@Nonnull
-	protected IChunkProvider createChunkProvider()
-	{
+	protected IChunkProvider createChunkProvider() {
 		return chunkProvider;
 	}
 
 	@Override
-	protected boolean isChunkLoaded(int x, int z, boolean allowEmpty)
-	{
+	protected boolean isChunkLoaded(int x, int z, boolean allowEmpty) {
 		return true;
 	}
 
 	//Enderchest use this for open and close
 	@Override
-	public void addBlockEvent(@Nonnull BlockPos blockPos, Block block, int metadata, int p_14745)
-	{
+	public void addBlockEvent(
+			@Nonnull
+					BlockPos blockPos, Block block, int metadata, int p_14745) {
 		//TODO Fix this some day so shit actually opens
 	}
 
 	@Override
-	public boolean isSideSolid(@Nonnull BlockPos blockPos,@Nonnull EnumFacing blockSide)
-	{
+	public boolean isSideSolid(
+			@Nonnull
+					BlockPos blockPos,
+			@Nonnull
+					EnumFacing blockSide) {
 		return false;
 	}
 
 	@Override
-	public TileEntity getTileEntity(@Nonnull BlockPos blockPos)
-	{
+	public TileEntity getTileEntity(
+			@Nonnull
+					BlockPos blockPos) {
 		if(blockPos.equals(originPos)) {
 			return this.getBlockContainer().getTileEntity();
 		}
@@ -75,16 +75,16 @@ public class WorldWrapper extends World
 	}
 
 	@Override
-	public Entity getEntityByID(int id)
-	{
+	public Entity getEntityByID(int id) {
 		return this.getWorld().getEntityByID(id);
 	}
 
 	//Most Blocks use this.
 	@Override
 	@Nonnull
-	public IBlockState getBlockState(@Nonnull BlockPos blockPos)
-	{
+	public IBlockState getBlockState(
+			@Nonnull
+					BlockPos blockPos) {
 		if(blockPos.equals(originPos)) {
 			return this.getBlockContainer().getBlockState();
 		}
@@ -94,89 +94,91 @@ public class WorldWrapper extends World
 	//Enderchest Particles
 	@Override
 	public void spawnParticle(EnumParticleTypes enumParticleType, double posX, double posY, double posZ, double velX,
-			double velY, double velZ, @Nonnull int... what)
-	{
-		int intCartX = (int)Math.floor(this.getPosX());
-		int intCartY = (int)Math.floor(this.getPosY());
-		int intCartZ = (int)Math.floor(this.getPosZ());
-		double changeInX = (this.getPosX() - (double)intCartX) / 2.0;
-		double changeInY = (this.getPosY() - (double)intCartY) / 2.0;
-		double changeInZ = (this.getPosZ() - (double)intCartZ) / 2.0;
-		this.getWorld().spawnParticle(enumParticleType, posX - changeInX, posY - changeInY, posZ - changeInZ,
-				velX, velY, velZ);
+			double velY, double velZ,
+			@Nonnull
+					int... what) {
+		int intCartX = (int) Math.floor(this.getPosX());
+		int intCartY = (int) Math.floor(this.getPosY());
+		int intCartZ = (int) Math.floor(this.getPosZ());
+		double changeInX = (this.getPosX() - (double) intCartX) / 2.0;
+		double changeInY = (this.getPosY() - (double) intCartY) / 2.0;
+		double changeInZ = (this.getPosZ() - (double) intCartZ) / 2.0;
+		this.getWorld()
+				.spawnParticle(enumParticleType, posX - changeInX, posY - changeInY, posZ - changeInZ, velX, velY,
+						velZ);
 	}
 
 	//Infinitato tries to get Entities and add potion effects
 	//TODO: Actually get the right AABB
 	@Override
 	@Nonnull
-	public <T extends Entity> List<T> getEntitiesWithinAABB(@Nonnull Class<? extends T > entityClass,
-			@Nonnull AxisAlignedBB axisAlignedBB)
-	{
+	public <T extends Entity> List<T> getEntitiesWithinAABB(
+			@Nonnull
+					Class<? extends T> entityClass,
+			@Nonnull
+					AxisAlignedBB axisAlignedBB) {
 		return this.getWorld().getEntitiesWithinAABB(entityClass, axisAlignedBB);
 	}
 
 	//Infinitato creates explosions when it lands
 	@Override
 	@Nonnull
-	public Explosion createExplosion(Entity entity, double posX, double posY, double posZ, float size, boolean damage)
-	{
+	public Explosion createExplosion(Entity entity, double posX, double posY, double posZ, float size, boolean damage) {
 		return this.getWorld().createExplosion(entity, this.getPosX(), this.getPosY(), this.getPosZ(), size, damage);
 	}
 
 	//Shia Labouef tiny potato screams "Just do it"
 	@Override
-	public void playSound(@Nullable EntityPlayer player, BlockPos pos, @Nonnull SoundEvent sound,
-			@Nonnull SoundCategory category, float volume, float pitch)
-	{
+	public void playSound(
+			@Nullable
+					EntityPlayer player, BlockPos pos,
+			@Nonnull
+					SoundEvent sound,
+			@Nonnull
+					SoundCategory category, float volume, float pitch) {
 		this.getWorld().playSound(player, this.getEntity().getPosition(), sound, category, volume, pitch);
 	}
 
 	@Override
 	@Nonnull
-	public Chunk getChunkFromChunkCoords(int chunkX, int chunkZ)
-	{
+	public Chunk getChunkFromChunkCoords(int chunkX, int chunkZ) {
 		return this.getWorld().getChunkFromChunkCoords(chunkX, chunkZ);
 	}
 
 	@Override
-	public void markChunkDirty(@Nonnull BlockPos pos,@Nonnull TileEntity tileEntity)
-	{
+	public void markChunkDirty(
+			@Nonnull
+					BlockPos pos,
+			@Nonnull
+					TileEntity tileEntity) {
 		this.getBlockContainer().markDirty();
 	}
 
-	public Entity getEntity()
-	{
+	public Entity getEntity() {
 		return this.getHolderEntity().getEntity();
 	}
 
-	public IHolderEntity getHolderEntity()
-	{
+	public IHolderEntity getHolderEntity() {
 		return this.entity;
 	}
 
-	public IBlockContainer getBlockContainer()
-	{
+	public IBlockContainer getBlockContainer() {
 		return this.getHolderEntity().getBlockContainer();
 	}
 
-	public double getPosX()
-	{
+	public double getPosX() {
 		return this.getEntity().posX;
 	}
 
-	public double getPosY()
-	{
+	public double getPosY() {
 		return this.getEntity().posY;
 	}
 
-	public double getPosZ()
-	{
+	public double getPosZ() {
 		return this.getEntity().posZ;
 	}
 
-	public World getWorld()
-	{
+	public World getWorld() {
 		return this.getEntity().worldObj;
 	}
 }

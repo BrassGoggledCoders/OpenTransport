@@ -14,7 +14,8 @@ public class BaseInterface implements IGuiInterface {
 	}
 
 	@Override
-	public Container getContainer(EntityPlayer entityPlayer, IHolderEntity holderEntity, IBlockContainer blockContainer) {
+	public Container getContainer(EntityPlayer entityPlayer, IHolderEntity holderEntity,
+			IBlockContainer blockContainer) {
 		return null;
 	}
 }

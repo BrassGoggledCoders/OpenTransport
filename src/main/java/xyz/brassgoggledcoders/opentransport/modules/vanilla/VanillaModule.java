@@ -10,19 +10,16 @@ import xyz.brassgoggledcoders.opentransport.blocks.BlockContainerBase;
 import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
 
 @Module(mod = OpenTransport.MODID)
-public class VanillaModule extends ModuleBase
-{
+public class VanillaModule extends ModuleBase {
 	public static IBlockContainer ENDER_CHEST;
 
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		return "Vanilla";
 	}
 
 	@Override
-	public void preInit(FMLPreInitializationEvent event)
-	{
+	public void preInit(FMLPreInitializationEvent event) {
 		ENDER_CHEST = new BlockContainerBase(Blocks.ENDER_CHEST).setClickInteraction(new EnderChestInteraction());
 		BlockContainerRegistry.registerContainer(ENDER_CHEST);
 	}

@@ -8,11 +8,12 @@ import net.minecraft.util.math.BlockPos;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
-public class BlockActivationInteraction extends BaseInteraction{
+public class BlockActivationInteraction extends BaseInteraction {
 	@Override
 	public boolean interact(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack, IHolderEntity holderEntity,
 			IBlockContainer blockContainer) {
-		return blockContainer.getBlock().onBlockActivated(this.getWorldWrapper(holderEntity), BlockPos.ORIGIN,
-				blockContainer.getBlockState(), entityPlayer, hand, itemStack, EnumFacing.UP, 0F,0F,0F);
+		return blockContainer.getBlock()
+				.onBlockActivated(this.getWorldWrapper(holderEntity), BlockPos.ORIGIN, blockContainer.getBlockState(),
+						entityPlayer, hand, itemStack, EnumFacing.UP, 0F, 0F, 0F);
 	}
 }

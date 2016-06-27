@@ -7,8 +7,7 @@ import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import javax.annotation.Nonnull;
 import java.util.Map;
 
-public interface ITransportType<E extends Entity>
-{
+public interface ITransportType<E extends Entity> {
 	@Nonnull
 	String getName();
 

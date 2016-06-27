@@ -27,13 +27,11 @@ import xyz.brassgoggledcoders.opentransport.entities.boats.EntityBoatHolder;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class ItemBoatHolder extends ItemBoat
-{
+public class ItemBoatHolder extends ItemBoat {
 	IBlockContainer firstContainer;
 	IBlockContainer secondContainer;
 
-	public ItemBoatHolder(IBlockContainer firstContainer, IBlockContainer secondContainer)
-	{
+	public ItemBoatHolder(IBlockContainer firstContainer, IBlockContainer secondContainer) {
 		super(EntityBoat.Type.OAK);
 		this.setUnlocalizedName("boat.holder." + firstContainer.getUnlocalizedName());
 		this.firstContainer = firstContainer;
@@ -42,59 +40,56 @@ public class ItemBoatHolder extends ItemBoat
 
 	@Override
 	@Nonnull
-	public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack itemStack, World world,
-			EntityPlayer entityPlayer, EnumHand hand)
-	{
+	public ActionResult<ItemStack> onItemRightClick(
+			@Nonnull
+					ItemStack itemStack, World world, EntityPlayer entityPlayer, EnumHand hand) {
 		float f = 1.0F;
 		float f1 = entityPlayer.prevRotationPitch + (entityPlayer.rotationPitch - entityPlayer.prevRotationPitch) * f;
 		float f2 = entityPlayer.prevRotationYaw + (entityPlayer.rotationYaw - entityPlayer.prevRotationYaw) * f;
-		double d0 = entityPlayer.prevPosX + (entityPlayer.posX - entityPlayer.prevPosX) * (double)f;
-		double d1 = entityPlayer.prevPosY + (entityPlayer.posY - entityPlayer.prevPosY) * (double)f + (double)entityPlayer.getEyeHeight();
-		double d2 = entityPlayer.prevPosZ + (entityPlayer.posZ - entityPlayer.prevPosZ) * (double)f;
+		double d0 = entityPlayer.prevPosX + (entityPlayer.posX - entityPlayer.prevPosX) * (double) f;
+		double d1 =
+				entityPlayer.prevPosY + (entityPlayer.posY - entityPlayer.prevPosY) * (double) f + (double) entityPlayer
+						.getEyeHeight();
+		double d2 = entityPlayer.prevPosZ + (entityPlayer.posZ - entityPlayer.prevPosZ) * (double) f;
 		Vec3d vec3d = new Vec3d(d0, d1, d2);
-		float f3 = MathHelper.cos(-f2 * 0.017453292F - (float)Math.PI);
-		float f4 = MathHelper.sin(-f2 * 0.017453292F - (float)Math.PI);
+		float f3 = MathHelper.cos(-f2 * 0.017453292F - (float) Math.PI);
+		float f4 = MathHelper.sin(-f2 * 0.017453292F - (float) Math.PI);
 		float f5 = -MathHelper.cos(-f1 * 0.017453292F);
 		float f6 = MathHelper.sin(-f1 * 0.017453292F);
 		float f7 = f4 * f5;
 		float f8 = f3 * f5;
 		double d3 = 5.0D;
-		Vec3d vec3d1 = vec3d.addVector((double)f7 * d3, (double)f6 * d3, (double)f8 * d3);
+		Vec3d vec3d1 = vec3d.addVector((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
 		RayTraceResult raytraceresult = world.rayTraceBlocks(vec3d, vec3d1, true);
 
-		if (raytraceresult == null)
-		{
+		if(raytraceresult == null) {
 			return new ActionResult<>(EnumActionResult.PASS, itemStack);
 		}
-		else
-		{
+		else {
 			Vec3d vec3d2 = entityPlayer.getLook(f);
 			boolean flag = false;
-			List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(entityPlayer, entityPlayer.getEntityBoundingBox().addCoord(vec3d2.xCoord * d3, vec3d2.yCoord * d3, vec3d2.zCoord * d3).expandXyz(1.0D));
+			List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(entityPlayer,
+					entityPlayer.getEntityBoundingBox()
+							.addCoord(vec3d2.xCoord * d3, vec3d2.yCoord * d3, vec3d2.zCoord * d3).expandXyz(1.0D));
 
-			for (Entity entity: list)
-			{
-				if (entity.canBeCollidedWith())
-				{
-					AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().expandXyz((double)entity.getCollisionBorderSize());
+			for(Entity entity : list) {
+				if(entity.canBeCollidedWith()) {
+					AxisAlignedBB axisalignedbb =
+							entity.getEntityBoundingBox().expandXyz((double) entity.getCollisionBorderSize());
 
-					if (axisalignedbb.isVecInside(vec3d))
-					{
+					if(axisalignedbb.isVecInside(vec3d)) {
 						flag = true;
 					}
 				}
 			}
 
-			if (flag)
-			{
+			if(flag) {
 				return new ActionResult<>(EnumActionResult.PASS, itemStack);
 			}
-			else if (raytraceresult.typeOfHit != RayTraceResult.Type.BLOCK)
-			{
+			else if(raytraceresult.typeOfHit != RayTraceResult.Type.BLOCK) {
 				return new ActionResult<>(EnumActionResult.PASS, itemStack);
 			}
-			else
-			{
+			else {
 				Block block = world.getBlockState(raytraceresult.getBlockPos()).getBlock();
 				boolean isWater = block == Blocks.WATER || block == Blocks.FLOWING_WATER;
 				EntityBoatHolder entityBoatHolder = new EntityBoatHolder(world);
@@ -107,19 +102,16 @@ public class ItemBoatHolder extends ItemBoat
 				entityBoatHolder.setBlockContainer(this.getBlockContainer(itemStack));
 				entityBoatHolder.rotationYaw = entityPlayer.rotationYaw;
 
-				if (!world.getCollisionBoxes(entityBoatHolder, entityBoatHolder.getEntityBoundingBox().expandXyz(-0.1D)).isEmpty())
-				{
+				if(!world.getCollisionBoxes(entityBoatHolder, entityBoatHolder.getEntityBoundingBox().expandXyz(-0.1D))
+						.isEmpty()) {
 					return new ActionResult<>(EnumActionResult.FAIL, itemStack);
 				}
-				else
-				{
-					if (!world.isRemote)
-					{
+				else {
+					if(!world.isRemote) {
 						world.spawnEntityInWorld(entityBoatHolder);
 					}
 
-					if (!entityPlayer.capabilities.isCreativeMode)
-					{
+					if(!entityPlayer.capabilities.isCreativeMode) {
 						--itemStack.stackSize;
 					}
 
@@ -132,40 +124,34 @@ public class ItemBoatHolder extends ItemBoat
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list)
-	{
-		for (int i = 0; i < EntityBoat.Type.values().length; i++)
-		{
+	public void getSubItems(
+			@Nonnull
+					Item item, CreativeTabs tab, List<ItemStack> list) {
+		for(int i = 0; i < EntityBoat.Type.values().length; i++) {
 			ItemStack stack = new ItemStack(item, 1, i);
 			list.add(stack);
 		}
 
-		if(secondContainer != null)
-		{
-			for (int i = 0; i < EntityBoat.Type.values().length; i++)
-			{
+		if(secondContainer != null) {
+			for(int i = 0; i < EntityBoat.Type.values().length; i++) {
 				ItemStack stack = new ItemStack(item, 1, i);
 				list.add(stack);
 			}
 		}
 	}
 
-	public IBlockContainer getBlockContainer(ItemStack itemStack)
-	{
+	public IBlockContainer getBlockContainer(ItemStack itemStack) {
 		return itemStack.getItemDamage() < 8 ? firstContainer : secondContainer;
 	}
 
-	public void increaseStat(EntityPlayer entityPlayer)
-	{
+	public void increaseStat(EntityPlayer entityPlayer) {
 		StatBase stat = StatList.getObjectUseStats(this);
-		if(stat != null)
-		{
+		if(stat != null) {
 			entityPlayer.addStat(stat);
 		}
 	}
 
-	public EntityBoat.Type getType(ItemStack itemStack)
-	{
+	public EntityBoat.Type getType(ItemStack itemStack) {
 		return EntityBoat.Type.values()[itemStack.getItemDamage()];
 	}
 }

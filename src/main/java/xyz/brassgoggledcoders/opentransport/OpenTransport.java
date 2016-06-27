@@ -14,31 +14,30 @@ import xyz.brassgoggledcoders.opentransport.network.HolderUpdatePacket;
 import xyz.brassgoggledcoders.opentransport.proxies.CommonProxy;
 import xyz.brassgoggledcoders.opentransport.transport.TransportTypeHandler;
 
-@Mod(modid = OpenTransport.MODID, name = OpenTransport.MODNAME, version = OpenTransport.VERSION, dependencies = OpenTransport.DEPENDENCIES)
-public class OpenTransport extends BoilerplateModBase
-{
+@Mod(modid = OpenTransport.MODID,
+	 name = OpenTransport.MODNAME,
+	 version = OpenTransport.VERSION,
+	 dependencies = OpenTransport.DEPENDENCIES)
+public class OpenTransport extends BoilerplateModBase {
 	public static final String MODID = "opentransport";
 	public static final String MODNAME = "OpenTransport";
 	public static final String VERSION = "@VERSION@";
 	public static final String DEPENDENCIES = "after:IronChest;";
 
-	@Instance(OpenTransport.MODID)
-	public static OpenTransport INSTANCE;
+	@Instance(OpenTransport.MODID) public static OpenTransport INSTANCE;
 
 	@SidedProxy(clientSide = "xyz.brassgoggledcoders.opentransport.proxies.ClientProxy",
-			serverSide = "xyz.brassgoggledcoders.opentransport.proxies.CommonProxy")
-	public static CommonProxy PROXY;
+				serverSide = "xyz.brassgoggledcoders.opentransport.proxies.CommonProxy") public static CommonProxy
+			PROXY;
 
 	public static TransportTypeHandler TRANSPORTTYPEHANDLER;
 
-	public OpenTransport()
-	{
+	public OpenTransport() {
 		super(MODID, MODNAME, VERSION, CreativeTabs.MISC);
 	}
 
 	@EventHandler
-	public void preInit(FMLPreInitializationEvent event)
-	{
+	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
 	}
 
@@ -49,21 +48,18 @@ public class OpenTransport extends BoilerplateModBase
 	}
 
 	@EventHandler
-	public void init(FMLInitializationEvent event)
-	{
+	public void init(FMLInitializationEvent event) {
 		super.init(event);
 		this.getPacketHandler().registerPacket(HolderUpdatePacket.Handler.class, HolderUpdatePacket.class, Side.CLIENT);
 	}
 
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent event)
-	{
+	public void postInit(FMLPostInitializationEvent event) {
 		super.postInit(event);
 	}
 
 	@Override
-	public Object getInstance()
-	{
+	public Object getInstance() {
 		return INSTANCE;
 	}
 }

@@ -8,16 +8,13 @@ import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IInteraction;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
-public class EnderChestInteraction implements IInteraction
-{
+public class EnderChestInteraction implements IInteraction {
 	@Override
 	public boolean interact(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack, IHolderEntity holderEntity,
-			IBlockContainer blockContainer)
-	{
+			IBlockContainer blockContainer) {
 		InventoryEnderChest inventoryenderchest = entityPlayer.getInventoryEnderChest();
 
-		if (!entityPlayer.worldObj.isRemote && !entityPlayer.isSneaking())
-		{
+		if(!entityPlayer.worldObj.isRemote && !entityPlayer.isSneaking()) {
 			entityPlayer.displayGUIChest(inventoryenderchest);
 			return true;
 		}
