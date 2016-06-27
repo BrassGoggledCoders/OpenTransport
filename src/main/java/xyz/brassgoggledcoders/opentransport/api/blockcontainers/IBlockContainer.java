@@ -20,6 +20,8 @@ public interface IBlockContainer
 
 	IInteraction getClickInteraction();
 
+	IGuiInterface getInterface();
+
 	boolean onInteract(EntityPlayer entityPlayer);
 
 	void tick();

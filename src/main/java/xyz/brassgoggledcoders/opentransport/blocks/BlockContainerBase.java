@@ -9,6 +9,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IGuiInterface;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IInteraction;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
@@ -23,6 +24,7 @@ public class BlockContainerBase implements IBlockContainer
 	boolean hasTileEntity;
 	String unlocalizedName;
 	IInteraction clickInteraction;
+	IGuiInterface guiInterface;
 	RenderType renderType = RenderType.VMC;
 	IHolderEntity holderEntity;
 	boolean isDirty;
@@ -60,6 +62,12 @@ public class BlockContainerBase implements IBlockContainer
 		return this;
 	}
 
+	public BlockContainerBase setGuiInterface(IGuiInterface guiInterface)
+	{
+		this.guiInterface = guiInterface;
+		return this;
+	}
+
 	public BlockContainerBase setRenderType(RenderType renderType)
 	{
 		this.renderType = renderType;
@@ -94,6 +102,11 @@ public class BlockContainerBase implements IBlockContainer
 	public IInteraction getClickInteraction()
 	{
 		return clickInteraction;
+	}
+
+	@Override
+	public IGuiInterface getInterface() {
+		return guiInterface;
 	}
 
 	@Override
