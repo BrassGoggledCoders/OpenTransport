@@ -1,0 +1,14 @@
+{
+  "forge_marker": 1,
+  "defaults" : {
+    "transform": "forge:default-block",
+    "textures": {
+      "all": "opentransport:blocks/dock"
+    },
+    "model": "cube_all"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

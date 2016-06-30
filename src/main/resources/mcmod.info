@@ -1,0 +1,21 @@
+{
+  "modListVersion": 2,
+  "modList": [{
+    "modid": "opentransport",
+    "name": "OpenTransport",
+    "description": "Boats and Carts",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "http://minecraft.curseforge.com/projects/opentransport",
+    "updateUrl": "http://minecraft.curseforge.com/projects/opentransport",
+    "authorList": ["SkySom"],
+    "credits": "Created by the Brass Goggled Coders",
+    "logoFile": "assets/opentransport/logo.png",
+    "screenshots": [],
+    "parent": "",
+    "requiredMods": ["Forge", "boilerplate"],
+    "dependencies": [],
+    "dependants": [],
+    "useDependencyInformation": true
+  }]
+}
