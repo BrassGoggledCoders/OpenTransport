@@ -31,9 +31,7 @@ public class RenderHolderBoat extends RenderBoat {
 	}
 
 	@Override
-	public void doRender(
-			@Nonnull
-					EntityBoat entity, double x, double y, double z, float entityYaw, float partialTicks) {
+	public void doRender(@Nonnull EntityBoat entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		EntityBoatHolder boatHolder = (EntityBoatHolder) entity;
 		GlStateManager.pushMatrix();
 		this.setupTranslation(x, y, z);

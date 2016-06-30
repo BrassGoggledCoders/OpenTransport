@@ -1,13 +1,9 @@
-package xyz.brassgoggledcoders.opentransport.items.boats;
+package xyz.brassgoggledcoders.opentransport.modules.boats.navigation.items;
 
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBoat;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatList;
@@ -19,23 +15,15 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
-import xyz.brassgoggledcoders.opentransport.entities.boats.EntityBoatHolder;
+import xyz.brassgoggledcoders.boilerplate.items.ItemBase;
+import xyz.brassgoggledcoders.opentransport.modules.boats.navigation.entities.EntityBuoy;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class ItemBoatHolder extends ItemBoat {
-	IBlockContainer firstContainer;
-	IBlockContainer secondContainer;
-
-	public ItemBoatHolder(IBlockContainer firstContainer, IBlockContainer secondContainer) {
-		super(EntityBoat.Type.OAK);
-		this.setUnlocalizedName("boat.holder." + firstContainer.getUnlocalizedName());
-		this.firstContainer = firstContainer;
-		this.secondContainer = secondContainer;
+public class ItemBuoy extends ItemBase {
+	public ItemBuoy() {
+		super("buoy");
 	}
 
 	@Override
@@ -88,22 +76,19 @@ public class ItemBoatHolder extends ItemBoat {
 			else {
 				Block block = world.getBlockState(raytraceresult.getBlockPos()).getBlock();
 				boolean isWater = block == Blocks.WATER || block == Blocks.FLOWING_WATER;
-				EntityBoatHolder entityBoatHolder = new EntityBoatHolder(world);
+				EntityBuoy entityBuoy = new EntityBuoy(world);
 				double boatPosX = raytraceresult.hitVec.xCoord;
 				double boatPosY = isWater ? raytraceresult.hitVec.yCoord - 0.12D : raytraceresult.hitVec.yCoord;
 				double boatPosZ = raytraceresult.hitVec.zCoord;
-				entityBoatHolder.setPosition(boatPosX, boatPosY, boatPosZ);
-				entityBoatHolder.setBoatType(this.getType(itemStack));
-				entityBoatHolder.setItemBoat(itemStack);
-				entityBoatHolder.setBlockContainer(this.getBlockContainer(itemStack));
-				entityBoatHolder.rotationYaw = entityPlayer.rotationYaw;
+				entityBuoy.setPosition(boatPosX, boatPosY, boatPosZ);
+				entityBuoy.rotationYaw = 0;
 
-				if(!world.getCollisionBoxes(entityBoatHolder, entityBoatHolder.getEntityBoundingBox().expandXyz(-0.1D))
+				if(!world.getCollisionBoxes(entityBuoy, entityBuoy.getEntityBoundingBox().expandXyz(-0.1D))
 						.isEmpty()) {
 					return new ActionResult<>(EnumActionResult.FAIL, itemStack);
 				} else {
 					if(!world.isRemote) {
-						world.spawnEntityInWorld(entityBoatHolder);
+						world.spawnEntityInWorld(entityBuoy);
 					}
 
 					if(!entityPlayer.capabilities.isCreativeMode) {
@@ -117,26 +102,6 @@ public class ItemBoatHolder extends ItemBoat {
 		}
 	}
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
-		for(int i = 0; i < EntityBoat.Type.values().length; i++) {
-			ItemStack stack = new ItemStack(item, 1, i);
-			list.add(stack);
-		}
-
-		if(secondContainer != null) {
-			for(int i = 0; i < EntityBoat.Type.values().length; i++) {
-				ItemStack stack = new ItemStack(item, 1, i);
-				list.add(stack);
-			}
-		}
-	}
-
-	public IBlockContainer getBlockContainer(ItemStack itemStack) {
-		return itemStack.getItemDamage() < 8 ? firstContainer : secondContainer;
-	}
-
 	public void increaseStat(EntityPlayer entityPlayer) {
 		StatBase stat = StatList.getObjectUseStats(this);
 		if(stat != null) {
@@ -144,7 +109,4 @@ public class ItemBoatHolder extends ItemBoat {
 		}
 	}
 
-	public EntityBoat.Type getType(ItemStack itemStack) {
-		return EntityBoat.Type.values()[itemStack.getItemDamage()];
-	}
 }
