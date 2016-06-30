@@ -21,13 +21,14 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import xyz.brassgoggledcoders.boilerplate.client.models.IHasModel;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.entities.boats.EntityBoatHolder;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class ItemBoatHolder extends ItemBoat {
+public class ItemBoatHolder extends ItemBoat implements IHasModel {
 	IBlockContainer firstContainer;
 	IBlockContainer secondContainer;
 
@@ -146,5 +147,10 @@ public class ItemBoatHolder extends ItemBoat {
 
 	public EntityBoat.Type getType(ItemStack itemStack) {
 		return EntityBoat.Type.values()[itemStack.getItemDamage()];
+	}
+
+	@Override
+	public String[] getResourceLocations() {
+		return new String[] {"boat"};
 	}
 }

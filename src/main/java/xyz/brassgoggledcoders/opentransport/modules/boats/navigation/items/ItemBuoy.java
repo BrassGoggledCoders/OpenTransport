@@ -109,4 +109,9 @@ public class ItemBuoy extends ItemBase {
 		}
 	}
 
+	@Override
+	public String[] getResourceLocations() {
+		return new String[] {"boat"};
+	}
+
 }
