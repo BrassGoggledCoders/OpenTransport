@@ -16,6 +16,10 @@ public class TileEntityBuoy extends TileEntityBase {
 	private boolean bottom;
 	private INavPoint navPoint;
 
+	public TileEntityBuoy() {
+		this(true);
+	}
+
 	public TileEntityBuoy(boolean bottom) {
 		this.setBottom(bottom);
 		if(bottom) {
