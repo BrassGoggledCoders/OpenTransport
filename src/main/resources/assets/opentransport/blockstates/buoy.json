@@ -1,0 +1,13 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "opentransport:buoy"
+  },
+  "variants": {
+    "normal": [{}],
+    "bottom": {
+      "true": {},
+      "false" : {}
+    }
+  }
+}

@@ -3,14 +3,18 @@ package xyz.brassgoggledcoders.opentransport.proxies;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.world.World;
+import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.entities.boats.EntityBoatHolder;
-import xyz.brassgoggledcoders.opentransport.modules.boats.navigation.entities.EntityBuoy;
+import xyz.brassgoggledcoders.opentransport.modules.boats.navigation.NavigationModule;
 import xyz.brassgoggledcoders.opentransport.modules.boats.navigation.renderers.RenderBuoy;
+import xyz.brassgoggledcoders.opentransport.modules.boats.navigation.tiles.TileEntityBuoy;
 import xyz.brassgoggledcoders.opentransport.renderers.boats.RenderHolderBoat;
 import xyz.brassgoggledcoders.opentransport.wrappers.player.EntityPlayerSPWrapper;
 
@@ -41,6 +45,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerEntityRenders() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityBoatHolder.class, RenderHolderBoat.Factory.INSTANCE);
-		RenderingRegistry.registerEntityRenderingHandler(EntityBuoy.class, RenderBuoy.Factory.INSTANCE);
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBuoy.class, new RenderBuoy());
+		ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(NavigationModule.BLOCK_BUOY), 0, TileEntityBuoy.class);
 	}
 }
