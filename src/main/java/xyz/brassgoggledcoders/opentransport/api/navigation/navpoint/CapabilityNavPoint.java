@@ -33,8 +33,6 @@ public class CapabilityNavPoint {
 
 				instance.setNavPosition(BlockPos.fromLong(nbtTagCompound.getLong("NAV_POSITION")));
 			}
-		}, () -> {
-			return new NavPointHandler(BlockPos.ORIGIN);
-		});
+		}, NavPointHandler::new);
 	}
 }

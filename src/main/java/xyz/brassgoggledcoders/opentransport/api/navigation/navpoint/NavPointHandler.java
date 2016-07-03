@@ -2,20 +2,23 @@ package xyz.brassgoggledcoders.opentransport.api.navigation.navpoint;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class NavPointHandler implements INavPoint, INBTSerializable<NBTTagCompound> {
+public class NavPointHandler implements INavPoint {
 	private BlockPos navPosition;
 	private String navName;
+
+	public NavPointHandler() {
+		this(BlockPos.ORIGIN);
+	}
 
 	public NavPointHandler(@Nonnull BlockPos navPosition) {
 		this(null, navPosition);
 	}
 
-	public NavPointHandler(@Nullable String navName,@Nonnull BlockPos navPosition) {
+	public NavPointHandler(@Nullable String navName, @Nonnull BlockPos navPosition) {
 		this.navName = navName;
 		this.navPosition = navPosition;
 	}
