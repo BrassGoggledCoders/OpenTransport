@@ -10,7 +10,7 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 
 public class CapabilityNavPoint {
 	@CapabilityInject(INavPoint.class)
-	public static Capability<INavPoint> NAV_POINT_CAPABILITY;
+	public static Capability<INavPoint> NAV_POINT_CAP;
 
 	public static void register() {
 		CapabilityManager.INSTANCE.register(INavPoint.class, new Capability.IStorage<INavPoint>() {
