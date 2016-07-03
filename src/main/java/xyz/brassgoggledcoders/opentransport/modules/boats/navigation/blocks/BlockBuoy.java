@@ -41,11 +41,9 @@ public class BlockBuoy extends BlockTEBase {
 
 	@Override
 	public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state) {
-		BlockPos secondBlockPos = pos;
+		BlockPos secondBlockPos = pos.down();
 		if(state.getValue(BOTTOM)) {
-			secondBlockPos = secondBlockPos.up();
-		} else {
-			secondBlockPos = secondBlockPos.down();
+			secondBlockPos = pos.up();
 		}
 		world.setBlockState(secondBlockPos, Blocks.AIR.getDefaultState());
 	}
