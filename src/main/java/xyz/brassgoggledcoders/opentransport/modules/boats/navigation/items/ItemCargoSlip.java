@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -41,6 +42,19 @@ public class ItemCargoSlip extends ItemBase {
 			}
 		}
 		return EnumActionResult.PASS;
+	}
+
+	@Override
+	@Nonnull
+	public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack itemStack, World world, EntityPlayer player,
+			EnumHand hand)
+	{
+		if(player.isSneaking() && itemStack.hasCapability(CapabilityCargoSlip.CARGO_SLIP_CAP, EnumFacing.UP)) {
+			ICargoSlip cargoSlip = itemStack.getCapability(CapabilityCargoSlip.CARGO_SLIP_CAP, EnumFacing.UP);
+			cargoSlip.removeLastNavPoint();
+			return new ActionResult<>(EnumActionResult.SUCCESS, itemStack);
+		}
+		return new ActionResult<>(EnumActionResult.PASS, itemStack);
 	}
 
 	@Override

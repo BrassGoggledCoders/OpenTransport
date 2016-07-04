@@ -4,6 +4,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.boilerplate.module.Module;
 import xyz.brassgoggledcoders.boilerplate.module.ModuleBase;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
+import xyz.brassgoggledcoders.opentransport.api.navigation.cargoship.CapabilityCargoShip;
 import xyz.brassgoggledcoders.opentransport.api.navigation.cargoslip.CapabilityCargoSlip;
 import xyz.brassgoggledcoders.opentransport.api.navigation.navpoint.CapabilityNavPoint;
 import xyz.brassgoggledcoders.opentransport.modules.boats.navigation.blocks.BlockBuoy;
@@ -25,6 +26,7 @@ public class NavigationModule extends ModuleBase {
 	public void preInit(FMLPreInitializationEvent event) {
 		CapabilityNavPoint.register();
 		CapabilityCargoSlip.register();
+		CapabilityCargoShip.register();
 		this.getBlockRegistry().registerBlock(BLOCK_DOCK);
 		this.getBlockRegistry().registerBlock(BLOCK_BUOY);
 		this.getItemRegistry().registerItem(ITEM_CARGO_SLIP);

@@ -19,7 +19,9 @@ public class CargoSlipHandler implements ICargoSlip {
 
 	@Override
 	public void addNavPoint(@Nonnull INavPoint navPoint) {
-		 navPoints.put(navPoints.size(), navPoint);
+		if(!navPoints.get(navPoints.size()).equals(navPoint)) {
+			navPoints.put(navPoints.size(), navPoint);
+		}
 	}
 
 	@Override
