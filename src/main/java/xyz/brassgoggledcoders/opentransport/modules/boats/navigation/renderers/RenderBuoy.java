@@ -7,7 +7,7 @@ import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.modules.boats.navigation.models.ModelBuoy;
 import xyz.brassgoggledcoders.opentransport.modules.boats.navigation.tiles.TileEntityBuoy;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class RenderBuoy extends TileEntitySpecialRenderer<TileEntityBuoy> {
 	private ResourceLocation textureBuoy;
@@ -20,9 +20,9 @@ public class RenderBuoy extends TileEntitySpecialRenderer<TileEntityBuoy> {
 	}
 
 	@Override
-	public void renderTileEntityAt(@Nonnull TileEntityBuoy te, double x, double y, double z, float partialTicks,
+	public void renderTileEntityAt(@Nullable TileEntityBuoy te, double x, double y, double z, float partialTicks,
 			int destroyStage) {
-		if(te.isBottom()) {
+		if(te == null || te.isBottom()) {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(x + .5, y + 1.45, z +.5);
 			GlStateManager.rotate(180, 1, 0, 0);

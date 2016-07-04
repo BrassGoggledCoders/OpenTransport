@@ -39,12 +39,12 @@ public class OpenTransport extends BoilerplateModBase {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
+		PROXY.registerEntityRenders();
 	}
 
 	@Override
 	public void modPreInit(FMLPreInitializationEvent event) {
 		TRANSPORTTYPEHANDLER = new TransportTypeHandler(event);
-		PROXY.registerEntityRenders();
 	}
 
 	@EventHandler
