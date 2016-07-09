@@ -24,11 +24,12 @@ public class OpenTransport extends BoilerplateModBase {
 	public static final String VERSION = "@VERSION@";
 	public static final String DEPENDENCIES = "after:IronChest;";
 
-	@Instance(OpenTransport.MODID) public static OpenTransport INSTANCE;
+	@Instance(OpenTransport.MODID)
+	public static OpenTransport INSTANCE;
 
 	@SidedProxy(clientSide = "xyz.brassgoggledcoders.opentransport.proxies.ClientProxy",
-				serverSide = "xyz.brassgoggledcoders.opentransport.proxies.CommonProxy") public static CommonProxy
-			PROXY;
+				serverSide = "xyz.brassgoggledcoders.opentransport.proxies.CommonProxy")
+	public static CommonProxy PROXY;
 
 	public static TransportTypeHandler TRANSPORTTYPEHANDLER;
 
