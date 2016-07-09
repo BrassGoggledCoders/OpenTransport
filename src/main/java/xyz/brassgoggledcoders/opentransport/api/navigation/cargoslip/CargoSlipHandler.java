@@ -13,6 +13,7 @@ import java.util.Map;
 public class CargoSlipHandler implements ICargoSlip {
 	private Map<Integer, INavPoint> navPoints;
 	private String slipName;
+
 	public CargoSlipHandler() {
 		navPoints = new HashMap<>();
 	}
@@ -60,7 +61,7 @@ public class CargoSlipHandler implements ICargoSlip {
 		Map<Integer, INavPoint> navPoints = this.getAllNavPoints();
 		if(navPoints.size() > 0) {
 			NBTTagList navPointsListNBT = new NBTTagList();
-			for(Map.Entry<Integer, INavPoint> navPoint: navPoints.entrySet()) {
+			for(Map.Entry<Integer, INavPoint> navPoint : navPoints.entrySet()) {
 				navPointsListNBT.set(navPoint.getKey(), navPoint.getValue().serializeNBT());
 			}
 			nbtTagCompound.setTag("NAV_POINTS", navPointsListNBT);
@@ -79,7 +80,7 @@ public class CargoSlipHandler implements ICargoSlip {
 			NBTTagList navPointsNBT = nbtTagCompound.getTagList("NAV_POINTS", 9);
 			for(int i = 0; i < navPointsNBT.tagCount(); i++) {
 				INavPoint navPoint = new NavPointHandler();
-				navPoint.deserializeNBT((NBTTagCompound)navPointsNBT.get(i));
+				navPoint.deserializeNBT((NBTTagCompound) navPointsNBT.get(i));
 				navPoints.put(i, navPoint);
 			}
 			this.setNavPoints(navPoints);

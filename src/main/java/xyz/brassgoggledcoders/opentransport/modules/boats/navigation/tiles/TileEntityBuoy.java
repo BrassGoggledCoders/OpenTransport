@@ -56,7 +56,7 @@ public class TileEntityBuoy extends TileEntityBase {
 	public TileEntityBuoy getOtherTile() {
 		BlockPos otherBuoyPos = this.isBottom() ? this.getPos().up() : this.getPos().down();
 		TileEntity tileEntity = this.getWorld().getTileEntity(otherBuoyPos);
-		return tileEntity instanceof TileEntityBuoy ? (TileEntityBuoy)tileEntity : null;
+		return tileEntity instanceof TileEntityBuoy ? (TileEntityBuoy) tileEntity : null;
 	}
 
 	@Override

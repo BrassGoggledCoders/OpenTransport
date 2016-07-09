@@ -24,7 +24,7 @@ public class RenderBuoy extends TileEntitySpecialRenderer<TileEntityBuoy> {
 			int destroyStage) {
 		if(te == null || te.isBottom()) {
 			GlStateManager.pushMatrix();
-			GlStateManager.translate(x + .5, y + 1.45, z +.5);
+			GlStateManager.translate(x + .5, y + 1.45, z + .5);
 			GlStateManager.rotate(180, 1, 0, 0);
 			this.bindTexture(textureBuoy);
 

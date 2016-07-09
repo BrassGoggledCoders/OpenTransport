@@ -32,7 +32,7 @@ public class BlockBuoy extends BlockTEBase {
 	}
 
 	@Override
-	public boolean canPlaceBlockAt(World world ,@Nonnull BlockPos blockPos) {
+	public boolean canPlaceBlockAt(World world, @Nonnull BlockPos blockPos) {
 		boolean canPlaceBottom = world.getBlockState(blockPos).getBlock().isReplaceable(world, blockPos);
 		blockPos = blockPos.up();
 		boolean canPlaceTop = world.getBlockState(blockPos).getBlock().isReplaceable(world, blockPos);
@@ -49,13 +49,13 @@ public class BlockBuoy extends BlockTEBase {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
-	{
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer,
+			ItemStack stack) {
 		world.setBlockState(pos.up(), this.getDefaultState().withProperty(BOTTOM, false));
 	}
 
 	@Override
-	public boolean isSideSolid(IBlockState blockState, @Nonnull IBlockAccess blockAccess,@Nonnull BlockPos blockPos,
+	public boolean isSideSolid(IBlockState blockState, @Nonnull IBlockAccess blockAccess, @Nonnull BlockPos blockPos,
 			EnumFacing facing) {
 		return false;
 	}
@@ -94,7 +94,7 @@ public class BlockBuoy extends BlockTEBase {
 
 	@Override
 	@Nonnull
-	public TileEntity createTileEntity(@Nonnull World world,@Nonnull IBlockState blockState) {
+	public TileEntity createTileEntity(@Nonnull World world, @Nonnull IBlockState blockState) {
 		return new TileEntityBuoy(blockState.getValue(BOTTOM));
 	}
 

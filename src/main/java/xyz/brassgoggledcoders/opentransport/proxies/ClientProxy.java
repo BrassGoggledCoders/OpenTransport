@@ -46,6 +46,7 @@ public class ClientProxy extends CommonProxy {
 	public void registerEntityRenders() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityBoatHolder.class, RenderHolderBoat.Factory.INSTANCE);
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBuoy.class, new RenderBuoy());
-		ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(NavigationModule.BLOCK_BUOY), 0, TileEntityBuoy.class);
+		ForgeHooksClient
+				.registerTESRItemStack(Item.getItemFromBlock(NavigationModule.BLOCK_BUOY), 0, TileEntityBuoy.class);
 	}
 }

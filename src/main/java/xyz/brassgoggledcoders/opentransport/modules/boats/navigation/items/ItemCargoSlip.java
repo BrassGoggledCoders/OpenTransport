@@ -30,8 +30,7 @@ public class ItemCargoSlip extends ItemBase {
 	@Override
 	@Nonnull
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand,
-			EnumFacing facing, float hitX, float hitY, float hitZ)
-	{
+			EnumFacing facing, float hitX, float hitY, float hitZ) {
 		TileEntity tileEntity = world.getTileEntity(pos);
 		if(tileEntity != null && tileEntity.hasCapability(CapabilityNavPoint.NAV_POINT_CAP, facing)) {
 			if(stack.hasCapability(CapabilityCargoSlip.CARGO_SLIP_CAP, facing)) {
@@ -47,8 +46,7 @@ public class ItemCargoSlip extends ItemBase {
 	@Override
 	@Nonnull
 	public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack itemStack, World world, EntityPlayer player,
-			EnumHand hand)
-	{
+			EnumHand hand) {
 		if(player.isSneaking() && itemStack.hasCapability(CapabilityCargoSlip.CARGO_SLIP_CAP, EnumFacing.UP)) {
 			ICargoSlip cargoSlip = itemStack.getCapability(CapabilityCargoSlip.CARGO_SLIP_CAP, EnumFacing.UP);
 			cargoSlip.removeLastNavPoint();
@@ -59,8 +57,7 @@ public class ItemCargoSlip extends ItemBase {
 
 	@Override
 	@Nonnull
-	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt)
-	{
+	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
 		return new CapProviderCargoSlip(nbt);
 	}
 

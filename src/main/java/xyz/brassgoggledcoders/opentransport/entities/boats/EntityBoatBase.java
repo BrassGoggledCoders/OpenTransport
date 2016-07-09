@@ -26,11 +26,7 @@ public class EntityBoatBase extends EntityBoat {
 	}
 
 	@Override
-	public boolean processInitialInteract(
-			@Nonnull
-					EntityPlayer player,
-			@Nullable
-					ItemStack stack, EnumHand hand) {
+	public boolean processInitialInteract(@Nonnull EntityPlayer player, @Nullable ItemStack stack, EnumHand hand) {
 		return true;
 	}
 

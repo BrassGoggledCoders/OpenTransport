@@ -41,35 +41,8 @@ public class BlockContainerBase implements IBlockContainer {
 		this.unlocalizedName = block.getUnlocalizedName().replaceFirst("tile.", "");
 	}
 
-	public BlockContainerBase setBlock(Block block) {
-		this.block = block;
-		this.blockState = block.getDefaultState();
-		return this;
-	}
-
-	public BlockContainerBase setBlockState(IBlockState blockState) {
-		this.block = blockState.getBlock();
-		this.blockState = blockState;
-		return this;
-	}
-
-	public BlockContainerBase setUnlocalizedName(String name) {
-		this.unlocalizedName = name.replaceFirst("tile.", "");
-		return this;
-	}
-
-	public BlockContainerBase setClickInteraction(IInteraction interaction) {
-		this.clickInteraction = interaction;
-		return this;
-	}
-
 	public BlockContainerBase setGuiInterface(IGuiInterface guiInterface) {
 		this.guiInterface = guiInterface;
-		return this;
-	}
-
-	public BlockContainerBase setRenderType(RenderType renderType) {
-		this.renderType = renderType;
 		return this;
 	}
 
@@ -79,10 +52,22 @@ public class BlockContainerBase implements IBlockContainer {
 		return block;
 	}
 
+	public BlockContainerBase setBlock(Block block) {
+		this.block = block;
+		this.blockState = block.getDefaultState();
+		return this;
+	}
+
 	@Override
 	@Nonnull
 	public IBlockState getBlockState() {
 		return blockState;
+	}
+
+	public BlockContainerBase setBlockState(IBlockState blockState) {
+		this.block = blockState.getBlock();
+		this.blockState = blockState;
+		return this;
 	}
 
 	@Override
@@ -91,16 +76,31 @@ public class BlockContainerBase implements IBlockContainer {
 		return unlocalizedName;
 	}
 
+	public BlockContainerBase setUnlocalizedName(String name) {
+		this.unlocalizedName = name.replaceFirst("tile.", "");
+		return this;
+	}
+
 	@Override
 	@Nonnull
 	public RenderType getRenderType() {
 		return renderType;
 	}
 
+	public BlockContainerBase setRenderType(RenderType renderType) {
+		this.renderType = renderType;
+		return this;
+	}
+
 	@Override
 	@Nonnull
 	public IInteraction getClickInteraction() {
 		return clickInteraction;
+	}
+
+	public BlockContainerBase setClickInteraction(IInteraction interaction) {
+		this.clickInteraction = interaction;
+		return this;
 	}
 
 	@Override

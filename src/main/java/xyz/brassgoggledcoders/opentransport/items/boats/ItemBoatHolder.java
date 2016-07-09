@@ -41,7 +41,8 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel {
 
 	@Override
 	@Nonnull
-	public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack itemStack, World world, EntityPlayer entityPlayer, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack itemStack, World world,
+			EntityPlayer entityPlayer, EnumHand hand) {
 		float f = 1.0F;
 		float f1 = entityPlayer.prevRotationPitch + (entityPlayer.rotationPitch - entityPlayer.prevRotationPitch) * f;
 		float f2 = entityPlayer.prevRotationYaw + (entityPlayer.rotationYaw - entityPlayer.prevRotationYaw) * f;
@@ -82,11 +83,9 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel {
 
 			if(flag) {
 				return new ActionResult<>(EnumActionResult.PASS, itemStack);
-			}
-			else if(raytraceresult.typeOfHit != RayTraceResult.Type.BLOCK) {
+			} else if(raytraceresult.typeOfHit != RayTraceResult.Type.BLOCK) {
 				return new ActionResult<>(EnumActionResult.PASS, itemStack);
-			}
-			else {
+			} else {
 				Block block = world.getBlockState(raytraceresult.getBlockPos()).getBlock();
 				boolean isWater = block == Blocks.WATER || block == Blocks.FLOWING_WATER;
 				EntityBoatHolder entityBoatHolder = new EntityBoatHolder(world);

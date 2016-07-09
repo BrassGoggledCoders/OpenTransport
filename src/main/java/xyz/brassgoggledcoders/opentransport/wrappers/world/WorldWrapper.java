@@ -49,25 +49,17 @@ public class WorldWrapper extends World {
 
 	//Enderchest use this for open and close
 	@Override
-	public void addBlockEvent(
-			@Nonnull
-					BlockPos blockPos, Block block, int metadata, int p_14745) {
+	public void addBlockEvent(@Nonnull BlockPos blockPos, Block block, int metadata, int p_14745) {
 		//TODO Fix this some day so shit actually opens
 	}
 
 	@Override
-	public boolean isSideSolid(
-			@Nonnull
-					BlockPos blockPos,
-			@Nonnull
-					EnumFacing blockSide) {
+	public boolean isSideSolid(@Nonnull BlockPos blockPos, @Nonnull EnumFacing blockSide) {
 		return false;
 	}
 
 	@Override
-	public TileEntity getTileEntity(
-			@Nonnull
-					BlockPos blockPos) {
+	public TileEntity getTileEntity(@Nonnull BlockPos blockPos) {
 		if(blockPos.equals(originPos)) {
 			return this.getBlockContainer().getTileEntity();
 		}
@@ -82,9 +74,7 @@ public class WorldWrapper extends World {
 	//Most Blocks use this.
 	@Override
 	@Nonnull
-	public IBlockState getBlockState(
-			@Nonnull
-					BlockPos blockPos) {
+	public IBlockState getBlockState(@Nonnull BlockPos blockPos) {
 		if(blockPos.equals(originPos)) {
 			return this.getBlockContainer().getBlockState();
 		}
@@ -94,9 +84,7 @@ public class WorldWrapper extends World {
 	//Enderchest Particles
 	@Override
 	public void spawnParticle(EnumParticleTypes enumParticleType, double posX, double posY, double posZ, double velX,
-			double velY, double velZ,
-			@Nonnull
-					int... what) {
+			double velY, double velZ, @Nonnull int... what) {
 		int intCartX = (int) Math.floor(this.getPosX());
 		int intCartY = (int) Math.floor(this.getPosY());
 		int intCartZ = (int) Math.floor(this.getPosZ());
@@ -112,11 +100,8 @@ public class WorldWrapper extends World {
 	//TODO: Actually get the right AABB
 	@Override
 	@Nonnull
-	public <T extends Entity> List<T> getEntitiesWithinAABB(
-			@Nonnull
-					Class<? extends T> entityClass,
-			@Nonnull
-					AxisAlignedBB axisAlignedBB) {
+	public <T extends Entity> List<T> getEntitiesWithinAABB(@Nonnull Class<? extends T> entityClass,
+			@Nonnull AxisAlignedBB axisAlignedBB) {
 		return this.getWorld().getEntitiesWithinAABB(entityClass, axisAlignedBB);
 	}
 
@@ -129,13 +114,8 @@ public class WorldWrapper extends World {
 
 	//Shia Labouef tiny potato screams "Just do it"
 	@Override
-	public void playSound(
-			@Nullable
-					EntityPlayer player, BlockPos pos,
-			@Nonnull
-					SoundEvent sound,
-			@Nonnull
-					SoundCategory category, float volume, float pitch) {
+	public void playSound(@Nullable EntityPlayer player, BlockPos pos, @Nonnull SoundEvent sound,
+			@Nonnull SoundCategory category, float volume, float pitch) {
 		this.getWorld().playSound(player, this.getEntity().getPosition(), sound, category, volume, pitch);
 	}
 
@@ -146,11 +126,7 @@ public class WorldWrapper extends World {
 	}
 
 	@Override
-	public void markChunkDirty(
-			@Nonnull
-					BlockPos pos,
-			@Nonnull
-					TileEntity tileEntity) {
+	public void markChunkDirty(@Nonnull BlockPos pos, @Nonnull TileEntity tileEntity) {
 		this.getBlockContainer().markDirty();
 	}
 

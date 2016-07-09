@@ -20,7 +20,7 @@ public class CapabilityCargoSlip {
 
 			@Override
 			public void readNBT(Capability<ICargoSlip> capability, ICargoSlip instance, EnumFacing side, NBTBase nbt) {
-				NBTTagCompound nbtTagCompound = (NBTTagCompound)nbt;
+				NBTTagCompound nbtTagCompound = (NBTTagCompound) nbt;
 				instance.deserializeNBT(nbtTagCompound);
 			}
 		}, CargoSlipHandler::new);

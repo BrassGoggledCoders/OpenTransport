@@ -19,9 +19,7 @@ public class ContainerIronChestEntity extends ContainerIronChest {
 		this.holderEntity = holderEntity;
 	}
 
-	public boolean canInteractWith(
-			@Nonnull
-					EntityPlayer entityPlayer) {
+	public boolean canInteractWith(@Nonnull EntityPlayer entityPlayer) {
 		return holderEntity.isUseableByPlayer(entityPlayer);
 	}
 

@@ -20,7 +20,7 @@ public class CapabilityNavPoint {
 
 			@Override
 			public void readNBT(Capability<INavPoint> capability, INavPoint instance, EnumFacing side, NBTBase nbt) {
-				NBTTagCompound nbtTagCompound = (NBTTagCompound)nbt;
+				NBTTagCompound nbtTagCompound = (NBTTagCompound) nbt;
 				instance.deserializeNBT(nbtTagCompound);
 			}
 		}, NavPointHandler::new);
