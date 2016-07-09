@@ -1,11 +1,13 @@
 package xyz.brassgoggledcoders.opentransport.items.boats;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBoat;
 import net.minecraft.item.ItemStack;
@@ -21,28 +23,27 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import xyz.brassgoggledcoders.boilerplate.client.models.IHasModel;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.entities.boats.EntityBoatHolder;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class ItemBoatHolder extends ItemBoat {
+public class ItemBoatHolder extends ItemBoat implements IHasModel {
 	IBlockContainer firstContainer;
-	IBlockContainer secondContainer;
 
-	public ItemBoatHolder(IBlockContainer firstContainer, IBlockContainer secondContainer) {
+	public ItemBoatHolder(IBlockContainer firstContainer, CreativeTabs tab) {
 		super(EntityBoat.Type.OAK);
 		this.setUnlocalizedName("boat.holder." + firstContainer.getUnlocalizedName());
+		this.setCreativeTab(tab);
 		this.firstContainer = firstContainer;
-		this.secondContainer = secondContainer;
 	}
 
 	@Override
 	@Nonnull
-	public ActionResult<ItemStack> onItemRightClick(
-			@Nonnull
-					ItemStack itemStack, World world, EntityPlayer entityPlayer, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack itemStack, World world,
+			EntityPlayer entityPlayer, EnumHand hand) {
 		float f = 1.0F;
 		float f1 = entityPlayer.prevRotationPitch + (entityPlayer.rotationPitch - entityPlayer.prevRotationPitch) * f;
 		float f2 = entityPlayer.prevRotationYaw + (entityPlayer.rotationYaw - entityPlayer.prevRotationYaw) * f;
@@ -64,8 +65,7 @@ public class ItemBoatHolder extends ItemBoat {
 
 		if(raytraceresult == null) {
 			return new ActionResult<>(EnumActionResult.PASS, itemStack);
-		}
-		else {
+		} else {
 			Vec3d vec3d2 = entityPlayer.getLook(f);
 			boolean flag = false;
 			List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(entityPlayer,
@@ -85,11 +85,9 @@ public class ItemBoatHolder extends ItemBoat {
 
 			if(flag) {
 				return new ActionResult<>(EnumActionResult.PASS, itemStack);
-			}
-			else if(raytraceresult.typeOfHit != RayTraceResult.Type.BLOCK) {
+			} else if(raytraceresult.typeOfHit != RayTraceResult.Type.BLOCK) {
 				return new ActionResult<>(EnumActionResult.PASS, itemStack);
-			}
-			else {
+			} else {
 				Block block = world.getBlockState(raytraceresult.getBlockPos()).getBlock();
 				boolean isWater = block == Blocks.WATER || block == Blocks.FLOWING_WATER;
 				EntityBoatHolder entityBoatHolder = new EntityBoatHolder(world);
@@ -105,8 +103,7 @@ public class ItemBoatHolder extends ItemBoat {
 				if(!world.getCollisionBoxes(entityBoatHolder, entityBoatHolder.getEntityBoundingBox().expandXyz(-0.1D))
 						.isEmpty()) {
 					return new ActionResult<>(EnumActionResult.FAIL, itemStack);
-				}
-				else {
+				} else {
 					if(!world.isRemote) {
 						world.spawnEntityInWorld(entityBoatHolder);
 					}
@@ -123,25 +120,38 @@ public class ItemBoatHolder extends ItemBoat {
 	}
 
 	@Override
+	@Nonnull
+	public String getUnlocalizedName(ItemStack itemStack) {
+		return this.getUnlocalizedName() + "." + this.getType(itemStack).toString().toLowerCase();
+	}
+
+	@Override
+	@Nonnull
+	public String getItemStackDisplayName(@Nonnull ItemStack itemStack) {
+		String displayName = "";
+
+		displayName += this.getBoatItem(itemStack).getItemStackDisplayName(itemStack);
+
+		Item blockItem = Item.getItemFromBlock(this.firstContainer.getBlock());
+		if(blockItem != null) {
+			displayName += " " + I18n.format("separator.with") + " ";
+			displayName += blockItem.getItemStackDisplayName(itemStack);
+		}
+
+		return displayName;
+	}
+
+	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(
-			@Nonnull
-					Item item, CreativeTabs tab, List<ItemStack> list) {
+	public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
 		for(int i = 0; i < EntityBoat.Type.values().length; i++) {
 			ItemStack stack = new ItemStack(item, 1, i);
 			list.add(stack);
 		}
-
-		if(secondContainer != null) {
-			for(int i = 0; i < EntityBoat.Type.values().length; i++) {
-				ItemStack stack = new ItemStack(item, 1, i);
-				list.add(stack);
-			}
-		}
 	}
 
 	public IBlockContainer getBlockContainer(ItemStack itemStack) {
-		return itemStack.getItemDamage() < 8 ? firstContainer : secondContainer;
+		return firstContainer;
 	}
 
 	public void increaseStat(EntityPlayer entityPlayer) {
@@ -153,5 +163,33 @@ public class ItemBoatHolder extends ItemBoat {
 
 	public EntityBoat.Type getType(ItemStack itemStack) {
 		return EntityBoat.Type.values()[itemStack.getItemDamage()];
+	}
+
+	public Item getBoatItem(ItemStack itemStack) {
+		EntityBoat.Type type = this.getType(itemStack);
+		Item itemBoat = Items.BOAT;
+		switch(type) {
+			case ACACIA:
+				itemBoat = Items.ACACIA_BOAT;
+				break;
+			case BIRCH:
+				itemBoat = Items.BIRCH_BOAT;
+				break;
+			case DARK_OAK:
+				itemBoat = Items.DARK_OAK_BOAT;
+				break;
+			case JUNGLE:
+				itemBoat = Items.JUNGLE_BOAT;
+				break;
+			case SPRUCE:
+				itemBoat = Items.SPRUCE_BOAT;
+				break;
+		}
+		return itemBoat;
+	}
+
+	@Override
+	public String[] getResourceLocations() {
+		return new String[] {"boat"};
 	}
 }

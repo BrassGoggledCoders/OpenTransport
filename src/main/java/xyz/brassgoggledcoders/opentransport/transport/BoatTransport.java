@@ -13,7 +13,6 @@ import xyz.brassgoggledcoders.opentransport.entities.boats.EntityBoatHolder;
 import xyz.brassgoggledcoders.opentransport.items.boats.ItemBoatHolder;
 
 import javax.annotation.Nonnull;
-import java.util.Iterator;
 import java.util.Map;
 
 @TransportType
@@ -41,17 +40,10 @@ public class BoatTransport implements ITransportType<EntityBoat> {
 
 	@Override
 	public void registerItems(Map<String, IBlockContainer> blockContainers) {
-		Iterator<Map.Entry<String, IBlockContainer>> containerIterable = blockContainers.entrySet().iterator();
-		while(containerIterable.hasNext()) {
-			IBlockContainer firstContainer = containerIterable.next().getValue();
-			IBlockContainer secondContainer = null;
-			if(containerIterable.hasNext()) {
-				secondContainer = containerIterable.next().getValue();
-			}
-			ItemBoatHolder holder = new ItemBoatHolder(firstContainer, secondContainer);
-			holder.setCreativeTab(this.getCreativeTab());
+		blockContainers.forEach((name, blockContainer) -> {
+			ItemBoatHolder holder = new ItemBoatHolder(blockContainer, this.getCreativeTab());
 			OpenTransport.INSTANCE.getRegistryHolder().getItemRegistry().registerItem(holder);
-		}
+		});
 	}
 
 	@Override
@@ -71,7 +63,7 @@ public class BoatTransport implements ITransportType<EntityBoat> {
 
 	private static class BoatCreativeTab extends BaseCreativeTab {
 		public BoatCreativeTab() {
-			super("Boats");
+			super("boats");
 		}
 
 		@Override
