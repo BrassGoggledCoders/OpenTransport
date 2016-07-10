@@ -24,13 +24,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.brassgoggledcoders.boilerplate.client.models.IHasModel;
+import xyz.brassgoggledcoders.boilerplate.client.renderers.custom.IHasItemRenderHandler;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.entities.boats.EntityBoatHolder;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class ItemBoatHolder extends ItemBoat implements IHasModel {
+public class ItemBoatHolder extends ItemBoat implements IHasModel, IHasItemRenderHandler {
 	IBlockContainer firstContainer;
 
 	public ItemBoatHolder(IBlockContainer firstContainer, CreativeTabs tab) {
@@ -191,5 +192,10 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel {
 	@Override
 	public String[] getResourceLocations() {
 		return new String[] {"boat"};
+	}
+
+	@Override
+	public String itemRenderPath() {
+		return "xyz.brassgoggledcoders.opentransport.renderers.boats.RenderItemHolderBoat";
 	}
 }
