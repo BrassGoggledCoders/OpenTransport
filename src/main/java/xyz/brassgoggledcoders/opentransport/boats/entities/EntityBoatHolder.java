@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.opentransport.entities.boats;
+package xyz.brassgoggledcoders.opentransport.boats.entities;
 
 import com.google.common.base.Optional;
 import net.minecraft.client.gui.Gui;
@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 import xyz.brassgoggledcoders.boilerplate.client.guis.IOpenableGUI;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
-import xyz.brassgoggledcoders.opentransport.items.boats.ItemBoatHolder;
+import xyz.brassgoggledcoders.opentransport.boats.items.ItemBoatHolder;
 import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
 
 import javax.annotation.Nonnull;

@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.opentransport.renderers.boats;
+package xyz.brassgoggledcoders.opentransport.boats.renderers;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
@@ -6,8 +6,8 @@ import net.minecraft.client.renderer.entity.RenderBoat;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
-import xyz.brassgoggledcoders.opentransport.entities.boats.EntityBoatHolder;
-import xyz.brassgoggledcoders.opentransport.models.boats.ModelBoatNoPaddles;
+import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
+import xyz.brassgoggledcoders.opentransport.boats.models.ModelBoatNoPaddles;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderBlock;
 
 import javax.annotation.Nonnull;

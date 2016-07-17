@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.opentransport.transport;
+package xyz.brassgoggledcoders.opentransport.boats;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityBoat;
@@ -9,8 +9,8 @@ import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.TransportType;
-import xyz.brassgoggledcoders.opentransport.entities.boats.EntityBoatHolder;
-import xyz.brassgoggledcoders.opentransport.items.boats.ItemBoatHolder;
+import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
+import xyz.brassgoggledcoders.opentransport.boats.items.ItemBoatHolder;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
@@ -63,7 +63,7 @@ public class BoatTransport implements ITransportType<EntityBoat> {
 
 	private static class BoatCreativeTab extends BaseCreativeTab {
 		public BoatCreativeTab() {
-			super("boats");
+			super("entities");
 		}
 
 		@Override

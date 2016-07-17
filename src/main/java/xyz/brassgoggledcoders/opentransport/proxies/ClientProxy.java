@@ -8,8 +8,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
-import xyz.brassgoggledcoders.opentransport.entities.boats.EntityBoatHolder;
-import xyz.brassgoggledcoders.opentransport.renderers.boats.RenderHolderBoat;
+import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
+import xyz.brassgoggledcoders.opentransport.boats.renderers.RenderHolderBoat;
 import xyz.brassgoggledcoders.opentransport.wrappers.player.EntityPlayerSPWrapper;
 
 public class ClientProxy extends CommonProxy {

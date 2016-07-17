@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.opentransport.renderers.boats;
+package xyz.brassgoggledcoders.opentransport.boats.renderers;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -10,9 +10,9 @@ import net.minecraft.world.World;
 import xyz.brassgoggledcoders.boilerplate.client.ClientHelper;
 import xyz.brassgoggledcoders.boilerplate.client.renderers.custom.IItemRenderingHandler;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
-import xyz.brassgoggledcoders.opentransport.entities.boats.EntityBoatHolder;
-import xyz.brassgoggledcoders.opentransport.items.boats.ItemBoatHolder;
-import xyz.brassgoggledcoders.opentransport.models.boats.ModelBoatNoPaddles;
+import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
+import xyz.brassgoggledcoders.opentransport.boats.items.ItemBoatHolder;
+import xyz.brassgoggledcoders.opentransport.boats.models.ModelBoatNoPaddles;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderBlock;
 
 public class RenderItemHolderBoat implements IItemRenderingHandler {

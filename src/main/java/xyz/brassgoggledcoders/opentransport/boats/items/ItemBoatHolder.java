@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.opentransport.items.boats;
+package xyz.brassgoggledcoders.opentransport.boats.items;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
@@ -26,7 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.brassgoggledcoders.boilerplate.client.models.IHasModel;
 import xyz.brassgoggledcoders.boilerplate.client.renderers.custom.IHasItemRenderHandler;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
-import xyz.brassgoggledcoders.opentransport.entities.boats.EntityBoatHolder;
+import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -196,6 +196,6 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel, IHasItemRende
 
 	@Override
 	public String itemRenderPath() {
-		return "xyz.brassgoggledcoders.opentransport.renderers.boats.RenderItemHolderBoat";
+		return "xyz.brassgoggledcoders.opentransport.boats.renderers.RenderItemHolderBoat";
 	}
 }

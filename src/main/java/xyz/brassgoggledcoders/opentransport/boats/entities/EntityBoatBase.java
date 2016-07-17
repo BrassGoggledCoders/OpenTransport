@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.opentransport.entities.boats;
+package xyz.brassgoggledcoders.opentransport.boats.entities;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
