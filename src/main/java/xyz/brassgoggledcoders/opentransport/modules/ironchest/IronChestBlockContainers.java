@@ -13,7 +13,8 @@ import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
 
 public class IronChestBlockContainers {
 	public static void preInit(FMLPreInitializationEvent event) {
-		IBlockContainer[] IRON_CHESTS = new IBlockContainer[IronChestType.values().length];
+		//Minus 1 cause no wood
+		IBlockContainer[] IRON_CHESTS = new IBlockContainer[IronChestType.values().length - 1];
 		Block ironChest = IronChest.ironChestBlock;
 		for(int i = 0; i < IRON_CHESTS.length; i++) {
 			IronChestType type = IronChestType.values()[i];

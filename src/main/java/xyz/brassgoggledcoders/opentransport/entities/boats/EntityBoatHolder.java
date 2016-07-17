@@ -25,11 +25,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<EntityBoatHolder>, IOpenableGUI {
-	IBlockContainer blockContainer;
 	private static final DataParameter<String> BLOCK_CONTAINER_NAME =
 			EntityDataManager.createKey(EntityBoat.class, DataSerializers.STRING);
 	private static final DataParameter<Optional<ItemStack>> ITEM_BOAT =
 			EntityDataManager.createKey(EntityBoat.class, DataSerializers.OPTIONAL_ITEM_STACK);
+	IBlockContainer blockContainer;
 
 	public EntityBoatHolder(World world) {
 		super(world);
@@ -50,6 +50,12 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 			return itemStackBoat.get().getItem();
 		}
 		return Items.BOAT;
+	}
+
+	public void setItemBoat(@Nonnull ItemStack itemBoatStack) {
+		if(itemBoatStack.getItem() instanceof ItemBoatHolder) {
+			this.dataManager.set(ITEM_BOAT, Optional.of(itemBoatStack));
+		}
 	}
 
 	@Override
@@ -76,20 +82,9 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 		this.blockContainer.setHolder(this);
 	}
 
-	public void setItemBoat(
-			@Nonnull
-					ItemStack itemBoatStack) {
-		if(itemBoatStack.getItem() instanceof ItemBoatHolder) {
-			this.dataManager.set(ITEM_BOAT, Optional.of(itemBoatStack));
-		}
-	}
-
 	@Override
-	public boolean processInitialInteract(
-			@Nonnull
-					EntityPlayer entityPlayer,
-			@Nullable
-					ItemStack itemStack, EnumHand hand) {
+	public boolean processInitialInteract(@Nonnull EntityPlayer entityPlayer, @Nullable ItemStack itemStack,
+			EnumHand hand) {
 		return this.getBlockContainer() != null && this.getBlockContainer().onInteract(entityPlayer, hand, itemStack);
 	}
 
