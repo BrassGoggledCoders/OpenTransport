@@ -1,7 +1,7 @@
-package xyz.brassgoggledcoders.opentransport.boats;
+package xyz.brassgoggledcoders.opentransport.minecarts;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.item.EntityBoat;
+import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import xyz.brassgoggledcoders.boilerplate.BaseCreativeTab;
@@ -9,46 +9,46 @@ import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.TransportType;
-import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
-import xyz.brassgoggledcoders.opentransport.boats.items.ItemBoatHolder;
+import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
+import xyz.brassgoggledcoders.opentransport.minecarts.items.ItemMinecartHolder;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
 
 @TransportType
-public class BoatTransport implements ITransportType<EntityBoat> {
-	private CreativeTabs boatsTab = new BoatCreativeTab();
+public class MinecartTransport implements ITransportType<EntityMinecart> {
+	private CreativeTabs cartsTab = new MinecartsCreativeTab();
 	private boolean isActive = true;
 
-	@Override
 	@Nonnull
+	@Override
 	public String getName() {
-		return "Boats";
+		return "Minecarts";
 	}
 
-	@Override
 	@Nonnull
-	public Class<EntityBoat> getBaseEntity() {
-		return EntityBoat.class;
+	@Override
+	public Class<EntityMinecart> getBaseEntity() {
+		return EntityMinecart.class;
 	}
 
-	@Override
 	@Nonnull
+	@Override
 	public CreativeTabs getCreativeTab() {
-		return boatsTab;
+		return cartsTab;
 	}
 
 	@Override
 	public void registerItems(Map<String, IBlockContainer> blockContainers) {
 		blockContainers.forEach((name, blockContainer) -> {
-			ItemBoatHolder holder = new ItemBoatHolder(blockContainer, this.getCreativeTab());
+			ItemMinecartHolder holder = new ItemMinecartHolder(blockContainer, this.getCreativeTab());
 			OpenTransport.INSTANCE.getRegistryHolder().getItemRegistry().registerItem(holder);
 		});
 	}
 
 	@Override
 	public void registerEntities() {
-		OpenTransport.INSTANCE.getRegistryHolder().getEntityRegistry().registerEntity(EntityBoatHolder.class);
+		OpenTransport.INSTANCE.getRegistryHolder().getEntityRegistry().registerEntity(EntityMinecartHolder.class);
 	}
 
 	@Override
@@ -61,14 +61,14 @@ public class BoatTransport implements ITransportType<EntityBoat> {
 		return this.isActive;
 	}
 
-	private static class BoatCreativeTab extends BaseCreativeTab {
-		public BoatCreativeTab() {
-			super("boats");
+	private static class MinecartsCreativeTab extends BaseCreativeTab {
+		public MinecartsCreativeTab() {
+			super("minecarts");
 		}
 
 		@Override
 		public Item getTabIconItem() {
-			return Items.BOAT;
+			return Items.MINECART;
 		}
 	}
 }

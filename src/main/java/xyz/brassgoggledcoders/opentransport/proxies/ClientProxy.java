@@ -10,6 +10,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
 import xyz.brassgoggledcoders.opentransport.boats.renderers.RenderHolderBoat;
+import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
+import xyz.brassgoggledcoders.opentransport.minecarts.renderers.RenderHolderMinecart;
 import xyz.brassgoggledcoders.opentransport.wrappers.player.EntityPlayerSPWrapper;
 
 public class ClientProxy extends CommonProxy {
@@ -38,6 +40,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerEntityRenders() {
-		RenderingRegistry.registerEntityRenderingHandler(EntityBoatHolder.class, RenderHolderBoat.Factory.INSTANCE);
+		RenderingRegistry.registerEntityRenderingHandler(EntityBoatHolder.class, RenderHolderBoat::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityMinecartHolder.class, RenderHolderMinecart::new);
 	}
 }
