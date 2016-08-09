@@ -56,12 +56,16 @@ task getLibraries {
     def ironchest = 'ironchest-' + minecraft_version + '-' + ironchest_version + '.jar'
     def ironchestSource = 'http://minecraft.curseforge.com/projects/iron-chests/files/2306186/download'
 
+    def ie = 'ImmersiveEngineering-' + immersive_engineering_version + '.jar'
+    def ieSource = ''
+
     downloads.add(new Tuple(ironchest, ironchestSource))
+    downloads.add(new Tuple(ie, ieSource))
 
     libsFolder.listFiles().each { file ->
         def isInDownloadList = false;
         downloads.each {download ->
-            if(file.name.equals(download.get(0).toString())) {
+            if(file.name == download.get(0).toString()) {
                 isInDownloadList = true;
             }
         }
