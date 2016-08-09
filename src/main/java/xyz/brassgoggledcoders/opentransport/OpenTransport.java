@@ -14,9 +14,7 @@ import xyz.brassgoggledcoders.opentransport.network.HolderUpdatePacket;
 import xyz.brassgoggledcoders.opentransport.proxies.CommonProxy;
 import xyz.brassgoggledcoders.opentransport.transport.TransportTypeHandler;
 
-@Mod(modid = OpenTransport.MODID,
-	 name = OpenTransport.MODNAME,
-	 version = OpenTransport.VERSION,
+@Mod(modid = OpenTransport.MODID, name = OpenTransport.MODNAME, version = OpenTransport.VERSION,
 	 dependencies = OpenTransport.DEPENDENCIES)
 public class OpenTransport extends BoilerplateModBase {
 	public static final String MODID = "opentransport";
