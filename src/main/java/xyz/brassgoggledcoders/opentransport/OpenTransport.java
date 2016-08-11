@@ -20,7 +20,7 @@ public class OpenTransport extends BoilerplateModBase {
 	public static final String MODID = "opentransport";
 	public static final String MODNAME = "OpenTransport";
 	public static final String VERSION = "@VERSION@";
-	public static final String DEPENDENCIES = "after:IronChest;";
+	public static final String DEPENDENCIES = "after:ironchest;after:immersiveengineering;";
 
 	@Instance(OpenTransport.MODID)
 	public static OpenTransport INSTANCE;
