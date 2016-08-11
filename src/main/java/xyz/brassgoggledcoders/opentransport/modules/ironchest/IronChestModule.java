@@ -21,7 +21,7 @@ public class IronChestModule extends ModuleBase {
 
 	@Override
 	public List<IDependency> getDependencies(List<IDependency> dependencies) {
-		dependencies.add(new ModDependency("IronChest"));
+		dependencies.add(new ModDependency("ironchest"));
 		return dependencies;
 	}
 
