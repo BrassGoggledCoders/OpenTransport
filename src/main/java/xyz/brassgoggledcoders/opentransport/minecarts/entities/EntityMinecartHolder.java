@@ -40,6 +40,7 @@ public class EntityMinecartHolder extends EntityMinecartBase implements IHolderE
 	protected void entityInit() {
 		super.entityInit();
 		this.dataManager.register(BLOCK_CONTAINER_NAME, "");
+		this.dataManager.register(ITEM_CART, Optional.absent());
 	}
 
 	@Nonnull
