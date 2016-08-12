@@ -10,7 +10,7 @@ import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import java.util.List;
 
 @Module(mod=OpenTransport.MODID)
-public class ImmersiveEngineeringModule extends ModuleBase {
+public class IEModule extends ModuleBase {
 	@Override
 	public String getName() {
 		return "Immersive Engineering";
@@ -24,6 +24,6 @@ public class ImmersiveEngineeringModule extends ModuleBase {
 
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
-		ImmersiveEngineeringBlockContainers.preInit(event);
+		IEBlockContainers.preInit(event);
 	}
 }
