@@ -31,7 +31,7 @@ group= "xyz.brassgoggledcoders.opentransport"
 archivesBaseName = "OpenTransport"
 
 minecraft {
-    version = "${minecraft_version}-${forge_version}-${minecraft_version}"
+    version = "${minecraft_version}-${forge_version}"
 
     mappings = "${mappings_version}"
     runDir = "run/"
@@ -54,14 +54,18 @@ task getLibraries {
     def downloads = new ArrayList<Tuple>();
 
     def ironchest = 'ironchest-' + minecraft_version + '-' + ironchest_version + '.jar'
-    def ironchestSource = 'http://minecraft.curseforge.com/projects/iron-chests/files/2306186/download'
+    def ironchestSource = 'https://minecraft.curseforge.com/projects/iron-chests/files/2321288/download'
+
+    def ie = 'ImmersiveEngineering-' + immersive_engineering_version + '.jar'
+    def ieSource = ''
 
     downloads.add(new Tuple(ironchest, ironchestSource))
+    downloads.add(new Tuple(ie, ieSource))
 
     libsFolder.listFiles().each { file ->
         def isInDownloadList = false;
         downloads.each {download ->
-            if(file.name.equals(download.get(0).toString())) {
+            if(file.name == download.get(0).toString()) {
                 isInDownloadList = true;
             }
         }

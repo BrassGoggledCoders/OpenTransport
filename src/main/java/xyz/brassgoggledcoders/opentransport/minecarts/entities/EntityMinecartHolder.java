@@ -1,8 +1,11 @@
 package xyz.brassgoggledcoders.opentransport.minecarts.entities;
 
+import com.google.common.base.Optional;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
+import net.minecraft.item.ItemMinecart;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -13,9 +16,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.boilerplate.client.guis.IOpenableGUI;
 import xyz.brassgoggledcoders.boilerplate.entity.minecarts.EntityMinecartBase;
-import xyz.brassgoggledcoders.boilerplate.items.minecarts.ItemMinecartBase;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
+import xyz.brassgoggledcoders.opentransport.minecarts.items.ItemMinecartHolder;
 import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
 
 import javax.annotation.Nonnull;
@@ -24,6 +27,8 @@ import javax.annotation.Nullable;
 public class EntityMinecartHolder extends EntityMinecartBase implements IHolderEntity<EntityMinecartHolder>, IOpenableGUI {
 	private static final DataParameter<String> BLOCK_CONTAINER_NAME =
 			EntityDataManager.createKey(EntityMinecartHolder.class, DataSerializers.STRING);
+	private static final DataParameter<Optional<ItemStack>> ITEM_CART =
+			EntityDataManager.createKey(EntityMinecartHolder.class, DataSerializers.OPTIONAL_ITEM_STACK);
 
 	private	IBlockContainer blockContainer;
 
@@ -35,12 +40,23 @@ public class EntityMinecartHolder extends EntityMinecartBase implements IHolderE
 	protected void entityInit() {
 		super.entityInit();
 		this.dataManager.register(BLOCK_CONTAINER_NAME, "");
+		this.dataManager.register(ITEM_CART, Optional.absent());
 	}
 
 	@Nonnull
 	@Override
-	public ItemMinecartBase getItem() {
-		return null;
+	public ItemMinecart getItem() {
+		Optional<ItemStack> itemStackCart = this.dataManager.get(ITEM_CART);
+		if(itemStackCart.isPresent()) {
+			return (ItemMinecart)itemStackCart.get().getItem();
+		}
+		return (ItemMinecart)Items.MINECART;
+	}
+
+	public void setItemCart(@Nonnull ItemStack itemCartStack) {
+		if(itemCartStack.getItem() instanceof ItemMinecartHolder) {
+			this.dataManager.set(ITEM_CART, Optional.of(itemCartStack));
+		}
 	}
 
 	@Override
@@ -83,6 +99,12 @@ public class EntityMinecartHolder extends EntityMinecartBase implements IHolderE
 			containerTag = blockContainer.writeToNBT(containerTag);
 			nbtTagCompound.setTag("CONTAINER", containerTag);
 		}
+		Optional<ItemStack> itemStackCart = this.dataManager.get(ITEM_CART);
+		if(itemStackCart.isPresent()) {
+			NBTTagCompound itemBoat = new NBTTagCompound();
+			nbtTagCompound.setTag("ITEM_BOAT", itemStackCart.get().writeToNBT(itemBoat));
+		}
+
 		return nbtTagCompound;
 	}
 
@@ -93,6 +115,7 @@ public class EntityMinecartHolder extends EntityMinecartBase implements IHolderE
 		this.setBlockContainer(BlockContainerRegistry.getBlockContainer(nbtTagCompound.getString("CONTAINER_NAME")));
 		blockContainer.setHolder(this);
 		blockContainer.readFromNBT(nbtTagCompound.getCompoundTag("CONTAINER"));
+		this.setItemCart(ItemStack.loadItemStackFromNBT(nbtTagCompound.getCompoundTag("ITEM_BOAT")));
 	}
 
 	@Override
