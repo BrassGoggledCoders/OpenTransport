@@ -99,6 +99,12 @@ public class EntityMinecartHolder extends EntityMinecartBase implements IHolderE
 			containerTag = blockContainer.writeToNBT(containerTag);
 			nbtTagCompound.setTag("CONTAINER", containerTag);
 		}
+		Optional<ItemStack> itemStackCart = this.dataManager.get(ITEM_CART);
+		if(itemStackCart.isPresent()) {
+			NBTTagCompound itemBoat = new NBTTagCompound();
+			nbtTagCompound.setTag("ITEM_BOAT", itemStackCart.get().writeToNBT(itemBoat));
+		}
+
 		return nbtTagCompound;
 	}
 
@@ -109,6 +115,7 @@ public class EntityMinecartHolder extends EntityMinecartBase implements IHolderE
 		this.setBlockContainer(BlockContainerRegistry.getBlockContainer(nbtTagCompound.getString("CONTAINER_NAME")));
 		blockContainer.setHolder(this);
 		blockContainer.readFromNBT(nbtTagCompound.getCompoundTag("CONTAINER"));
+		this.setItemCart(ItemStack.loadItemStackFromNBT(nbtTagCompound.getCompoundTag("ITEM_BOAT")));
 	}
 
 	@Override
