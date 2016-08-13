@@ -1,6 +1,7 @@
 package xyz.brassgoggledcoders.opentransport.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -53,9 +54,18 @@ public class BlockContainerBase implements IBlockContainer {
 		return this;
 	}
 
+	public <T extends Comparable<T>, V extends T> BlockContainerBase withProperty(IProperty<T> property, V value) {
+		this.blockState = this.blockState.withProperty(property, value);
+		return this;
+	}
+
 	public BlockContainerBase setUnlocalizedName(String name) {
 		this.unlocalizedName = name.replaceFirst("tile.", "");
 		return this;
+	}
+
+	public BlockContainerBase setUnlocalizedSuffix(String name) {
+		return this.setUnlocalizedName(this.getBlock().getUnlocalizedName() + "." + name);
 	}
 
 	public BlockContainerBase setClickInteraction(IInteraction interaction) {
@@ -170,7 +180,7 @@ public class BlockContainerBase implements IBlockContainer {
 	}
 
 	@Override
-	public IBlockContainer copy() {
+	public BlockContainerBase copy() {
 		BlockContainerBase copyBlockContainer = new BlockContainerBase(this.getBlock());
 		copyBlockContainer.setBlockState(this.getBlockState()).setClickInteraction(this.getClickInteraction())
 				.setGuiInterface(this.guiInterface).setRenderType(this.getRenderType())
