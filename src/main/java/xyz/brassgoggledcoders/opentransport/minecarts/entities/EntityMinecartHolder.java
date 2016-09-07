@@ -24,13 +24,14 @@ import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class EntityMinecartHolder extends EntityMinecartBase implements IHolderEntity<EntityMinecartHolder>, IOpenableGUI {
+public class EntityMinecartHolder extends EntityMinecartBase
+		implements IHolderEntity<EntityMinecartHolder>, IOpenableGUI {
 	private static final DataParameter<String> BLOCK_CONTAINER_NAME =
 			EntityDataManager.createKey(EntityMinecartHolder.class, DataSerializers.STRING);
 	private static final DataParameter<Optional<ItemStack>> ITEM_CART =
 			EntityDataManager.createKey(EntityMinecartHolder.class, DataSerializers.OPTIONAL_ITEM_STACK);
 
-	private	IBlockContainer blockContainer;
+	private IBlockContainer blockContainer;
 
 	public EntityMinecartHolder(World world) {
 		super(world);
@@ -48,9 +49,9 @@ public class EntityMinecartHolder extends EntityMinecartBase implements IHolderE
 	public ItemMinecart getItem() {
 		Optional<ItemStack> itemStackCart = this.dataManager.get(ITEM_CART);
 		if(itemStackCart.isPresent()) {
-			return (ItemMinecart)itemStackCart.get().getItem();
+			return (ItemMinecart) itemStackCart.get().getItem();
 		}
-		return (ItemMinecart)Items.MINECART;
+		return (ItemMinecart) Items.MINECART;
 	}
 
 	public void setItemCart(@Nonnull ItemStack itemCartStack) {

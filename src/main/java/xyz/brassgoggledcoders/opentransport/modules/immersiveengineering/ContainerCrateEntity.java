@@ -11,15 +11,14 @@ import javax.annotation.Nonnull;
 public class ContainerCrateEntity extends ContainerCrate {
 	private IHolderEntity holderEntity;
 
-	public ContainerCrateEntity(InventoryPlayer inventoryPlayer, IHolderEntity holderEntity, TileEntityWoodenCrate crate)
-	{
+	public ContainerCrateEntity(InventoryPlayer inventoryPlayer, IHolderEntity holderEntity,
+			TileEntityWoodenCrate crate) {
 		super(inventoryPlayer, crate);
 		this.holderEntity = holderEntity;
 	}
 
 	@Override
-	public boolean canInteractWith(@Nonnull EntityPlayer entityPlayer)
-	{
+	public boolean canInteractWith(@Nonnull EntityPlayer entityPlayer) {
 		return holderEntity.isUseableByPlayer(entityPlayer);
 	}
 }

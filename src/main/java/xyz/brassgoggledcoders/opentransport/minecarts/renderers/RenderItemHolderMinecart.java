@@ -28,7 +28,7 @@ public class RenderItemHolderMinecart implements IItemRenderingHandler {
 
 	@Override
 	public void render(World world, Item item, ItemStack itemStack, TransformType type) {
-		if(minecartHolder == null)  {
+		if(minecartHolder == null) {
 			minecartHolder = new EntityMinecartHolder(Minecraft.getMinecraft().theWorld);
 		}
 		if(minecartHolder.getEntity().worldObj != null && item instanceof ItemMinecartHolder) {

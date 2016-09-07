@@ -9,7 +9,7 @@ import xyz.brassgoggledcoders.opentransport.OpenTransport;
 
 import java.util.List;
 
-@Module(mod=OpenTransport.MODID)
+@Module(mod = OpenTransport.MODID)
 public class IEModule extends ModuleBase {
 	@Override
 	public String getName() {

@@ -52,13 +52,13 @@ public class BoatTransport implements ITransportType<EntityBoat> {
 	}
 
 	@Override
-	public void setIsActive(boolean isActive) {
-		this.isActive = isActive;
+	public boolean getIsActive() {
+		return this.isActive;
 	}
 
 	@Override
-	public boolean getIsActive() {
-		return this.isActive;
+	public void setIsActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	private static class BoatCreativeTab extends BaseCreativeTab {

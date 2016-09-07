@@ -46,8 +46,7 @@ public class HolderUpdatePacket implements IMessage {
 			if(entity instanceof IHolderEntity) {
 				return (IHolderEntity) entity;
 			}
-		}
-		else {
+		} else {
 			OpenTransport.INSTANCE.getLogger().devInfo("The world was null");
 		}
 

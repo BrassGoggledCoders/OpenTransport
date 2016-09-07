@@ -37,9 +37,7 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
 	}
 
 	@Override
-	public void addChatComponentMessage(
-			@Nullable
-					ITextComponent chatComponent) {
+	public void addChatComponentMessage(@Nullable ITextComponent chatComponent) {
 		this.getEntityPlayer().addChatComponentMessage(chatComponent);
 	}
 
@@ -52,29 +50,20 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
 	public double getDistanceSq(double x, double y, double z) {
 		if(this.getEntity() != null) {
 			return this.entityPlayer.getDistanceSq(this.getEntity().posX, this.getEntity().posY, this.getEntity().posZ);
-		}
-		else {
+		} else {
 			return 64;
 		}
 	}
 
 	@Override
-	public void openGui(
-			@Nonnull
-					Object mod, int id,
-			@Nonnull
-					World world, int posX, int posY, int poxZ) {
+	public void openGui(@Nonnull Object mod, int id, @Nonnull World world, int posX, int posY, int poxZ) {
 		this.getEntityPlayer()
 				.openGui(OpenTransport.INSTANCE, this.getEntity().getEntityId(), this.getEntity().worldObj, posX, posY,
 						poxZ);
 	}
 
 	@Override
-	public void setItemStackToSlot(
-			@Nonnull
-					EntityEquipmentSlot slot,
-			@Nullable
-					ItemStack stack) {
+	public void setItemStackToSlot(@Nonnull EntityEquipmentSlot slot, @Nullable ItemStack stack) {
 		this.getEntityPlayer().setItemStackToSlot(slot, stack);
 	}
 
@@ -85,9 +74,7 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
 
 	@Override
 	@Nullable
-	public ItemStack getItemStackFromSlot(
-			@Nonnull
-					EntityEquipmentSlot slot) {
+	public ItemStack getItemStackFromSlot(@Nonnull EntityEquipmentSlot slot) {
 		return this.getEntityPlayer().getItemStackFromSlot(slot);
 	}
 
@@ -108,9 +95,7 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
 	}
 
 	@Override
-	public boolean replaceItemInInventory(int slot,
-			@Nonnull
-					ItemStack itemStack) {
+	public boolean replaceItemInInventory(int slot, @Nonnull ItemStack itemStack) {
 		return this.getEntityPlayer().replaceItemInInventory(slot, itemStack);
 	}
 
@@ -148,20 +133,12 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
 
 	@Override
 	@Nonnull
-	public <T> T getCapability(
-			@Nonnull
-					Capability<T> capability,
-			@Nonnull
-					EnumFacing facing) {
+	public <T> T getCapability(@Nonnull Capability<T> capability, @Nonnull EnumFacing facing) {
 		return this.getEntityPlayer().getCapability(capability, facing);
 	}
 
 	@Override
-	public boolean hasCapability(
-			@Nonnull
-					Capability<?> capability,
-			@Nonnull
-					EnumFacing facing) {
+	public boolean hasCapability(@Nonnull Capability<?> capability, @Nonnull EnumFacing facing) {
 		return this.getEntityPlayer().hasCapability(capability, facing);
 	}
 

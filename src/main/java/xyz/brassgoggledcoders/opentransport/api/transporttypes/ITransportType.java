@@ -21,7 +21,7 @@ public interface ITransportType<E extends Entity> {
 
 	void registerEntities();
 
-	void setIsActive(boolean isActive);
-
 	boolean getIsActive();
+
+	void setIsActive(boolean isActive);
 }

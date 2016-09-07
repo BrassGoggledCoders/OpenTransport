@@ -17,10 +17,11 @@ import xyz.brassgoggledcoders.opentransport.renderers.RenderBlock;
 
 public class RenderItemHolderBoat implements IItemRenderingHandler {
 	private static final String shortCut = "textures/entity/boat/boat_";
-	private static final ResourceLocation[] BOAT_TEXTURES = new ResourceLocation[] {
-		new ResourceLocation(shortCut + "oak.png"), new ResourceLocation(shortCut + "spruce.png"),
-		new ResourceLocation(shortCut + "birch.png"), new ResourceLocation(shortCut + "jungle.png"),
-		new ResourceLocation(shortCut + "acacia.png"), new ResourceLocation(shortCut + "darkoak.png")};
+	private static final ResourceLocation[] BOAT_TEXTURES =
+			new ResourceLocation[] {new ResourceLocation(shortCut + "oak.png"),
+					new ResourceLocation(shortCut + "spruce.png"), new ResourceLocation(shortCut + "birch.png"),
+					new ResourceLocation(shortCut + "jungle.png"), new ResourceLocation(shortCut + "acacia.png"),
+					new ResourceLocation(shortCut + "darkoak.png")};
 
 	private RenderBlock renderBlock;
 	private EntityBoatHolder boatHolder;
@@ -33,11 +34,11 @@ public class RenderItemHolderBoat implements IItemRenderingHandler {
 
 	@Override
 	public void render(World world, Item item, ItemStack itemStack, TransformType type) {
-		if(boatHolder == null)  {
+		if(boatHolder == null) {
 			boatHolder = new EntityBoatHolder(Minecraft.getMinecraft().theWorld);
 		}
 		if(boatHolder.getEntity().worldObj != null && item instanceof ItemBoatHolder) {
-			ItemBoatHolder itemBoatHolder = (ItemBoatHolder)item;
+			ItemBoatHolder itemBoatHolder = (ItemBoatHolder) item;
 			IBlockContainer blockContainer = itemBoatHolder.getBlockContainer(itemStack);
 			blockContainer.setHolder(boatHolder);
 			boatHolder.setBlockContainer(blockContainer);

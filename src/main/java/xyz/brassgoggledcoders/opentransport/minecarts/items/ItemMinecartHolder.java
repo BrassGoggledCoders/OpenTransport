@@ -56,8 +56,7 @@ public class ItemMinecartHolder extends ItemMinecartBase implements IHasItemRend
 	}
 
 	@Override
-	public String[] getResourceLocations()
-	{
+	public String[] getResourceLocations() {
 		return new String[] {"minecart"};
 	}
 

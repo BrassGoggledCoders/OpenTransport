@@ -101,8 +101,7 @@ public class RenderHolderMinecart extends RenderMinecart<EntityMinecartHolder> {
 			GlStateManager.disableColorMaterial();
 		}
 
-		if (!this.renderOutlines)
-		{
+		if(!this.renderOutlines) {
 			this.renderName(entity, x, y, z);
 		}
 	}
