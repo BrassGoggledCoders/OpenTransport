@@ -1,5 +1,7 @@
 package xyz.brassgoggledcoders.opentransport.minecarts.items;
 
+import com.teamacronymcoders.base.entity.EntityMinecartBase;
+import com.teamacronymcoders.base.items.minecarts.ItemMinecartBase;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
@@ -8,15 +10,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import xyz.brassgoggledcoders.boilerplate.client.renderers.custom.IHasItemRenderHandler;
-import xyz.brassgoggledcoders.boilerplate.entity.minecarts.EntityMinecartBase;
-import xyz.brassgoggledcoders.boilerplate.items.minecarts.ItemMinecartBase;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ItemMinecartHolder extends ItemMinecartBase implements IHasItemRenderHandler {
+public class ItemMinecartHolder extends ItemMinecartBase /*implements IHasItemRenderHandler*/ {
 	private IBlockContainer blockContainer;
 
 	public ItemMinecartHolder(IBlockContainer blockContainer, CreativeTabs creativeTabs) {
@@ -56,12 +57,15 @@ public class ItemMinecartHolder extends ItemMinecartBase implements IHasItemRend
 	}
 
 	@Override
-	public String[] getResourceLocations() {
-		return new String[] {"minecart"};
+	public List<String> getModelNames() {
+		List<String> modelNames = new ArrayList<>();
+        modelNames.add("minecart");
+        return modelNames;
 	}
 
-	@Override
+	//TODO RENDERING
+	/*@Override
 	public String itemRenderPath() {
 		return "xyz.brassgoggledcoders.opentransport.minecarts.renderers.RenderItemHolderMinecart";
-	}
+	}*/
 }

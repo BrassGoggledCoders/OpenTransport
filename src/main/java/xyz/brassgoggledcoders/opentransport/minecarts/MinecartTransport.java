@@ -1,10 +1,11 @@
 package xyz.brassgoggledcoders.opentransport.minecarts;
 
+import com.teamacronymcoders.base.registry.EntityRegistry;
+import com.teamacronymcoders.base.registry.ItemRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import xyz.brassgoggledcoders.boilerplate.BaseCreativeTab;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
@@ -42,13 +43,13 @@ public class MinecartTransport implements ITransportType<EntityMinecart> {
 	public void registerItems(Map<String, IBlockContainer> blockContainers) {
 		blockContainers.forEach((name, blockContainer) -> {
 			ItemMinecartHolder holder = new ItemMinecartHolder(blockContainer, this.getCreativeTab());
-			OpenTransport.INSTANCE.getRegistryHolder().getItemRegistry().registerItem(holder);
+			OpenTransport.INSTANCE.<ItemRegistry>getRegistry(ItemRegistry.class, "ITEM").register(holder);
 		});
 	}
 
 	@Override
 	public void registerEntities() {
-		OpenTransport.INSTANCE.getRegistryHolder().getEntityRegistry().registerEntity(EntityMinecartHolder.class);
+		OpenTransport.INSTANCE.getRegistryHolder().getRegistry(EntityRegistry.class, "ENTITY").register(EntityMinecartHolder.class);
 	}
 
 	@Override
@@ -61,12 +62,13 @@ public class MinecartTransport implements ITransportType<EntityMinecart> {
 		this.isActive = isActive;
 	}
 
-	private static class MinecartsCreativeTab extends BaseCreativeTab {
+	private static class MinecartsCreativeTab extends CreativeTabs {
 		public MinecartsCreativeTab() {
 			super("minecarts");
 		}
 
 		@Override
+		@Nonnull
 		public Item getTabIconItem() {
 			return Items.MINECART;
 		}

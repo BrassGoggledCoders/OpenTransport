@@ -1,6 +1,7 @@
 package xyz.brassgoggledcoders.opentransport.boats.entities;
 
 import com.google.common.base.Optional;
+import com.teamacronymcoders.base.client.gui.IHasGui;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,7 +16,6 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import xyz.brassgoggledcoders.boilerplate.client.guis.IOpenableGUI;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.boats.items.ItemBoatHolder;
@@ -24,7 +24,7 @@ import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<EntityBoatHolder>, IOpenableGUI {
+public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<EntityBoatHolder>, IHasGui {
 	private static final DataParameter<String> BLOCK_CONTAINER_NAME =
 			EntityDataManager.createKey(EntityBoat.class, DataSerializers.STRING);
 	private static final DataParameter<Optional<ItemStack>> ITEM_BOAT =

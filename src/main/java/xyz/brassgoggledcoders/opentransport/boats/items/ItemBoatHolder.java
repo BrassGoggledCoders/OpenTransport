@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.opentransport.boats.items;
 
+import com.teamacronymcoders.base.client.models.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
@@ -23,15 +24,14 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import xyz.brassgoggledcoders.boilerplate.client.models.IHasModel;
-import xyz.brassgoggledcoders.boilerplate.client.renderers.custom.IHasItemRenderHandler;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ItemBoatHolder extends ItemBoat implements IHasModel, IHasItemRenderHandler {
+public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRenderHandler*/ {
 	IBlockContainer firstContainer;
 
 	public ItemBoatHolder(IBlockContainer firstContainer, CreativeTabs tab) {
@@ -190,12 +190,14 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel, IHasItemRende
 	}
 
 	@Override
-	public String[] getResourceLocations() {
-		return new String[] {"boat"};
+	public List<String> getModelNames() {
+		List<String> models = new ArrayList<>();
+		models.add("boat");
+		return models;
 	}
-
+/* TODO RENDERING AGAIN
 	@Override
 	public String itemRenderPath() {
 		return "xyz.brassgoggledcoders.opentransport.boats.renderers.RenderItemHolderBoat";
-	}
+	}*/
 }

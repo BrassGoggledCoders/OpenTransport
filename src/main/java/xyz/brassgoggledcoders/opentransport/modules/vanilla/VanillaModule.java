@@ -1,15 +1,15 @@
 package xyz.brassgoggledcoders.opentransport.modules.vanilla;
 
+import com.teamacronymcoders.base.modulesystem.Module;
+import com.teamacronymcoders.base.modulesystem.ModuleBase;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import xyz.brassgoggledcoders.boilerplate.module.Module;
-import xyz.brassgoggledcoders.boilerplate.module.ModuleBase;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.blocks.BlockContainerBase;
 import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
 
-@Module(mod = OpenTransport.MODID)
+@Module(OpenTransport.MODID)
 public class VanillaModule extends ModuleBase {
 	public static IBlockContainer ENDER_CHEST;
 

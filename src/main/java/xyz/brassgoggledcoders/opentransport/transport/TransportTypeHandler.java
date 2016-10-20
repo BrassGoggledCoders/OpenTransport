@@ -1,10 +1,10 @@
 package xyz.brassgoggledcoders.opentransport.transport;
 
+import com.teamacronymcoders.base.registry.config.ConfigEntry;
+import com.teamacronymcoders.base.registry.config.ConfigRegistry;
+import com.teamacronymcoders.base.util.ClassLoading;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import xyz.brassgoggledcoders.boilerplate.config.ConfigEntry;
-import xyz.brassgoggledcoders.boilerplate.config.Type;
-import xyz.brassgoggledcoders.boilerplate.registries.ConfigRegistry;
-import xyz.brassgoggledcoders.boilerplate.utils.ClassLoading;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.TransportType;
@@ -33,12 +33,12 @@ public class TransportTypeHandler {
 	}
 
 	private ConfigRegistry getConfig() {
-		return OpenTransport.INSTANCE.getRegistryHolder().getConfigRegistry();
+		return OpenTransport.INSTANCE.<ConfigRegistry>getRegistry(ConfigRegistry.class, "CONFIG");
 	}
 
 	private static class TransportTypeEntry extends ConfigEntry {
 		public TransportTypeEntry(ITransportType transportType) {
-			super("Transport Types", transportType.getName() + " enabled", Type.BOOLEAN, true + "");
+			super("Transport Types", transportType.getName() + " enabled", Property.Type.BOOLEAN, Boolean.toString(true));
 		}
 	}
 

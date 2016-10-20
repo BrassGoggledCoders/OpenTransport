@@ -1,21 +1,11 @@
 package xyz.brassgoggledcoders.opentransport.minecarts.renderers;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelMinecart;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import xyz.brassgoggledcoders.boilerplate.client.ClientHelper;
-import xyz.brassgoggledcoders.boilerplate.client.renderers.custom.IItemRenderingHandler;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
-import xyz.brassgoggledcoders.opentransport.minecarts.items.ItemMinecartHolder;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderBlock;
 
-public class RenderItemHolderMinecart implements IItemRenderingHandler {
+public class RenderItemHolderMinecart /*implements IItemRenderingHandler*/ {
 	private RenderBlock renderBlock;
 	private EntityMinecartHolder minecartHolder;
 	private ModelMinecart modelMinecart;
@@ -25,7 +15,7 @@ public class RenderItemHolderMinecart implements IItemRenderingHandler {
 		renderBlock = new RenderBlock();
 		modelMinecart = new ModelMinecart();
 	}
-
+/*TODO: RENDERING CODE
 	@Override
 	public void render(World world, Item item, ItemStack itemStack, TransformType type) {
 		if(minecartHolder == null) {
@@ -85,5 +75,5 @@ public class RenderItemHolderMinecart implements IItemRenderingHandler {
 
 	protected void renderBlockContainer(IBlockContainer blockContainer) {
 		renderBlock.renderEntity(ClientHelper.player(), blockContainer, 0);
-	}
+	}*/
 }

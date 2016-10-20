@@ -18,8 +18,8 @@ buildscript {
 
 repositories {
     maven {
-        name "BrassGoggledCoders maven"
-        url "https://maven.brassgoggledcoders.xyz"
+        name "TAC maven"
+        url "http://blamejared.com/maven"
     }
 }
 
@@ -42,7 +42,7 @@ minecraft {
 }
 
 dependencies {
-    compile "xyz.brassgoggledcoders.boilerplate:Boilerplate:${minecraft_version}-${boilerplate_version}:deobf"
+    compile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}:deobf"
 }
 
 task getLibraries {
@@ -92,11 +92,8 @@ task getLibraries {
     }
 }
 
-
-compileJava {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-}
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 processResources
 {

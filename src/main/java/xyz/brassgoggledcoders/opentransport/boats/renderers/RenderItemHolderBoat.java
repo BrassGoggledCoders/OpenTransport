@@ -1,21 +1,11 @@
 package xyz.brassgoggledcoders.opentransport.boats.renderers;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import xyz.brassgoggledcoders.boilerplate.client.ClientHelper;
-import xyz.brassgoggledcoders.boilerplate.client.renderers.custom.IItemRenderingHandler;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
-import xyz.brassgoggledcoders.opentransport.boats.items.ItemBoatHolder;
 import xyz.brassgoggledcoders.opentransport.boats.models.ModelBoatNoPaddles;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderBlock;
 
-public class RenderItemHolderBoat implements IItemRenderingHandler {
+public class RenderItemHolderBoat /*implements IItemRenderingHandler*/ {
 	private static final String shortCut = "textures/entity/boat/boat_";
 	private static final ResourceLocation[] BOAT_TEXTURES =
 			new ResourceLocation[] {new ResourceLocation(shortCut + "oak.png"),
@@ -31,7 +21,7 @@ public class RenderItemHolderBoat implements IItemRenderingHandler {
 		renderBlock = new RenderBlock();
 		modelBoat = new ModelBoatNoPaddles();
 	}
-
+/* TODO MORE RENDERING
 	@Override
 	public void render(World world, Item item, ItemStack itemStack, TransformType type) {
 		if(boatHolder == null) {
@@ -91,5 +81,5 @@ public class RenderItemHolderBoat implements IItemRenderingHandler {
 
 	protected void renderBlockContainer(IBlockContainer blockContainer) {
 		renderBlock.renderEntity(ClientHelper.player(), blockContainer, 0);
-	}
+	}*/
 }

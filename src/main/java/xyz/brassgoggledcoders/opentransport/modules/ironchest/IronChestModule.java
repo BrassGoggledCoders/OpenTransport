@@ -1,16 +1,16 @@
 package xyz.brassgoggledcoders.opentransport.modules.ironchest;
 
+import com.teamacronymcoders.base.modulesystem.Module;
+import com.teamacronymcoders.base.modulesystem.ModuleBase;
+import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
+import com.teamacronymcoders.base.modulesystem.dependencies.ModDependency;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import xyz.brassgoggledcoders.boilerplate.module.Module;
-import xyz.brassgoggledcoders.boilerplate.module.ModuleBase;
-import xyz.brassgoggledcoders.boilerplate.module.dependencies.IDependency;
-import xyz.brassgoggledcoders.boilerplate.module.dependencies.ModDependency;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 
 import java.util.List;
 
-@Module(mod = OpenTransport.MODID)
+@Module(OpenTransport.MODID)
 public class IronChestModule extends ModuleBase {
 	public static IBlockContainer[] IRON_CHESTS;
 

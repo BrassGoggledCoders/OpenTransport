@@ -1,10 +1,11 @@
 package xyz.brassgoggledcoders.opentransport.boats;
 
+import com.teamacronymcoders.base.registry.EntityRegistry;
+import com.teamacronymcoders.base.registry.ItemRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import xyz.brassgoggledcoders.boilerplate.BaseCreativeTab;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
@@ -42,13 +43,13 @@ public class BoatTransport implements ITransportType<EntityBoat> {
 	public void registerItems(Map<String, IBlockContainer> blockContainers) {
 		blockContainers.forEach((name, blockContainer) -> {
 			ItemBoatHolder holder = new ItemBoatHolder(blockContainer, this.getCreativeTab());
-			OpenTransport.INSTANCE.getRegistryHolder().getItemRegistry().registerItem(holder);
+			OpenTransport.INSTANCE.<ItemRegistry>getRegistry(ItemRegistry.class, "ITEM").register(holder);
 		});
 	}
 
 	@Override
 	public void registerEntities() {
-		OpenTransport.INSTANCE.getRegistryHolder().getEntityRegistry().registerEntity(EntityBoatHolder.class);
+		OpenTransport.INSTANCE.<EntityRegistry>getRegistry(EntityRegistry.class, "ENTITY").register(EntityBoatHolder.class);
 	}
 
 	@Override
@@ -61,12 +62,13 @@ public class BoatTransport implements ITransportType<EntityBoat> {
 		this.isActive = isActive;
 	}
 
-	private static class BoatCreativeTab extends BaseCreativeTab {
+	private static class BoatCreativeTab extends CreativeTabs {
 		public BoatCreativeTab() {
 			super("boats");
 		}
 
 		@Override
+		@Nonnull
 		public Item getTabIconItem() {
 			return Items.BOAT;
 		}

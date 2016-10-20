@@ -1,6 +1,8 @@
 package xyz.brassgoggledcoders.opentransport.minecarts.entities;
 
 import com.google.common.base.Optional;
+import com.teamacronymcoders.base.client.gui.IHasGui;
+import com.teamacronymcoders.base.entity.EntityMinecartBase;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -14,8 +16,6 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import xyz.brassgoggledcoders.boilerplate.client.guis.IOpenableGUI;
-import xyz.brassgoggledcoders.boilerplate.entity.minecarts.EntityMinecartBase;
 import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.minecarts.items.ItemMinecartHolder;
@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class EntityMinecartHolder extends EntityMinecartBase
-		implements IHolderEntity<EntityMinecartHolder>, IOpenableGUI {
+		implements IHolderEntity<EntityMinecartHolder>, IHasGui {
 	private static final DataParameter<String> BLOCK_CONTAINER_NAME =
 			EntityDataManager.createKey(EntityMinecartHolder.class, DataSerializers.STRING);
 	private static final DataParameter<Optional<ItemStack>> ITEM_CART =

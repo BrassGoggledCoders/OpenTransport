@@ -1,15 +1,15 @@
 package xyz.brassgoggledcoders.opentransport.modules.immersiveengineering;
 
+import com.teamacronymcoders.base.modulesystem.Module;
+import com.teamacronymcoders.base.modulesystem.ModuleBase;
+import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
+import com.teamacronymcoders.base.modulesystem.dependencies.ModDependency;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import xyz.brassgoggledcoders.boilerplate.module.Module;
-import xyz.brassgoggledcoders.boilerplate.module.ModuleBase;
-import xyz.brassgoggledcoders.boilerplate.module.dependencies.IDependency;
-import xyz.brassgoggledcoders.boilerplate.module.dependencies.ModDependency;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 
 import java.util.List;
 
-@Module(mod = OpenTransport.MODID)
+@Module(OpenTransport.MODID)
 public class IEModule extends ModuleBase {
 	@Override
 	public String getName() {
