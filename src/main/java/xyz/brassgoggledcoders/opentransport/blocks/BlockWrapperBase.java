@@ -11,9 +11,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IGuiInterface;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IInteraction;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IGuiInterface;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IInteraction;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.interactions.BaseInteraction;
 import xyz.brassgoggledcoders.opentransport.interfaces.BaseInterface;
@@ -23,7 +23,7 @@ import xyz.brassgoggledcoders.opentransport.wrappers.world.WorldWrapper;
 
 import javax.annotation.Nonnull;
 
-public class BlockContainerBase implements IBlockContainer {
+public class BlockWrapperBase implements IBlockWrapper {
 	Block block;
 	IBlockState blockState;
 	TileEntity tileEntity;
@@ -36,22 +36,22 @@ public class BlockContainerBase implements IBlockContainer {
 	IHolderEntity holderEntity;
 	boolean isDirty;
 
-	public BlockContainerBase(Block block) {
+	public BlockWrapperBase(Block block) {
 		this.block = block;
 		this.blockState = block.getDefaultState();
 		this.unlocalizedName = block.getUnlocalizedName().replaceFirst("tile.", "");
 	}
 
-	public <T extends Comparable<T>, V extends T> BlockContainerBase withProperty(IProperty<T> property, V value) {
+	public <T extends Comparable<T>, V extends T> BlockWrapperBase withProperty(IProperty<T> property, V value) {
 		this.blockState = this.blockState.withProperty(property, value);
 		return this;
 	}
 
-	public BlockContainerBase setUnlocalizedSuffix(String name) {
+	public BlockWrapperBase setUnlocalizedSuffix(String name) {
 		return this.setUnlocalizedName(this.getBlock().getUnlocalizedName() + "." + name);
 	}
 
-	public BlockContainerBase setGuiInterface(IGuiInterface guiInterface) {
+	public BlockWrapperBase setGuiInterface(IGuiInterface guiInterface) {
 		this.guiInterface = guiInterface;
 		return this;
 	}
@@ -62,7 +62,7 @@ public class BlockContainerBase implements IBlockContainer {
 		return block;
 	}
 
-	public BlockContainerBase setBlock(Block block) {
+	public BlockWrapperBase setBlock(Block block) {
 		this.block = block;
 		this.blockState = block.getDefaultState();
 		return this;
@@ -74,7 +74,7 @@ public class BlockContainerBase implements IBlockContainer {
 		return blockState;
 	}
 
-	public BlockContainerBase setBlockState(IBlockState blockState) {
+	public BlockWrapperBase setBlockState(IBlockState blockState) {
 		this.block = blockState.getBlock();
 		this.blockState = blockState;
 		return this;
@@ -86,7 +86,7 @@ public class BlockContainerBase implements IBlockContainer {
 		return unlocalizedName;
 	}
 
-	public BlockContainerBase setUnlocalizedName(String name) {
+	public BlockWrapperBase setUnlocalizedName(String name) {
 		this.unlocalizedName = name.replaceFirst("tile.", "");
 		return this;
 	}
@@ -97,7 +97,7 @@ public class BlockContainerBase implements IBlockContainer {
 		return renderType;
 	}
 
-	public BlockContainerBase setRenderType(RenderType renderType) {
+	public BlockWrapperBase setRenderType(RenderType renderType) {
 		this.renderType = renderType;
 		return this;
 	}
@@ -108,7 +108,7 @@ public class BlockContainerBase implements IBlockContainer {
 		return clickInteraction;
 	}
 
-	public BlockContainerBase setClickInteraction(IInteraction interaction) {
+	public BlockWrapperBase setClickInteraction(IInteraction interaction) {
 		this.clickInteraction = interaction;
 		return this;
 	}
@@ -180,8 +180,8 @@ public class BlockContainerBase implements IBlockContainer {
 	}
 
 	@Override
-	public BlockContainerBase copy() {
-		BlockContainerBase copyBlockContainer = new BlockContainerBase(this.getBlock());
+	public BlockWrapperBase copy() {
+		BlockWrapperBase copyBlockContainer = new BlockWrapperBase(this.getBlock());
 		copyBlockContainer.setBlockState(this.getBlockState()).setClickInteraction(this.getClickInteraction())
 				.setGuiInterface(this.guiInterface).setRenderType(this.getRenderType())
 				.setUnlocalizedName(this.getUnlocalizedName());

@@ -7,7 +7,7 @@ import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.TransportType;
 import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
@@ -40,10 +40,10 @@ public class MinecartTransport implements ITransportType<EntityMinecart> {
 	}
 
 	@Override
-	public void registerItems(Map<String, IBlockContainer> blockContainers) {
+	public void registerItems(Map<String, IBlockWrapper> blockContainers) {
 		blockContainers.forEach((name, blockContainer) -> {
 			ItemMinecartHolder holder = new ItemMinecartHolder(blockContainer, this.getCreativeTab());
-			OpenTransport.INSTANCE.<ItemRegistry>getRegistry(ItemRegistry.class, "ITEM").register(holder);
+			OpenTransport.INSTANCE.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(holder);
 		});
 	}
 

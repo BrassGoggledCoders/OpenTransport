@@ -29,7 +29,7 @@ public class RenderItemHolderBoat /*implements IItemRenderingHandler*/ {
 		}
 		if(boatHolder.getEntity().worldObj != null && item instanceof ItemBoatHolder) {
 			ItemBoatHolder itemBoatHolder = (ItemBoatHolder) item;
-			IBlockContainer blockContainer = itemBoatHolder.getBlockContainer(itemStack);
+			IBlockWrapper blockContainer = itemBoatHolder.getBlockContainer(itemStack);
 			blockContainer.setHolder(boatHolder);
 			boatHolder.setBlockContainer(blockContainer);
 
@@ -79,7 +79,7 @@ public class RenderItemHolderBoat /*implements IItemRenderingHandler*/ {
 		GlStateManager.popMatrix();
 	}
 
-	protected void renderBlockContainer(IBlockContainer blockContainer) {
+	protected void renderBlockContainer(IBlockWrapper blockContainer) {
 		renderBlock.renderEntity(ClientHelper.player(), blockContainer, 0);
 	}*/
 }

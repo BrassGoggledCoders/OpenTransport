@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
 
 import javax.annotation.Nonnull;
@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemMinecartHolder extends ItemMinecartBase /*implements IHasItemRenderHandler*/ {
-	private IBlockContainer blockContainer;
+	private IBlockWrapper blockContainer;
 
-	public ItemMinecartHolder(IBlockContainer blockContainer, CreativeTabs creativeTabs) {
+	public ItemMinecartHolder(IBlockWrapper blockContainer, CreativeTabs creativeTabs) {
 		super("minecart.holder." + blockContainer.getUnlocalizedName());
 		this.setCreativeTab(creativeTabs);
 		this.blockContainer = blockContainer;
@@ -43,7 +43,7 @@ public class ItemMinecartHolder extends ItemMinecartBase /*implements IHasItemRe
 		return displayName;
 	}
 
-	public IBlockContainer getBlockContainer(ItemStack itemStack) {
+	public IBlockWrapper getBlockContainer(ItemStack itemStack) {
 		return this.blockContainer;
 	}
 

@@ -6,13 +6,13 @@ import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
 import com.teamacronymcoders.base.modulesystem.dependencies.ModDependency;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 
 import java.util.List;
 
 @Module(OpenTransport.MODID)
 public class IronChestModule extends ModuleBase {
-	public static IBlockContainer[] IRON_CHESTS;
+	public static IBlockWrapper[] IRON_CHESTS;
 
 	@Override
 	public String getName() {

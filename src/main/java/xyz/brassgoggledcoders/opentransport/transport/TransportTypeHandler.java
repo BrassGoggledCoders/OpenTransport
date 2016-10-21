@@ -33,7 +33,7 @@ public class TransportTypeHandler {
 	}
 
 	private ConfigRegistry getConfig() {
-		return OpenTransport.INSTANCE.<ConfigRegistry>getRegistry(ConfigRegistry.class, "CONFIG");
+		return (ConfigRegistry) OpenTransport.INSTANCE.getRegistry(ConfigRegistry.class, "CONFIG");
 	}
 
 	private static class TransportTypeEntry extends ConfigEntry {

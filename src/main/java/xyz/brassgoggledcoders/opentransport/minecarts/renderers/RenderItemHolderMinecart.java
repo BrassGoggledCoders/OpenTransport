@@ -23,7 +23,7 @@ public class RenderItemHolderMinecart /*implements IItemRenderingHandler*/ {
 		}
 		if(minecartHolder.getEntity().worldObj != null && item instanceof ItemMinecartHolder) {
 			ItemMinecartHolder itemMinecartHolder = (ItemMinecartHolder) item;
-			IBlockContainer blockContainer = itemMinecartHolder.getBlockContainer(itemStack);
+			IBlockWrapper blockContainer = itemMinecartHolder.getBlockContainer(itemStack);
 			blockContainer.setHolder(minecartHolder);
 			minecartHolder.setBlockContainer(blockContainer);
 
@@ -73,7 +73,7 @@ public class RenderItemHolderMinecart /*implements IItemRenderingHandler*/ {
 		GlStateManager.popMatrix();
 	}
 
-	protected void renderBlockContainer(IBlockContainer blockContainer) {
+	protected void renderBlockContainer(IBlockWrapper blockContainer) {
 		renderBlock.renderEntity(ClientHelper.player(), blockContainer, 0);
 	}*/
 }

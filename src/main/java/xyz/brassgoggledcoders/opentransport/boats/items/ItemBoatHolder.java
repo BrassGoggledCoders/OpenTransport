@@ -24,7 +24,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
 
 import javax.annotation.Nonnull;
@@ -32,9 +32,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRenderHandler*/ {
-	IBlockContainer firstContainer;
+	IBlockWrapper firstContainer;
 
-	public ItemBoatHolder(IBlockContainer firstContainer, CreativeTabs tab) {
+	public ItemBoatHolder(IBlockWrapper firstContainer, CreativeTabs tab) {
 		super(EntityBoat.Type.OAK);
 		this.setUnlocalizedName("boat.holder." + firstContainer.getUnlocalizedName());
 		this.setCreativeTab(tab);
@@ -151,7 +151,7 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
 		}
 	}
 
-	public IBlockContainer getBlockContainer(ItemStack itemStack) {
+	public IBlockWrapper getBlockContainer(ItemStack itemStack) {
 		return firstContainer;
 	}
 

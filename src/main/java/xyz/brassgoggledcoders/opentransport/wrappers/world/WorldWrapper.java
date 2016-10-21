@@ -16,7 +16,7 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 import javax.annotation.Nonnull;
@@ -138,7 +138,7 @@ public class WorldWrapper extends World {
 		return this.entity;
 	}
 
-	public IBlockContainer getBlockContainer() {
+	public IBlockWrapper getBlockContainer() {
 		return this.getHolderEntity().getBlockContainer();
 	}
 

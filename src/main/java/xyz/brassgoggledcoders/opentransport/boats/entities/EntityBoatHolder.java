@@ -16,7 +16,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.boats.items.ItemBoatHolder;
 import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
@@ -29,7 +29,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 			EntityDataManager.createKey(EntityBoat.class, DataSerializers.STRING);
 	private static final DataParameter<Optional<ItemStack>> ITEM_BOAT =
 			EntityDataManager.createKey(EntityBoat.class, DataSerializers.OPTIONAL_ITEM_STACK);
-	IBlockContainer blockContainer;
+	IBlockWrapper blockContainer;
 
 	public EntityBoatHolder(World world) {
 		super(world);
@@ -64,7 +64,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 	}
 
 	@Override
-	public IBlockContainer getBlockContainer() {
+	public IBlockWrapper getBlockContainer() {
 		if(this.blockContainer == null) {
 			String containerName = this.dataManager.get(BLOCK_CONTAINER_NAME);
 			this.blockContainer = BlockContainerRegistry.getBlockContainer(containerName);
@@ -76,7 +76,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 	}
 
 	@Override
-	public void setBlockContainer(IBlockContainer blockContainer) {
+	public void setBlockContainer(IBlockWrapper blockContainer) {
 		this.dataManager.set(BLOCK_CONTAINER_NAME, blockContainer.getUnlocalizedName());
 		this.blockContainer = blockContainer;
 		this.blockContainer.setHolder(this);

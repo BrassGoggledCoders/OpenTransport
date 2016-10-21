@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.opentransport.api.blockcontainers;
+package xyz.brassgoggledcoders.opentransport.api.blockwrappers;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -12,7 +12,7 @@ import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
 
 import javax.annotation.Nonnull;
 
-public interface IBlockContainer {
+public interface IBlockWrapper {
 	@Nonnull
 	Block getBlock();
 
@@ -46,5 +46,5 @@ public interface IBlockContainer {
 
 	void readFromNBT(NBTTagCompound tagCompound);
 
-	IBlockContainer copy();
+	IBlockWrapper copy();
 }

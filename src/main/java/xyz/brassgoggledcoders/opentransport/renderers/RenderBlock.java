@@ -6,10 +6,10 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 
 public class RenderBlock {
-	public void renderEntity(Entity entity, IBlockContainer blockContainer, float partialTicks) {
+	public void renderEntity(Entity entity, IBlockWrapper blockContainer, float partialTicks) {
 		this.render(blockContainer.getRenderType(), blockContainer.getBlockState(), blockContainer.getTileEntity(),
 				entity.getBrightness(partialTicks));
 	}

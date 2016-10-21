@@ -5,13 +5,13 @@ import blusunrize.immersiveengineering.common.blocks.wooden.TileEntityWoodenCrat
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IGuiInterface;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IGuiInterface;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 public class CrateInterface implements IGuiInterface {
 	@Override
-	public Gui getGUI(EntityPlayer entityPlayer, IHolderEntity holderEntity, IBlockContainer blockContainer) {
+	public Gui getGUI(EntityPlayer entityPlayer, IHolderEntity holderEntity, IBlockWrapper blockContainer) {
 		GuiCrate guiCrate =
 				new GuiCrate(entityPlayer.inventory, (TileEntityWoodenCrate) blockContainer.getTileEntity());
 		guiCrate.inventorySlots = getContainer(entityPlayer, holderEntity, blockContainer);
@@ -20,7 +20,7 @@ public class CrateInterface implements IGuiInterface {
 
 	@Override
 	public Container getContainer(EntityPlayer entityPlayer, IHolderEntity holderEntity,
-			IBlockContainer blockContainer) {
+			IBlockWrapper blockContainer) {
 		return new ContainerCrateEntity(entityPlayer.inventory, holderEntity,
 				(TileEntityWoodenCrate) blockContainer.getTileEntity());
 	}

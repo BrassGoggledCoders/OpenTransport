@@ -7,7 +7,7 @@ import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.TransportType;
 import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
@@ -40,16 +40,16 @@ public class BoatTransport implements ITransportType<EntityBoat> {
 	}
 
 	@Override
-	public void registerItems(Map<String, IBlockContainer> blockContainers) {
+	public void registerItems(Map<String, IBlockWrapper> blockContainers) {
 		blockContainers.forEach((name, blockContainer) -> {
 			ItemBoatHolder holder = new ItemBoatHolder(blockContainer, this.getCreativeTab());
-			OpenTransport.INSTANCE.<ItemRegistry>getRegistry(ItemRegistry.class, "ITEM").register(holder);
+			OpenTransport.INSTANCE.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(holder);
 		});
 	}
 
 	@Override
 	public void registerEntities() {
-		OpenTransport.INSTANCE.<EntityRegistry>getRegistry(EntityRegistry.class, "ENTITY").register(EntityBoatHolder.class);
+		OpenTransport.INSTANCE.getRegistryHolder().getRegistry(EntityRegistry.class, "ENTITY").register(EntityBoatHolder.class);
 	}
 
 	@Override

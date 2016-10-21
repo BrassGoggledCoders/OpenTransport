@@ -18,8 +18,16 @@ buildscript {
 
 repositories {
     maven {
-        name "TAC maven"
+        name "Base"
         url "http://blamejared.com/maven"
+    }
+    maven {
+        name 'Mobius'
+        url 'http://mobiusstrip.eu/maven'
+    }
+    maven {
+        name 'JEI'
+        url "http://dvs1.progwml6.com/files/maven"
     }
 }
 
@@ -59,8 +67,12 @@ task getLibraries {
     def ie = 'ImmersiveEngineering-' + immersive_engineering_version + '.jar'
     def ieSource = ''
 
+    def railcraft = 'Railcraft_' + minecraft_version + '-' + railcraft_version + '-dev.jar'
+    def railcraftSource = 'http://www.railcraft.info/ivy/com.headlamp-games/Railcraft/' + railcraft_version + '/' + railcraft
+
     downloads.add(new Tuple(ironchest, ironchestSource))
     downloads.add(new Tuple(ie, ieSource))
+    downloads.add(new Tuple(railcraft, railcraftSource))
 
     libsFolder.listFiles().each { file ->
         def isInDownloadList = false;

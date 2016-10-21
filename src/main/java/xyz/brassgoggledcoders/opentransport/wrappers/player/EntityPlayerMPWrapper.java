@@ -15,7 +15,7 @@ import net.minecraft.world.LockCode;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.api.blockcontainers.IBlockContainer;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 import javax.annotation.Nonnull;
@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 public class EntityPlayerMPWrapper extends EntityPlayerMP {
 	protected EntityPlayerMP entityPlayer;
 	protected IHolderEntity containerHolder;
-	protected IBlockContainer blockContainer;
+	protected IBlockWrapper blockContainer;
 
 	public EntityPlayerMPWrapper(EntityPlayerMP entityPlayer, IHolderEntity containerHolder) {
 		super(entityPlayer.mcServer, entityPlayer.getServerWorld(), entityPlayer.getGameProfile(),
