@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.boats.items.ItemBoatHolder;
-import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
+import xyz.brassgoggledcoders.opentransport.registries.BlockWrapperRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,7 +29,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
             EntityDataManager.createKey(EntityBoat.class, DataSerializers.STRING);
     private static final DataParameter<Optional<ItemStack>> ITEM_BOAT =
             EntityDataManager.createKey(EntityBoat.class, DataSerializers.OPTIONAL_ITEM_STACK);
-    IBlockWrapper blockContainer;
+    IBlockWrapper blockWrapper;
 
     public EntityBoatHolder(World world) {
         super(world);
@@ -64,28 +64,28 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
     }
 
     @Override
-    public IBlockWrapper getBlockContainer() {
-        if (this.blockContainer == null) {
+    public IBlockWrapper getBlockWrapper() {
+        if (this.blockWrapper == null) {
             String containerName = this.dataManager.get(BLOCK_CONTAINER_NAME);
-            this.blockContainer = BlockContainerRegistry.getBlockContainer(containerName);
-            if (this.blockContainer != null) {
-                this.blockContainer.setHolder(this);
+            this.blockWrapper = BlockWrapperRegistry.getBlockWrapper(containerName);
+            if (this.blockWrapper != null) {
+                this.blockWrapper.setHolder(this);
             }
         }
-        return this.blockContainer;
+        return this.blockWrapper;
     }
 
     @Override
-    public void setBlockContainer(IBlockWrapper blockContainer) {
-        this.dataManager.set(BLOCK_CONTAINER_NAME, blockContainer.getUnlocalizedName());
-        this.blockContainer = blockContainer;
-        this.blockContainer.setHolder(this);
+    public void setBlockWrapper(IBlockWrapper blockWrapper) {
+        this.dataManager.set(BLOCK_CONTAINER_NAME, blockWrapper.getUnlocalizedName());
+        this.blockWrapper = blockWrapper;
+        this.blockWrapper.setHolder(this);
     }
 
     @Override
     public boolean processInitialInteract(@Nonnull EntityPlayer entityPlayer, @Nullable ItemStack itemStack,
                                           EnumHand hand) {
-        return this.getBlockContainer() != null && this.getBlockContainer().onInteract(entityPlayer, hand, itemStack);
+        return this.getBlockWrapper() != null && this.getBlockWrapper().onInteract(entityPlayer, hand, itemStack);
     }
 
     @Override
@@ -99,9 +99,9 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
             nbtTagCompound.setTag("ITEM_BOAT", itemStackBoat.get().writeToNBT(itemBoat));
         }
         nbtTagCompound.setString("CONTAINER_NAME", this.dataManager.get(BLOCK_CONTAINER_NAME));
-        if (blockContainer != null) {
+        if (blockWrapper != null) {
             NBTTagCompound containerTag = new NBTTagCompound();
-            containerTag = blockContainer.writeToNBT(containerTag);
+            containerTag = blockWrapper.writeToNBT(containerTag);
             nbtTagCompound.setTag("CONTAINER", containerTag);
         }
         return nbtTagCompound;
@@ -111,19 +111,19 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
     public void readFromNBT(NBTTagCompound nbtTagCompound) {
         super.readFromNBT(nbtTagCompound);
         this.dataManager.set(BLOCK_CONTAINER_NAME, nbtTagCompound.getString("CONTAINER_NAME"));
-        this.setBlockContainer(BlockContainerRegistry.getBlockContainer(nbtTagCompound.getString("CONTAINER_NAME")));
+        this.setBlockWrapper(BlockWrapperRegistry.getBlockWrapper(nbtTagCompound.getString("CONTAINER_NAME")));
         this.setItemBoat(ItemStack.loadItemStackFromNBT(nbtTagCompound.getCompoundTag("ITEM_BOAT")));
-        blockContainer.setHolder(this);
-        blockContainer.readFromNBT(nbtTagCompound.getCompoundTag("CONTAINER"));
+        blockWrapper.setHolder(this);
+        blockWrapper.readFromNBT(nbtTagCompound.getCompoundTag("CONTAINER"));
     }
 
     @Override
     public Gui getClientGuiElement(int ID, EntityPlayer player, World world, BlockPos blockPos) {
-        return this.getBlockContainer().getInterface().getGUI(player, this, this.getBlockContainer());
+        return this.getBlockWrapper().getInterface().getGUI(player, this, this.getBlockWrapper());
     }
 
     @Override
     public Container getServerGuiElement(int ID, EntityPlayer player, World world, BlockPos blockPos) {
-        return this.getBlockContainer().getInterface().getContainer(player, this, this.getBlockContainer());
+        return this.getBlockWrapper().getInterface().getContainer(player, this, this.getBlockWrapper());
     }
 }

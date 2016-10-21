@@ -18,12 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemMinecartHolder extends ItemMinecartBase /*implements IHasItemRenderHandler*/ {
-    private IBlockWrapper blockContainer;
+    private IBlockWrapper blockWrapper;
 
-    public ItemMinecartHolder(IBlockWrapper blockContainer, CreativeTabs creativeTabs) {
-        super("minecart.holder." + blockContainer.getUnlocalizedName());
+    public ItemMinecartHolder(IBlockWrapper blockWrapper, CreativeTabs creativeTabs) {
+        super("minecart.holder." + blockWrapper.getUnlocalizedName());
         this.setCreativeTab(creativeTabs);
-        this.blockContainer = blockContainer;
+        this.blockWrapper = blockWrapper;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ItemMinecartHolder extends ItemMinecartBase /*implements IHasItemRe
 
         displayName += Items.MINECART.getItemStackDisplayName(itemStack);
 
-        Item blockItem = Item.getItemFromBlock(this.blockContainer.getBlock());
+        Item blockItem = Item.getItemFromBlock(this.blockWrapper.getBlock());
         if (blockItem != null) {
             displayName += " " + I18n.format("separator.with") + " ";
             displayName += blockItem.getItemStackDisplayName(itemStack);
@@ -43,15 +43,15 @@ public class ItemMinecartHolder extends ItemMinecartBase /*implements IHasItemRe
         return displayName;
     }
 
-    public IBlockWrapper getBlockContainer(ItemStack itemStack) {
-        return this.blockContainer;
+    public IBlockWrapper getBlockWrapper(ItemStack itemStack) {
+        return this.blockWrapper;
     }
 
     @Nonnull
     @Override
     public EntityMinecartBase getEntityFromItem(World world, ItemStack itemStack) {
         EntityMinecartHolder minecart = new EntityMinecartHolder(world);
-        minecart.setBlockContainer(blockContainer);
+        minecart.setBlockWrapper(blockWrapper);
         minecart.setItemCart(itemStack);
         return minecart;
     }

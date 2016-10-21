@@ -24,7 +24,7 @@ public class HolderUpdatePacket implements IMessage {
     public HolderUpdatePacket(IHolderEntity holderEntity) {
         this.entityID = holderEntity.getEntity().getEntityId();
         this.holderEntity = holderEntity;
-        this.nbtTagCompound = holderEntity.getBlockContainer().writeToNBT(new NBTTagCompound());
+        this.nbtTagCompound = holderEntity.getBlockWrapper().writeToNBT(new NBTTagCompound());
     }
 
     @Override
@@ -63,7 +63,7 @@ public class HolderUpdatePacket implements IMessage {
                     IHolderEntity holderEntity = message.getHolderEntityFromMessage(ctx);
 
                     if (holderEntity != null) {
-                        holderEntity.getBlockContainer().readFromNBT(message.nbtTagCompound);
+                        holderEntity.getBlockWrapper().readFromNBT(message.nbtTagCompound);
                     }
                 }
             });

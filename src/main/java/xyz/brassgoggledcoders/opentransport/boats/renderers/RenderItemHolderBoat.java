@@ -29,9 +29,9 @@ public class RenderItemHolderBoat /*implements IItemRenderingHandler*/ {
 		}
 		if(boatHolder.getEntity().worldObj != null && item instanceof ItemBoatHolder) {
 			ItemBoatHolder itemBoatHolder = (ItemBoatHolder) item;
-			IBlockWrapper blockContainer = itemBoatHolder.getBlockContainer(itemStack);
-			blockContainer.setHolder(boatHolder);
-			boatHolder.setBlockContainer(blockContainer);
+			IBlockWrapper blockWrapper = itemBoatHolder.getBlockWrapper(itemStack);
+			blockWrapper.setHolder(boatHolder);
+			boatHolder.setBlockWrapper(blockWrapper);
 
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(.5, .55, .5);
@@ -66,7 +66,7 @@ public class RenderItemHolderBoat /*implements IItemRenderingHandler*/ {
 			GlStateManager.rotate(90, 0, 1, 0);
 			GlStateManager.scale(1.5, 1.5, 1.5);
 			GlStateManager.translate(-.5, -0.25, .5);
-			renderBlockContainer(blockContainer);
+			renderBlockWrapper(blockWrapper);
 			GlStateManager.popMatrix();
 		}
 	}
@@ -79,7 +79,7 @@ public class RenderItemHolderBoat /*implements IItemRenderingHandler*/ {
 		GlStateManager.popMatrix();
 	}
 
-	protected void renderBlockContainer(IBlockWrapper blockContainer) {
-		renderBlock.renderEntity(ClientHelper.player(), blockContainer, 0);
+	protected void renderBlockWrapper(IBlockWrapper blockWrapper) {
+		renderBlock.renderEntity(ClientHelper.player(), blockWrapper, 0);
 	}*/
 }

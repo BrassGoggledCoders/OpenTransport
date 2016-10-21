@@ -40,16 +40,16 @@ public class BoatTransport implements ITransportType<EntityBoat> {
     }
 
     @Override
-    public void registerItems(Map<String, IBlockWrapper> blockContainers) {
-        blockContainers.forEach((name, blockContainer) -> {
-            ItemBoatHolder holder = new ItemBoatHolder(blockContainer, this.getCreativeTab());
+    public void registerItems(Map<String, IBlockWrapper> blockWrappers) {
+        blockWrappers.forEach((name, blockWrapper) -> {
+            ItemBoatHolder holder = new ItemBoatHolder(blockWrapper, this.getCreativeTab());
             OpenTransport.instance.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(holder);
         });
     }
 
     @Override
     public void registerEntities() {
-        OpenTransport.instance.getRegistryHolder().getRegistry(EntityRegistry.class, "ENTITY").register(EntityBoatHolder.class);
+        OpenTransport.instance.getRegistry(EntityRegistry.class, "ENTITY").register(EntityBoatHolder.class);
     }
 
     @Override

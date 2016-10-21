@@ -9,8 +9,8 @@ import net.minecraft.tileentity.TileEntity;
 import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 
 public class RenderBlock {
-    public void renderEntity(Entity entity, IBlockWrapper blockContainer, float partialTicks) {
-        this.render(blockContainer.getRenderType(), blockContainer.getBlockState(), blockContainer.getTileEntity(),
+    public void renderEntity(Entity entity, IBlockWrapper blockWrapper, float partialTicks) {
+        this.render(blockWrapper.getRenderType(), blockWrapper.getBlockState(), blockWrapper.getTileEntity(),
                 entity.getBrightness(partialTicks));
     }
 

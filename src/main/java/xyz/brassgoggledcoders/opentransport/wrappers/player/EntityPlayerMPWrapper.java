@@ -24,14 +24,14 @@ import javax.annotation.Nullable;
 public class EntityPlayerMPWrapper extends EntityPlayerMP {
     protected EntityPlayerMP entityPlayer;
     protected IHolderEntity containerHolder;
-    protected IBlockWrapper blockContainer;
+    protected IBlockWrapper blockWrapper;
 
     public EntityPlayerMPWrapper(EntityPlayerMP entityPlayer, IHolderEntity containerHolder) {
         super(entityPlayer.mcServer, entityPlayer.getServerWorld(), entityPlayer.getGameProfile(),
                 entityPlayer.interactionManager);
         this.entityPlayer = entityPlayer;
         this.containerHolder = containerHolder;
-        this.blockContainer = containerHolder.getBlockContainer();
+        this.blockWrapper = containerHolder.getBlockWrapper();
         this.worldObj = entityPlayer.worldObj;
         this.connection = entityPlayer.connection;
     }

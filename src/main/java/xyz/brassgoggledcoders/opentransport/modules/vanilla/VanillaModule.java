@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.blocks.BlockWrapperBase;
-import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
+import xyz.brassgoggledcoders.opentransport.registries.BlockWrapperRegistry;
 
 @Module(OpenTransport.MODID)
 public class VanillaModule extends ModuleBase {
@@ -21,6 +21,6 @@ public class VanillaModule extends ModuleBase {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         ENDER_CHEST = new BlockWrapperBase(Blocks.ENDER_CHEST).setClickInteraction(new EnderChestInteraction());
-        BlockContainerRegistry.registerContainer(ENDER_CHEST);
+        BlockWrapperRegistry.registerContainer(ENDER_CHEST);
     }
 }

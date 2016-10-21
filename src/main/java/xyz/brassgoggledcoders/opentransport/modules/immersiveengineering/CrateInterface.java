@@ -11,17 +11,17 @@ import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 public class CrateInterface implements IGuiInterface {
     @Override
-    public Gui getGUI(EntityPlayer entityPlayer, IHolderEntity holderEntity, IBlockWrapper blockContainer) {
+    public Gui getGUI(EntityPlayer entityPlayer, IHolderEntity holderEntity, IBlockWrapper blockWrapper) {
         GuiCrate guiCrate =
-                new GuiCrate(entityPlayer.inventory, (TileEntityWoodenCrate) blockContainer.getTileEntity());
-        guiCrate.inventorySlots = getContainer(entityPlayer, holderEntity, blockContainer);
+                new GuiCrate(entityPlayer.inventory, (TileEntityWoodenCrate) blockWrapper.getTileEntity());
+        guiCrate.inventorySlots = getContainer(entityPlayer, holderEntity, blockWrapper);
         return guiCrate;
     }
 
     @Override
     public Container getContainer(EntityPlayer entityPlayer, IHolderEntity holderEntity,
-                                  IBlockWrapper blockContainer) {
+                                  IBlockWrapper blockWrapper) {
         return new ContainerCrateEntity(entityPlayer.inventory, holderEntity,
-                (TileEntityWoodenCrate) blockContainer.getTileEntity());
+                (TileEntityWoodenCrate) blockWrapper.getTileEntity());
     }
 }

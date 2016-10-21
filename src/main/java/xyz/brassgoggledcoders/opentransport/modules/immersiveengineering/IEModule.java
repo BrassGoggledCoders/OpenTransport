@@ -24,6 +24,6 @@ public class IEModule extends ModuleBase {
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
-        IEBlockContainers.preInit(event);
+        IEBlockWrappers.preInit(event);
     }
 }

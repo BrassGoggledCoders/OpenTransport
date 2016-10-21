@@ -27,6 +27,6 @@ public class IronChestModule extends ModuleBase {
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
-        IronChestBlockContainers.preInit(event);
+        IronChestBlockWrappers.preInit(event);
     }
 }

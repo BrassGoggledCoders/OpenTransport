@@ -11,7 +11,7 @@ import xyz.brassgoggledcoders.opentransport.wrappers.world.WorldWrapper;
 public class BaseInteraction implements IInteraction {
     @Override
     public boolean interact(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack, IHolderEntity holderEntity,
-                            IBlockWrapper blockContainer) {
+                            IBlockWrapper blockWrapper) {
         return false;
     }
 

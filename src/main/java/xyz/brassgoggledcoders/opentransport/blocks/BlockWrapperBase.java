@@ -122,11 +122,11 @@ public class BlockWrapperBase implements IBlockWrapper {
     @Override
     public boolean onInteract(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack) {
         boolean result;
-        this.updateBlockContainer();
+        this.updateBlockWrapper();
         EntityPlayer entityPlayerWrapper = OpenTransport.proxy.getEntityPlayerWrapper(entityPlayer, this.holderEntity);
         result = this.getClickInteraction().interact(entityPlayerWrapper, hand, itemStack, this.holderEntity, this);
         OpenTransport.proxy.resetPlayer(entityPlayer);
-        this.updateBlockContainer();
+        this.updateBlockWrapper();
         return result;
     }
 
@@ -181,14 +181,14 @@ public class BlockWrapperBase implements IBlockWrapper {
 
     @Override
     public BlockWrapperBase copy() {
-        BlockWrapperBase copyBlockContainer = new BlockWrapperBase(this.getBlock());
-        copyBlockContainer.setBlockState(this.getBlockState()).setClickInteraction(this.getClickInteraction())
+        BlockWrapperBase copyBlockWrapper = new BlockWrapperBase(this.getBlock());
+        copyBlockWrapper.setBlockState(this.getBlockState()).setClickInteraction(this.getClickInteraction())
                 .setGuiInterface(this.guiInterface).setRenderType(this.getRenderType())
                 .setUnlocalizedName(this.getUnlocalizedName());
-        return copyBlockContainer;
+        return copyBlockWrapper;
     }
 
-    private void updateBlockContainer() {
+    private void updateBlockWrapper() {
         OpenTransport.instance.getPacketHandler()
                 .sendToAllAround(new HolderUpdatePacket(this.holderEntity), this.holderEntity.getEntity());
     }

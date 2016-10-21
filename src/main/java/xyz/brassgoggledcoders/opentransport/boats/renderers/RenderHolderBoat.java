@@ -40,7 +40,7 @@ public class RenderHolderBoat extends RenderBoat {
         GlStateManager.pushMatrix();
         GlStateManager.rotate(180, 1, 0, 0);
         GlStateManager.translate(-0.5, -0.20, 0.5);
-        this.renderBlock.renderEntity(entity, boatHolder.getBlockContainer(), partialTicks);
+        this.renderBlock.renderEntity(entity, boatHolder.getBlockWrapper(), partialTicks);
         GlStateManager.popMatrix();
 
         if (this.renderOutlines) {

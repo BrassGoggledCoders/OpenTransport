@@ -8,10 +8,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.blocks.BlockWrapperBase;
 import xyz.brassgoggledcoders.opentransport.interactions.BlockActivationInteraction;
-import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
+import xyz.brassgoggledcoders.opentransport.registries.BlockWrapperRegistry;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
 
-public class IronChestBlockContainers {
+public class IronChestBlockWrappers {
     public static void preInit(FMLPreInitializationEvent event) {
         //Minus 1 cause no wood
         IBlockWrapper[] IRON_CHESTS = new IBlockWrapper[IronChestType.values().length - 1];
@@ -22,7 +22,7 @@ public class IronChestBlockContainers {
                     .setUnlocalizedName(ironChest.getUnlocalizedName() + "." + type.toString().toLowerCase())
                     .setBlockState(ironChest.getDefaultState().withProperty(BlockIronChest.VARIANT_PROP, type))
                     .setGuiInterface(new IronChestInterface()).setClickInteraction(new BlockActivationInteraction());
-            BlockContainerRegistry.registerContainer(IRON_CHESTS[i]);
+            BlockWrapperRegistry.registerContainer(IRON_CHESTS[i]);
         }
         IronChestModule.IRON_CHESTS = IRON_CHESTS;
     }

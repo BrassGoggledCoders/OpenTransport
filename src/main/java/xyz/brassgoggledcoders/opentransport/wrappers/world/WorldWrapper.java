@@ -61,7 +61,7 @@ public class WorldWrapper extends World {
     @Override
     public TileEntity getTileEntity(@Nonnull BlockPos blockPos) {
         if (blockPos.equals(originPos)) {
-            return this.getBlockContainer().getTileEntity();
+            return this.getBlockWrapper().getTileEntity();
         }
         return null;
     }
@@ -76,7 +76,7 @@ public class WorldWrapper extends World {
     @Nonnull
     public IBlockState getBlockState(@Nonnull BlockPos blockPos) {
         if (blockPos.equals(originPos)) {
-            return this.getBlockContainer().getBlockState();
+            return this.getBlockWrapper().getBlockState();
         }
         return Blocks.AIR.getDefaultState();
     }
@@ -127,7 +127,7 @@ public class WorldWrapper extends World {
 
     @Override
     public void markChunkDirty(@Nonnull BlockPos pos, @Nonnull TileEntity tileEntity) {
-        this.getBlockContainer().markDirty();
+        this.getBlockWrapper().markDirty();
     }
 
     public Entity getEntity() {
@@ -138,8 +138,8 @@ public class WorldWrapper extends World {
         return this.entity;
     }
 
-    public IBlockWrapper getBlockContainer() {
-        return this.getHolderEntity().getBlockContainer();
+    public IBlockWrapper getBlockWrapper() {
+        return this.getHolderEntity().getBlockWrapper();
     }
 
     public double getPosX() {

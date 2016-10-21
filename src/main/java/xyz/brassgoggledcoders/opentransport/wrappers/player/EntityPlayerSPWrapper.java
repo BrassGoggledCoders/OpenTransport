@@ -25,14 +25,14 @@ import javax.annotation.Nullable;
 public class EntityPlayerSPWrapper extends EntityPlayerSP {
     protected EntityPlayerSP entityPlayer;
     protected IHolderEntity containerHolder;
-    protected IBlockWrapper blockContainer;
+    protected IBlockWrapper blockWrapper;
 
     public EntityPlayerSPWrapper(EntityPlayerSP entityPlayer, IHolderEntity containerHolder) {
         super(Minecraft.getMinecraft(), entityPlayer.worldObj, entityPlayer.connection,
                 entityPlayer.getStatFileWriter());
         this.entityPlayer = entityPlayer;
         this.containerHolder = containerHolder;
-        this.blockContainer = containerHolder.getBlockContainer();
+        this.blockWrapper = containerHolder.getBlockWrapper();
         this.worldObj = entityPlayer.worldObj;
     }
 

@@ -17,7 +17,7 @@ public interface ITransportType<E extends Entity> {
     @Nonnull
     CreativeTabs getCreativeTab();
 
-    void registerItems(Map<String, IBlockWrapper> blockContainers);
+    void registerItems(Map<String, IBlockWrapper> blockWrappers);
 
     void registerEntities();
 

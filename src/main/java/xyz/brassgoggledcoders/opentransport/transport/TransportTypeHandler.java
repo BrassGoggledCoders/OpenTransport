@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.TransportType;
-import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
+import xyz.brassgoggledcoders.opentransport.registries.BlockWrapperRegistry;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class TransportTypeHandler {
             this.getConfig().addEntry(transportType.getName(), new TransportTypeEntry(transportType));
             transportType.setIsActive(this.getConfig().getBoolean(transportType.getName(), true));
             if (transportType.getIsActive()) {
-                transportType.registerItems(BlockContainerRegistry.getAllBlockContainers());
+                transportType.registerItems(BlockWrapperRegistry.getAllBlockWrappers());
                 transportType.registerEntities();
             }
         }
@@ -33,7 +33,7 @@ public class TransportTypeHandler {
     }
 
     private ConfigRegistry getConfig() {
-        return (ConfigRegistry) OpenTransport.instance.getRegistry(ConfigRegistry.class, "CONFIG");
+        return OpenTransport.instance.getRegistry(ConfigRegistry.class, "CONFIG");
     }
 
     private static class TransportTypeEntry extends ConfigEntry {

@@ -9,13 +9,13 @@ import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 public class BaseInterface implements IGuiInterface {
     @Override
-    public Gui getGUI(EntityPlayer entityPlayer, IHolderEntity holderEntity, IBlockWrapper blockContainer) {
+    public Gui getGUI(EntityPlayer entityPlayer, IHolderEntity holderEntity, IBlockWrapper blockWrapper) {
         return null;
     }
 
     @Override
     public Container getContainer(EntityPlayer entityPlayer, IHolderEntity holderEntity,
-                                  IBlockWrapper blockContainer) {
+                                  IBlockWrapper blockWrapper) {
         return null;
     }
 }

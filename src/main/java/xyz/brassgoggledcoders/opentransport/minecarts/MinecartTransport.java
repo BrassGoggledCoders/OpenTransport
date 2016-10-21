@@ -40,9 +40,9 @@ public class MinecartTransport implements ITransportType<EntityMinecart> {
     }
 
     @Override
-    public void registerItems(Map<String, IBlockWrapper> blockContainers) {
-        blockContainers.forEach((name, blockContainer) -> {
-            ItemMinecartHolder holder = new ItemMinecartHolder(blockContainer, this.getCreativeTab());
+    public void registerItems(Map<String, IBlockWrapper> blockWrappers) {
+        blockWrappers.forEach((name, blockWrapper) -> {
+            ItemMinecartHolder holder = new ItemMinecartHolder(blockWrapper, this.getCreativeTab());
             OpenTransport.instance.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(holder);
         });
     }

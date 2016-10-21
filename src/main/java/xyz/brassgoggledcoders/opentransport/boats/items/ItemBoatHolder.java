@@ -98,7 +98,7 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
                 entityBoatHolder.setPosition(boatPosX, boatPosY, boatPosZ);
                 entityBoatHolder.setBoatType(this.getType(itemStack));
                 entityBoatHolder.setItemBoat(itemStack);
-                entityBoatHolder.setBlockContainer(this.getBlockContainer(itemStack));
+                entityBoatHolder.setBlockWrapper(this.getBlockWrapper(itemStack));
                 entityBoatHolder.rotationYaw = entityPlayer.rotationYaw;
 
                 if (!world.getCollisionBoxes(entityBoatHolder, entityBoatHolder.getEntityBoundingBox().expandXyz(-0.1D))
@@ -151,7 +151,7 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
         }
     }
 
-    public IBlockWrapper getBlockContainer(ItemStack itemStack) {
+    public IBlockWrapper getBlockWrapper(ItemStack itemStack) {
         return firstContainer;
     }
 

@@ -11,9 +11,9 @@ import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 public class BlockActivationInteraction extends BaseInteraction {
     @Override
     public boolean interact(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack, IHolderEntity holderEntity,
-                            IBlockWrapper blockContainer) {
-        return blockContainer.getBlock()
-                .onBlockActivated(this.getWorldWrapper(holderEntity), BlockPos.ORIGIN, blockContainer.getBlockState(),
+                            IBlockWrapper blockWrapper) {
+        return blockWrapper.getBlock()
+                .onBlockActivated(this.getWorldWrapper(holderEntity), BlockPos.ORIGIN, blockWrapper.getBlockState(),
                         entityPlayer, hand, itemStack, EnumFacing.UP, 0F, 0F, 0F);
     }
 }
