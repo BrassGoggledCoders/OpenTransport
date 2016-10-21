@@ -25,105 +25,105 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<EntityBoatHolder>, IHasGui {
-	private static final DataParameter<String> BLOCK_CONTAINER_NAME =
-			EntityDataManager.createKey(EntityBoat.class, DataSerializers.STRING);
-	private static final DataParameter<Optional<ItemStack>> ITEM_BOAT =
-			EntityDataManager.createKey(EntityBoat.class, DataSerializers.OPTIONAL_ITEM_STACK);
-	IBlockWrapper blockContainer;
+    private static final DataParameter<String> BLOCK_CONTAINER_NAME =
+            EntityDataManager.createKey(EntityBoat.class, DataSerializers.STRING);
+    private static final DataParameter<Optional<ItemStack>> ITEM_BOAT =
+            EntityDataManager.createKey(EntityBoat.class, DataSerializers.OPTIONAL_ITEM_STACK);
+    IBlockWrapper blockContainer;
 
-	public EntityBoatHolder(World world) {
-		super(world);
-	}
+    public EntityBoatHolder(World world) {
+        super(world);
+    }
 
-	@Override
-	protected void entityInit() {
-		super.entityInit();
-		this.dataManager.register(BLOCK_CONTAINER_NAME, "");
-		this.dataManager.register(ITEM_BOAT, Optional.<ItemStack>absent());
-	}
+    @Override
+    protected void entityInit() {
+        super.entityInit();
+        this.dataManager.register(BLOCK_CONTAINER_NAME, "");
+        this.dataManager.register(ITEM_BOAT, Optional.<ItemStack>absent());
+    }
 
-	@Override
-	@Nonnull
-	public Item getItemBoat() {
-		Optional<ItemStack> itemStackBoat = this.dataManager.get(ITEM_BOAT);
-		if(itemStackBoat.isPresent()) {
-			return itemStackBoat.get().getItem();
-		}
-		return Items.BOAT;
-	}
+    @Override
+    @Nonnull
+    public Item getItemBoat() {
+        Optional<ItemStack> itemStackBoat = this.dataManager.get(ITEM_BOAT);
+        if (itemStackBoat.isPresent()) {
+            return itemStackBoat.get().getItem();
+        }
+        return Items.BOAT;
+    }
 
-	public void setItemBoat(@Nonnull ItemStack itemBoatStack) {
-		if(itemBoatStack.getItem() instanceof ItemBoatHolder) {
-			this.dataManager.set(ITEM_BOAT, Optional.of(itemBoatStack));
-		}
-	}
+    public void setItemBoat(@Nonnull ItemStack itemBoatStack) {
+        if (itemBoatStack.getItem() instanceof ItemBoatHolder) {
+            this.dataManager.set(ITEM_BOAT, Optional.of(itemBoatStack));
+        }
+    }
 
-	@Override
-	public EntityBoatHolder getEntity() {
-		return this;
-	}
+    @Override
+    public EntityBoatHolder getEntity() {
+        return this;
+    }
 
-	@Override
-	public IBlockWrapper getBlockContainer() {
-		if(this.blockContainer == null) {
-			String containerName = this.dataManager.get(BLOCK_CONTAINER_NAME);
-			this.blockContainer = BlockContainerRegistry.getBlockContainer(containerName);
-			if(this.blockContainer != null) {
-				this.blockContainer.setHolder(this);
-			}
-		}
-		return this.blockContainer;
-	}
+    @Override
+    public IBlockWrapper getBlockContainer() {
+        if (this.blockContainer == null) {
+            String containerName = this.dataManager.get(BLOCK_CONTAINER_NAME);
+            this.blockContainer = BlockContainerRegistry.getBlockContainer(containerName);
+            if (this.blockContainer != null) {
+                this.blockContainer.setHolder(this);
+            }
+        }
+        return this.blockContainer;
+    }
 
-	@Override
-	public void setBlockContainer(IBlockWrapper blockContainer) {
-		this.dataManager.set(BLOCK_CONTAINER_NAME, blockContainer.getUnlocalizedName());
-		this.blockContainer = blockContainer;
-		this.blockContainer.setHolder(this);
-	}
+    @Override
+    public void setBlockContainer(IBlockWrapper blockContainer) {
+        this.dataManager.set(BLOCK_CONTAINER_NAME, blockContainer.getUnlocalizedName());
+        this.blockContainer = blockContainer;
+        this.blockContainer.setHolder(this);
+    }
 
-	@Override
-	public boolean processInitialInteract(@Nonnull EntityPlayer entityPlayer, @Nullable ItemStack itemStack,
-			EnumHand hand) {
-		return this.getBlockContainer() != null && this.getBlockContainer().onInteract(entityPlayer, hand, itemStack);
-	}
+    @Override
+    public boolean processInitialInteract(@Nonnull EntityPlayer entityPlayer, @Nullable ItemStack itemStack,
+                                          EnumHand hand) {
+        return this.getBlockContainer() != null && this.getBlockContainer().onInteract(entityPlayer, hand, itemStack);
+    }
 
-	@Override
-	@Nonnull
-	public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
-		super.writeToNBT(nbtTagCompound);
+    @Override
+    @Nonnull
+    public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
+        super.writeToNBT(nbtTagCompound);
 
-		Optional<ItemStack> itemStackBoat = this.dataManager.get(ITEM_BOAT);
-		if(itemStackBoat.isPresent()) {
-			NBTTagCompound itemBoat = new NBTTagCompound();
-			nbtTagCompound.setTag("ITEM_BOAT", itemStackBoat.get().writeToNBT(itemBoat));
-		}
-		nbtTagCompound.setString("CONTAINER_NAME", this.dataManager.get(BLOCK_CONTAINER_NAME));
-		if(blockContainer != null) {
-			NBTTagCompound containerTag = new NBTTagCompound();
-			containerTag = blockContainer.writeToNBT(containerTag);
-			nbtTagCompound.setTag("CONTAINER", containerTag);
-		}
-		return nbtTagCompound;
-	}
+        Optional<ItemStack> itemStackBoat = this.dataManager.get(ITEM_BOAT);
+        if (itemStackBoat.isPresent()) {
+            NBTTagCompound itemBoat = new NBTTagCompound();
+            nbtTagCompound.setTag("ITEM_BOAT", itemStackBoat.get().writeToNBT(itemBoat));
+        }
+        nbtTagCompound.setString("CONTAINER_NAME", this.dataManager.get(BLOCK_CONTAINER_NAME));
+        if (blockContainer != null) {
+            NBTTagCompound containerTag = new NBTTagCompound();
+            containerTag = blockContainer.writeToNBT(containerTag);
+            nbtTagCompound.setTag("CONTAINER", containerTag);
+        }
+        return nbtTagCompound;
+    }
 
-	@Override
-	public void readFromNBT(NBTTagCompound nbtTagCompound) {
-		super.readFromNBT(nbtTagCompound);
-		this.dataManager.set(BLOCK_CONTAINER_NAME, nbtTagCompound.getString("CONTAINER_NAME"));
-		this.setBlockContainer(BlockContainerRegistry.getBlockContainer(nbtTagCompound.getString("CONTAINER_NAME")));
-		this.setItemBoat(ItemStack.loadItemStackFromNBT(nbtTagCompound.getCompoundTag("ITEM_BOAT")));
-		blockContainer.setHolder(this);
-		blockContainer.readFromNBT(nbtTagCompound.getCompoundTag("CONTAINER"));
-	}
+    @Override
+    public void readFromNBT(NBTTagCompound nbtTagCompound) {
+        super.readFromNBT(nbtTagCompound);
+        this.dataManager.set(BLOCK_CONTAINER_NAME, nbtTagCompound.getString("CONTAINER_NAME"));
+        this.setBlockContainer(BlockContainerRegistry.getBlockContainer(nbtTagCompound.getString("CONTAINER_NAME")));
+        this.setItemBoat(ItemStack.loadItemStackFromNBT(nbtTagCompound.getCompoundTag("ITEM_BOAT")));
+        blockContainer.setHolder(this);
+        blockContainer.readFromNBT(nbtTagCompound.getCompoundTag("CONTAINER"));
+    }
 
-	@Override
-	public Gui getClientGuiElement(int ID, EntityPlayer player, World world, BlockPos blockPos) {
-		return this.getBlockContainer().getInterface().getGUI(player, this, this.getBlockContainer());
-	}
+    @Override
+    public Gui getClientGuiElement(int ID, EntityPlayer player, World world, BlockPos blockPos) {
+        return this.getBlockContainer().getInterface().getGUI(player, this, this.getBlockContainer());
+    }
 
-	@Override
-	public Container getServerGuiElement(int ID, EntityPlayer player, World world, BlockPos blockPos) {
-		return this.getBlockContainer().getInterface().getContainer(player, this, this.getBlockContainer());
-	}
+    @Override
+    public Container getServerGuiElement(int ID, EntityPlayer player, World world, BlockPos blockPos) {
+        return this.getBlockContainer().getInterface().getContainer(player, this, this.getBlockContainer());
+    }
 }

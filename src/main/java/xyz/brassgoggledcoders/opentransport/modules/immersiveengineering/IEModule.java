@@ -11,19 +11,19 @@ import java.util.List;
 
 @Module(OpenTransport.MODID)
 public class IEModule extends ModuleBase {
-	@Override
-	public String getName() {
-		return "Immersive Engineering";
-	}
+    @Override
+    public String getName() {
+        return "Immersive Engineering";
+    }
 
-	@Override
-	public List<IDependency> getDependencies(List<IDependency> dependencies) {
-		dependencies.add(new ModDependency("immersiveengineering"));
-		return dependencies;
-	}
+    @Override
+    public List<IDependency> getDependencies(List<IDependency> dependencies) {
+        dependencies.add(new ModDependency("immersiveengineering"));
+        return dependencies;
+    }
 
-	@Override
-	public void preInit(FMLPreInitializationEvent event) {
-		IEBlockContainers.preInit(event);
-	}
+    @Override
+    public void preInit(FMLPreInitializationEvent event) {
+        IEBlockContainers.preInit(event);
+    }
 }

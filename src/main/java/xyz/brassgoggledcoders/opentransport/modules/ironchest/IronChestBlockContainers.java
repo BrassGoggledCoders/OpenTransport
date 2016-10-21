@@ -12,18 +12,18 @@ import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
 
 public class IronChestBlockContainers {
-	public static void preInit(FMLPreInitializationEvent event) {
-		//Minus 1 cause no wood
-		IBlockWrapper[] IRON_CHESTS = new IBlockWrapper[IronChestType.values().length - 1];
-		Block ironChest = IronChest.ironChestBlock;
-		for(int i = 0; i < IRON_CHESTS.length; i++) {
-			IronChestType type = IronChestType.values()[i];
-			IRON_CHESTS[i] = new BlockWrapperBase(ironChest).setRenderType(RenderType.TESR)
-					.setUnlocalizedName(ironChest.getUnlocalizedName() + "." + type.toString().toLowerCase())
-					.setBlockState(ironChest.getDefaultState().withProperty(BlockIronChest.VARIANT_PROP, type))
-					.setGuiInterface(new IronChestInterface()).setClickInteraction(new BlockActivationInteraction());
-			BlockContainerRegistry.registerContainer(IRON_CHESTS[i]);
-		}
-		IronChestModule.IRON_CHESTS = IRON_CHESTS;
-	}
+    public static void preInit(FMLPreInitializationEvent event) {
+        //Minus 1 cause no wood
+        IBlockWrapper[] IRON_CHESTS = new IBlockWrapper[IronChestType.values().length - 1];
+        Block ironChest = IronChest.ironChestBlock;
+        for (int i = 0; i < IRON_CHESTS.length; i++) {
+            IronChestType type = IronChestType.values()[i];
+            IRON_CHESTS[i] = new BlockWrapperBase(ironChest).setRenderType(RenderType.TESR)
+                    .setUnlocalizedName(ironChest.getUnlocalizedName() + "." + type.toString().toLowerCase())
+                    .setBlockState(ironChest.getDefaultState().withProperty(BlockIronChest.VARIANT_PROP, type))
+                    .setGuiInterface(new IronChestInterface()).setClickInteraction(new BlockActivationInteraction());
+            BlockContainerRegistry.registerContainer(IRON_CHESTS[i]);
+        }
+        IronChestModule.IRON_CHESTS = IRON_CHESTS;
+    }
 }

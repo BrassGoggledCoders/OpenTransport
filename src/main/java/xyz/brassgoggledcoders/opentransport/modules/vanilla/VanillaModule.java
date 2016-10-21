@@ -11,16 +11,16 @@ import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
 
 @Module(OpenTransport.MODID)
 public class VanillaModule extends ModuleBase {
-	public static IBlockWrapper ENDER_CHEST;
+    public static IBlockWrapper ENDER_CHEST;
 
-	@Override
-	public String getName() {
-		return "Vanilla";
-	}
+    @Override
+    public String getName() {
+        return "Vanilla";
+    }
 
-	@Override
-	public void preInit(FMLPreInitializationEvent event) {
-		ENDER_CHEST = new BlockWrapperBase(Blocks.ENDER_CHEST).setClickInteraction(new EnderChestInteraction());
-		BlockContainerRegistry.registerContainer(ENDER_CHEST);
-	}
+    @Override
+    public void preInit(FMLPreInitializationEvent event) {
+        ENDER_CHEST = new BlockWrapperBase(Blocks.ENDER_CHEST).setClickInteraction(new EnderChestInteraction());
+        BlockContainerRegistry.registerContainer(ENDER_CHEST);
+    }
 }

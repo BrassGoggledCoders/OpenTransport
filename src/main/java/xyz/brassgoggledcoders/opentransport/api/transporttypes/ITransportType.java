@@ -8,20 +8,20 @@ import javax.annotation.Nonnull;
 import java.util.Map;
 
 public interface ITransportType<E extends Entity> {
-	@Nonnull
-	String getName();
+    @Nonnull
+    String getName();
 
-	@Nonnull
-	Class<E> getBaseEntity();
+    @Nonnull
+    Class<E> getBaseEntity();
 
-	@Nonnull
-	CreativeTabs getCreativeTab();
+    @Nonnull
+    CreativeTabs getCreativeTab();
 
-	void registerItems(Map<String, IBlockWrapper> blockContainers);
+    void registerItems(Map<String, IBlockWrapper> blockContainers);
 
-	void registerEntities();
+    void registerEntities();
 
-	boolean getIsActive();
+    boolean getIsActive();
 
-	void setIsActive(boolean isActive);
+    void setIsActive(boolean isActive);
 }

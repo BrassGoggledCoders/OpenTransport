@@ -8,14 +8,14 @@ import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IGuiInterface;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 public class BaseInterface implements IGuiInterface {
-	@Override
-	public Gui getGUI(EntityPlayer entityPlayer, IHolderEntity holderEntity, IBlockWrapper blockContainer) {
-		return null;
-	}
+    @Override
+    public Gui getGUI(EntityPlayer entityPlayer, IHolderEntity holderEntity, IBlockWrapper blockContainer) {
+        return null;
+    }
 
-	@Override
-	public Container getContainer(EntityPlayer entityPlayer, IHolderEntity holderEntity,
-			IBlockWrapper blockContainer) {
-		return null;
-	}
+    @Override
+    public Container getContainer(EntityPlayer entityPlayer, IHolderEntity holderEntity,
+                                  IBlockWrapper blockContainer) {
+        return null;
+    }
 }

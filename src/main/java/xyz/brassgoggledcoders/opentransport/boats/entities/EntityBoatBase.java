@@ -11,27 +11,27 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class EntityBoatBase extends EntityBoat {
-	public EntityBoatBase(World world) {
-		super(world);
-	}
+    public EntityBoatBase(World world) {
+        super(world);
+    }
 
-	@Override
-	public boolean canPassengerSteer() {
-		return true;
-	}
+    @Override
+    public boolean canPassengerSteer() {
+        return true;
+    }
 
-	@Override
-	public boolean isBeingRidden() {
-		return false;
-	}
+    @Override
+    public boolean isBeingRidden() {
+        return false;
+    }
 
-	@Override
-	public boolean processInitialInteract(@Nonnull EntityPlayer player, @Nullable ItemStack stack, EnumHand hand) {
-		return true;
-	}
+    @Override
+    public boolean processInitialInteract(@Nonnull EntityPlayer player, @Nullable ItemStack stack, EnumHand hand) {
+        return true;
+    }
 
-	@Override
-	protected boolean canFitPassenger(Entity passenger) {
-		return false;
-	}
+    @Override
+    protected boolean canFitPassenger(Entity passenger) {
+        return false;
+    }
 }

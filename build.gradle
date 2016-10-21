@@ -35,7 +35,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = "${minecraft_version}-${opentransport_version}." + System.getenv("bamboo_buildNumber")
 
-group= "xyz.brassgoggledcoders.opentransport"
+group = "xyz.brassgoggledcoders.opentransport"
 archivesBaseName = "OpenTransport"
 
 minecraft {
@@ -76,22 +76,22 @@ task getLibraries {
 
     libsFolder.listFiles().each { file ->
         def isInDownloadList = false;
-        downloads.each {download ->
-            if(file.name == download.get(0).toString()) {
+        downloads.each { download ->
+            if (file.name == download.get(0).toString()) {
                 isInDownloadList = true;
             }
         }
-        if(!isInDownloadList || file.size() < 5) {
+        if (!isInDownloadList || file.size() < 5) {
             println "Deleting file " + file.name
             file.delete();
         }
     }
 
-    downloads.each{download ->
+    downloads.each { download ->
         def fileLocation = new File('libs', download.get(0).toString())
-        if(!fileLocation.exists())  {
+        if (!fileLocation.exists()) {
             def downloadString = download.get(1).toString()
-            if(downloadString.contains(" ")) {
+            if (downloadString.contains(" ")) {
                 downloadString = downloadString.replace(" ", "%20");
             }
             println "Downloading " + download.get(0).toString()
@@ -108,20 +108,20 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 processResources
-{
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+        {
+            inputs.property "version", project.version
+            inputs.property "mcversion", project.minecraft.version
 
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
+            from(sourceSets.main.resources.srcDirs) {
+                include 'mcmod.info'
 
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
+                expand 'version': project.version, 'mcversion': project.minecraft.version
+            }
 
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
-}
+            from(sourceSets.main.resources.srcDirs) {
+                exclude 'mcmod.info'
+            }
+        }
 
 jar {
     classifier = ""

@@ -6,6 +6,6 @@ import net.minecraft.util.EnumHand;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 public interface IInteraction {
-	boolean interact(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack, IHolderEntity holderEntity,
-			IBlockWrapper blockContainer);
+    boolean interact(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack, IHolderEntity holderEntity,
+                     IBlockWrapper blockContainer);
 }

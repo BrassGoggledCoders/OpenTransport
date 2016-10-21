@@ -6,23 +6,23 @@ import xyz.brassgoggledcoders.opentransport.boats.models.ModelBoatNoPaddles;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderBlock;
 
 public class RenderItemHolderBoat /*implements IItemRenderingHandler*/ {
-	private static final String shortCut = "textures/entity/boat/boat_";
-	private static final ResourceLocation[] BOAT_TEXTURES =
-			new ResourceLocation[] {new ResourceLocation(shortCut + "oak.png"),
-					new ResourceLocation(shortCut + "spruce.png"), new ResourceLocation(shortCut + "birch.png"),
-					new ResourceLocation(shortCut + "jungle.png"), new ResourceLocation(shortCut + "acacia.png"),
-					new ResourceLocation(shortCut + "darkoak.png")};
+    private static final String shortCut = "textures/entity/boat/boat_";
+    private static final ResourceLocation[] BOAT_TEXTURES =
+            new ResourceLocation[]{new ResourceLocation(shortCut + "oak.png"),
+                    new ResourceLocation(shortCut + "spruce.png"), new ResourceLocation(shortCut + "birch.png"),
+                    new ResourceLocation(shortCut + "jungle.png"), new ResourceLocation(shortCut + "acacia.png"),
+                    new ResourceLocation(shortCut + "darkoak.png")};
 
-	private RenderBlock renderBlock;
-	private EntityBoatHolder boatHolder;
-	private ModelBoatNoPaddles modelBoat;
+    private RenderBlock renderBlock;
+    private EntityBoatHolder boatHolder;
+    private ModelBoatNoPaddles modelBoat;
 
-	public RenderItemHolderBoat() {
-		renderBlock = new RenderBlock();
-		modelBoat = new ModelBoatNoPaddles();
-	}
+    public RenderItemHolderBoat() {
+        renderBlock = new RenderBlock();
+        modelBoat = new ModelBoatNoPaddles();
+    }
 /* TODO MORE RENDERING
-	@Override
+    @Override
 	public void render(World world, Item item, ItemStack itemStack, TransformType type) {
 		if(boatHolder == null) {
 			boatHolder = new EntityBoatHolder(Minecraft.getMinecraft().theWorld);

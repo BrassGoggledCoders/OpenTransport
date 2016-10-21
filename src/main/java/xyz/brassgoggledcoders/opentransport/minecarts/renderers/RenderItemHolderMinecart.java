@@ -6,17 +6,17 @@ import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHol
 import xyz.brassgoggledcoders.opentransport.renderers.RenderBlock;
 
 public class RenderItemHolderMinecart /*implements IItemRenderingHandler*/ {
-	private RenderBlock renderBlock;
-	private EntityMinecartHolder minecartHolder;
-	private ModelMinecart modelMinecart;
-	private ResourceLocation minecartTexture = new ResourceLocation("textures/entity/minecart.png");
+    private RenderBlock renderBlock;
+    private EntityMinecartHolder minecartHolder;
+    private ModelMinecart modelMinecart;
+    private ResourceLocation minecartTexture = new ResourceLocation("textures/entity/minecart.png");
 
-	public RenderItemHolderMinecart() {
-		renderBlock = new RenderBlock();
-		modelMinecart = new ModelMinecart();
-	}
+    public RenderItemHolderMinecart() {
+        renderBlock = new RenderBlock();
+        modelMinecart = new ModelMinecart();
+    }
 /*TODO: RENDERING CODE
-	@Override
+    @Override
 	public void render(World world, Item item, ItemStack itemStack, TransformType type) {
 		if(minecartHolder == null) {
 			minecartHolder = new EntityMinecartHolder(Minecraft.getMinecraft().theWorld);

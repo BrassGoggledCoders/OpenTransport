@@ -9,13 +9,13 @@ import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.wrappers.world.WorldWrapper;
 
 public class BaseInteraction implements IInteraction {
-	@Override
-	public boolean interact(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack, IHolderEntity holderEntity,
-			IBlockWrapper blockContainer) {
-		return false;
-	}
+    @Override
+    public boolean interact(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack, IHolderEntity holderEntity,
+                            IBlockWrapper blockContainer) {
+        return false;
+    }
 
-	protected WorldWrapper getWorldWrapper(IHolderEntity holderEntity) {
-		return new WorldWrapper(holderEntity);
-	}
+    protected WorldWrapper getWorldWrapper(IHolderEntity holderEntity) {
+        return new WorldWrapper(holderEntity);
+    }
 }

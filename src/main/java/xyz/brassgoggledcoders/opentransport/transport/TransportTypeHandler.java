@@ -13,33 +13,33 @@ import xyz.brassgoggledcoders.opentransport.registries.BlockContainerRegistry;
 import java.util.List;
 
 public class TransportTypeHandler {
-	private List<ITransportType> transportTypes;
+    private List<ITransportType> transportTypes;
 
-	public TransportTypeHandler(FMLPreInitializationEvent event) {
-		transportTypes = ClassLoading.getInstances(event.getAsmData(), TransportType.class, ITransportType.class);
+    public TransportTypeHandler(FMLPreInitializationEvent event) {
+        transportTypes = ClassLoading.getInstances(event.getAsmData(), TransportType.class, ITransportType.class);
 
-		for(ITransportType transportType : this.getTransportTypes()) {
-			this.getConfig().addEntry(transportType.getName(), new TransportTypeEntry(transportType));
-			transportType.setIsActive(this.getConfig().getBoolean(transportType.getName(), true));
-			if(transportType.getIsActive()) {
-				transportType.registerItems(BlockContainerRegistry.getAllBlockContainers());
-				transportType.registerEntities();
-			}
-		}
-	}
+        for (ITransportType transportType : this.getTransportTypes()) {
+            this.getConfig().addEntry(transportType.getName(), new TransportTypeEntry(transportType));
+            transportType.setIsActive(this.getConfig().getBoolean(transportType.getName(), true));
+            if (transportType.getIsActive()) {
+                transportType.registerItems(BlockContainerRegistry.getAllBlockContainers());
+                transportType.registerEntities();
+            }
+        }
+    }
 
-	public List<ITransportType> getTransportTypes() {
-		return transportTypes;
-	}
+    public List<ITransportType> getTransportTypes() {
+        return transportTypes;
+    }
 
-	private ConfigRegistry getConfig() {
-		return (ConfigRegistry) OpenTransport.INSTANCE.getRegistry(ConfigRegistry.class, "CONFIG");
-	}
+    private ConfigRegistry getConfig() {
+        return (ConfigRegistry) OpenTransport.instance.getRegistry(ConfigRegistry.class, "CONFIG");
+    }
 
-	private static class TransportTypeEntry extends ConfigEntry {
-		public TransportTypeEntry(ITransportType transportType) {
-			super("Transport Types", transportType.getName() + " enabled", Property.Type.BOOLEAN, Boolean.toString(true));
-		}
-	}
+    private static class TransportTypeEntry extends ConfigEntry {
+        public TransportTypeEntry(ITransportType transportType) {
+            super("Transport Types", transportType.getName() + " enabled", Property.Type.BOOLEAN, Boolean.toString(true));
+        }
+    }
 
 }

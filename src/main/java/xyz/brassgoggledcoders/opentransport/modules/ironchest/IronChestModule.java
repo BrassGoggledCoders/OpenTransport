@@ -12,21 +12,21 @@ import java.util.List;
 
 @Module(OpenTransport.MODID)
 public class IronChestModule extends ModuleBase {
-	public static IBlockWrapper[] IRON_CHESTS;
+    public static IBlockWrapper[] IRON_CHESTS;
 
-	@Override
-	public String getName() {
-		return "Iron Chest";
-	}
+    @Override
+    public String getName() {
+        return "Iron Chest";
+    }
 
-	@Override
-	public List<IDependency> getDependencies(List<IDependency> dependencies) {
-		dependencies.add(new ModDependency("ironchest"));
-		return dependencies;
-	}
+    @Override
+    public List<IDependency> getDependencies(List<IDependency> dependencies) {
+        dependencies.add(new ModDependency("ironchest"));
+        return dependencies;
+    }
 
-	@Override
-	public void preInit(FMLPreInitializationEvent event) {
-		IronChestBlockContainers.preInit(event);
-	}
+    @Override
+    public void preInit(FMLPreInitializationEvent event) {
+        IronChestBlockContainers.preInit(event);
+    }
 }

@@ -13,38 +13,38 @@ import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
 import javax.annotation.Nonnull;
 
 public interface IBlockWrapper {
-	@Nonnull
-	Block getBlock();
+    @Nonnull
+    Block getBlock();
 
-	@Nonnull
-	IBlockState getBlockState();
+    @Nonnull
+    IBlockState getBlockState();
 
-	@Nonnull
-	String getUnlocalizedName();
+    @Nonnull
+    String getUnlocalizedName();
 
-	@Nonnull
-	RenderType getRenderType();
+    @Nonnull
+    RenderType getRenderType();
 
-	@Nonnull
-	IInteraction getClickInteraction();
+    @Nonnull
+    IInteraction getClickInteraction();
 
-	IGuiInterface getInterface();
+    IGuiInterface getInterface();
 
-	boolean onInteract(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack);
+    boolean onInteract(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack);
 
-	void tick();
+    void tick();
 
-	void markDirty();
+    void markDirty();
 
-	void setHolder(IHolderEntity entity);
+    void setHolder(IHolderEntity entity);
 
-	boolean hasTileEntity();
+    boolean hasTileEntity();
 
-	TileEntity getTileEntity();
+    TileEntity getTileEntity();
 
-	NBTTagCompound writeToNBT(NBTTagCompound tagCompound);
+    NBTTagCompound writeToNBT(NBTTagCompound tagCompound);
 
-	void readFromNBT(NBTTagCompound tagCompound);
+    void readFromNBT(NBTTagCompound tagCompound);
 
-	IBlockWrapper copy();
+    IBlockWrapper copy();
 }

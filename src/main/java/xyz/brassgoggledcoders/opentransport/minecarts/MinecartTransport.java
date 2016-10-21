@@ -18,59 +18,59 @@ import java.util.Map;
 
 @TransportType
 public class MinecartTransport implements ITransportType<EntityMinecart> {
-	private CreativeTabs cartsTab = new MinecartsCreativeTab();
-	private boolean isActive = true;
+    private CreativeTabs cartsTab = new MinecartsCreativeTab();
+    private boolean isActive = true;
 
-	@Nonnull
-	@Override
-	public String getName() {
-		return "Minecarts";
-	}
+    @Nonnull
+    @Override
+    public String getName() {
+        return "Minecarts";
+    }
 
-	@Nonnull
-	@Override
-	public Class<EntityMinecart> getBaseEntity() {
-		return EntityMinecart.class;
-	}
+    @Nonnull
+    @Override
+    public Class<EntityMinecart> getBaseEntity() {
+        return EntityMinecart.class;
+    }
 
-	@Nonnull
-	@Override
-	public CreativeTabs getCreativeTab() {
-		return cartsTab;
-	}
+    @Nonnull
+    @Override
+    public CreativeTabs getCreativeTab() {
+        return cartsTab;
+    }
 
-	@Override
-	public void registerItems(Map<String, IBlockWrapper> blockContainers) {
-		blockContainers.forEach((name, blockContainer) -> {
-			ItemMinecartHolder holder = new ItemMinecartHolder(blockContainer, this.getCreativeTab());
-			OpenTransport.INSTANCE.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(holder);
-		});
-	}
+    @Override
+    public void registerItems(Map<String, IBlockWrapper> blockContainers) {
+        blockContainers.forEach((name, blockContainer) -> {
+            ItemMinecartHolder holder = new ItemMinecartHolder(blockContainer, this.getCreativeTab());
+            OpenTransport.instance.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(holder);
+        });
+    }
 
-	@Override
-	public void registerEntities() {
-		OpenTransport.INSTANCE.getRegistryHolder().getRegistry(EntityRegistry.class, "ENTITY").register(EntityMinecartHolder.class);
-	}
+    @Override
+    public void registerEntities() {
+        OpenTransport.instance.getRegistryHolder().getRegistry(EntityRegistry.class, "ENTITY").register(EntityMinecartHolder.class);
+    }
 
-	@Override
-	public boolean getIsActive() {
-		return this.isActive;
-	}
+    @Override
+    public boolean getIsActive() {
+        return this.isActive;
+    }
 
-	@Override
-	public void setIsActive(boolean isActive) {
-		this.isActive = isActive;
-	}
+    @Override
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
 
-	private static class MinecartsCreativeTab extends CreativeTabs {
-		public MinecartsCreativeTab() {
-			super("minecarts");
-		}
+    private static class MinecartsCreativeTab extends CreativeTabs {
+        public MinecartsCreativeTab() {
+            super("minecarts");
+        }
 
-		@Override
-		@Nonnull
-		public Item getTabIconItem() {
-			return Items.MINECART;
-		}
-	}
+        @Override
+        @Nonnull
+        public Item getTabIconItem() {
+            return Items.MINECART;
+        }
+    }
 }
