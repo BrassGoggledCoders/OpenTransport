@@ -51,6 +51,7 @@ minecraft {
 
 dependencies {
     compile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}:deobf"
+    compile "cpw.mods:ironchest:${minecraft_version}-${ironchest_version}"
 }
 
 task getLibraries {
@@ -61,16 +62,12 @@ task getLibraries {
 
     def downloads = new ArrayList<Tuple>();
 
-    def ironchest = 'ironchest-' + minecraft_version + '-' + ironchest_version + '.jar'
-    def ironchestSource = 'https://minecraft.curseforge.com/projects/iron-chests/files/2321288/download'
-
     def ie = 'ImmersiveEngineering-' + immersive_engineering_version + '.jar'
     def ieSource = ''
 
     def railcraft = 'Railcraft_' + minecraft_version + '-' + railcraft_version + '-dev.jar'
     def railcraftSource = 'http://www.railcraft.info/ivy/com.headlamp-games/Railcraft/' + railcraft_version + '/' + railcraft
 
-    downloads.add(new Tuple(ironchest, ironchestSource))
     downloads.add(new Tuple(ie, ieSource))
     downloads.add(new Tuple(railcraft, railcraftSource))
 
@@ -94,10 +91,12 @@ task getLibraries {
             if (downloadString.contains(" ")) {
                 downloadString = downloadString.replace(" ", "%20");
             }
-            println "Downloading " + download.get(0).toString()
-            fileLocation.withOutputStream { out ->
-                new URL(downloadString).withInputStream { from ->
-                    out << from;
+            if (!downloadString.equals("")) {
+                println "Downloading " + download.get(0).toString()
+                fileLocation.withOutputStream { out ->
+                    new URL(downloadString).withInputStream { from ->
+                        out << from;
+                    }
                 }
             }
         }
