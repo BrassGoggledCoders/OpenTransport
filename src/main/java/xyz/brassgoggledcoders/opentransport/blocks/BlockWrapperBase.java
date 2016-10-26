@@ -18,6 +18,7 @@ import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.interactions.BaseInteraction;
 import xyz.brassgoggledcoders.opentransport.interfaces.BaseInterface;
 import xyz.brassgoggledcoders.opentransport.network.HolderUpdatePacket;
+import xyz.brassgoggledcoders.opentransport.registries.BlockWrapperRegistry;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
 import xyz.brassgoggledcoders.opentransport.wrappers.world.WorldWrapper;
 
@@ -191,5 +192,9 @@ public class BlockWrapperBase implements IBlockWrapper {
     private void updateBlockWrapper() {
         OpenTransport.instance.getPacketHandler()
                 .sendToAllAround(new HolderUpdatePacket(this.holderEntity), this.holderEntity.getEntity());
+    }
+
+    public void register() {
+        BlockWrapperRegistry.registerWrapper(this);
     }
 }
