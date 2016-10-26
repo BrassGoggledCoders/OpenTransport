@@ -5,14 +5,11 @@ import com.teamacronymcoders.base.modulesystem.ModuleBase;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.blocks.BlockWrapperBase;
-import xyz.brassgoggledcoders.opentransport.registries.BlockWrapperRegistry;
+import xyz.brassgoggledcoders.opentransport.interactions.BlockActivationInteraction;
 
 @Module(OpenTransport.MODID)
 public class VanillaModule extends ModuleBase {
-    public static IBlockWrapper ENDER_CHEST;
-
     @Override
     public String getName() {
         return "Vanilla";
@@ -20,7 +17,9 @@ public class VanillaModule extends ModuleBase {
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
-        ENDER_CHEST = new BlockWrapperBase(Blocks.ENDER_CHEST).setClickInteraction(new EnderChestInteraction());
-        BlockWrapperRegistry.registerContainer(ENDER_CHEST);
+        new BlockWrapperBase(Blocks.ENDER_CHEST).setClickInteraction(new EnderChestInteraction()).register();
+        new BlockWrapperBase(Blocks.JUKEBOX).setClickInteraction(new BlockActivationInteraction()).register();
+        new BlockWrapperBase(Blocks.CRAFTING_TABLE).setClickInteraction(new BlockActivationInteraction()).register();
+        new BlockWrapperBase(Blocks.NOTEBLOCK).setClickInteraction(new BlockActivationInteraction()).register();
     }
 }
