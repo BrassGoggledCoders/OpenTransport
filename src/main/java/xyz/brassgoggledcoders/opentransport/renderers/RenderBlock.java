@@ -10,7 +10,8 @@ import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 
 public class RenderBlock {
     public void renderEntity(Entity entity, IBlockWrapper blockWrapper, float partialTicks) {
-        this.render(blockWrapper.getRenderType(), blockWrapper.getBlockState(), blockWrapper.getTileEntity(),
+        this.render(blockWrapper.getRenderType(), blockWrapper.getBlockState(),
+                blockWrapper.hasTileEntity() ? blockWrapper.getTileEntity() : null,
                 entity.getBrightness(partialTicks));
     }
 
