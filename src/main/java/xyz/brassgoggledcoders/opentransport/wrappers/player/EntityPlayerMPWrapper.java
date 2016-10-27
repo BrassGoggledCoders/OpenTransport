@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.opentransport.wrappers.player;
 
+import com.teamacronymcoders.base.client.gui.GuiCarrier;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -58,8 +59,8 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
 
     @Override
     public void openGui(@Nonnull Object mod, int id, @Nonnull World world, int posX, int posY, int poxZ) {
-        this.getEntityPlayer().openGui(OpenTransport.instance, this.getEntity().getEntityId(),
-                this.getEntity().worldObj, posX, posY, poxZ);
+        this.getEntityPlayer().openGui(OpenTransport.instance, GuiCarrier.ENTITY.ordinal(),this.getEntityWorld(),
+                this.getEntity().getEntityId(), 0, 0);
     }
 
     @Override
@@ -116,8 +117,8 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
 
     @Override
     public void displayGui(IInteractionObject guiOwner) {
-        this.openGui(OpenTransport.instance, this.getEntity().getEntityId(), this.getEntity().worldObj,
-                (int)this.getEntity().posX, (int)this.getEntity().posY, (int)this.getEntity().posZ);
+        this.openGui(OpenTransport.instance, GuiCarrier.ENTITY.ordinal(),this.getEntityWorld(),
+                this.getEntity().getEntityId(), 0, 0);
     }
 
     @Override
