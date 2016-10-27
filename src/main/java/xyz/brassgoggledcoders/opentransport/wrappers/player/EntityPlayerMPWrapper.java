@@ -11,6 +11,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.LockCode;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -57,9 +58,8 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
 
     @Override
     public void openGui(@Nonnull Object mod, int id, @Nonnull World world, int posX, int posY, int poxZ) {
-        this.getEntityPlayer()
-                .openGui(OpenTransport.instance, this.getEntity().getEntityId(), this.getEntity().worldObj, posX, posY,
-                        poxZ);
+        this.getEntityPlayer().openGui(OpenTransport.instance, this.getEntity().getEntityId(),
+                this.getEntity().worldObj, posX, posY, poxZ);
     }
 
     @Override
@@ -112,6 +112,12 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
     @Override
     public void displayGUIChest(IInventory iInventory) {
         this.getEntityPlayer().displayGUIChest(iInventory);
+    }
+
+    @Override
+    public void displayGui(IInteractionObject guiOwner) {
+        this.openGui(OpenTransport.instance, this.getEntity().getEntityId(), this.getEntity().worldObj,
+                (int)this.getEntity().posX, (int)this.getEntity().posY, (int)this.getEntity().posZ);
     }
 
     @Override
