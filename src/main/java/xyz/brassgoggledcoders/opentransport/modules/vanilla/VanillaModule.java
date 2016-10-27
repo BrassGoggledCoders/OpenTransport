@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.blocks.BlockWrapperBase;
 import xyz.brassgoggledcoders.opentransport.interactions.BlockActivationInteraction;
+import xyz.brassgoggledcoders.opentransport.modules.vanilla.containers.CraftingTableGuiInterface;
 
 @Module(OpenTransport.MODID)
 public class VanillaModule extends ModuleBase {
@@ -19,7 +20,8 @@ public class VanillaModule extends ModuleBase {
     public void preInit(FMLPreInitializationEvent event) {
         new BlockWrapperBase(Blocks.ENDER_CHEST).setClickInteraction(new EnderChestInteraction()).register();
         new BlockWrapperBase(Blocks.JUKEBOX).setClickInteraction(new BlockActivationInteraction()).register();
-        new BlockWrapperBase(Blocks.CRAFTING_TABLE).setClickInteraction(new BlockActivationInteraction()).register();
+        new BlockWrapperBase(Blocks.CRAFTING_TABLE).setClickInteraction(new BlockActivationInteraction())
+                .setGuiInterface(new CraftingTableGuiInterface()).register();
         new BlockWrapperBase(Blocks.NOTEBLOCK).setClickInteraction(new BlockActivationInteraction()).register();
     }
 }
