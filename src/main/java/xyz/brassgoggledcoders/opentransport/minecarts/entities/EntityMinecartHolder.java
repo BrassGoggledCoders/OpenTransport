@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.opentransport.minecarts.entities;
 import com.google.common.base.Optional;
 import com.teamacronymcoders.base.client.gui.IHasGui;
 import com.teamacronymcoders.base.entity.EntityMinecartBase;
+import net.minecraft.block.BlockRailBase;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -15,6 +16,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
@@ -32,6 +34,8 @@ public class EntityMinecartHolder extends EntityMinecartBase
             EntityDataManager.createKey(EntityMinecartHolder.class, DataSerializers.OPTIONAL_ITEM_STACK);
 
     private IBlockWrapper blockWrapper;
+    private boolean isPowered = false;
+    private int poweredReset = 0;
 
     public EntityMinecartHolder(World world) {
         super(world);
@@ -42,6 +46,17 @@ public class EntityMinecartHolder extends EntityMinecartBase
         super.entityInit();
         this.dataManager.register(BLOCK_CONTAINER_NAME, "");
         this.dataManager.register(ITEM_CART, Optional.absent());
+    }
+
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
+        if(poweredReset > 0) {
+            poweredReset--;
+            if(poweredReset == 0) {
+                isPowered = false;
+            }
+        }
     }
 
     @Nonnull
@@ -85,6 +100,21 @@ public class EntityMinecartHolder extends EntityMinecartBase
     }
 
     @Override
+    public boolean getRedstonePower() {
+        boolean returnBoolean = isPowered;
+        isPowered = false;
+        return returnBoolean;
+    }
+
+    @Override
+    public void onActivatorRailPass(int x, int y, int z, boolean isPowered) {
+        if(isPowered) {
+            this.isPowered = true;
+            this.getBlockWrapper().getWorldWrapper().notifyBlocks();
+        }
+    }
+
+    @Override
     public boolean processInitialInteract(@Nonnull EntityPlayer entityPlayer, @Nullable ItemStack itemStack,
                                           EnumHand hand) {
         return this.getBlockWrapper() != null && this.getBlockWrapper().onInteract(entityPlayer, hand, itemStack);
@@ -117,6 +147,16 @@ public class EntityMinecartHolder extends EntityMinecartBase
         blockWrapper.setHolder(this);
         blockWrapper.readFromNBT(nbtTagCompound.getCompoundTag("CONTAINER"));
         this.setItemCart(ItemStack.loadItemStackFromNBT(nbtTagCompound.getCompoundTag("ITEM_BOAT")));
+    }
+
+    protected BlockPos getRailPosition()
+    {
+        int x = MathHelper.floor_double(this.posX);
+        int y = MathHelper.floor_double(this.posY);
+        int z = MathHelper.floor_double(this.posZ);
+
+        if (BlockRailBase.isRailBlock(this.worldObj, new BlockPos(x, y - 1, z))) y--;
+        return new BlockPos(x, y, z);
     }
 
     @Override

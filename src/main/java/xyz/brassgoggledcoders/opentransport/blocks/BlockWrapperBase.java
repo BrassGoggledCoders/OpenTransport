@@ -9,7 +9,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
-import net.minecraft.world.World;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IGuiInterface;
@@ -28,7 +27,7 @@ public class BlockWrapperBase implements IBlockWrapper {
     Block block;
     IBlockState blockState;
     TileEntity tileEntity;
-    World world;
+    WorldWrapper world;
     boolean hasTileEntity;
     String unlocalizedName;
     IInteraction clickInteraction = new BaseInteraction();
@@ -163,6 +162,11 @@ public class BlockWrapperBase implements IBlockWrapper {
             this.tileEntity.setWorldObj(this.world);
         }
         return this.tileEntity;
+    }
+
+    @Override
+    public WorldWrapper getWorldWrapper() {
+        return world;
     }
 
     @Override
