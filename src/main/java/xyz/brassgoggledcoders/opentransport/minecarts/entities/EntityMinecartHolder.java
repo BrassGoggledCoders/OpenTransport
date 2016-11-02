@@ -4,8 +4,10 @@ import com.google.common.base.Optional;
 import com.teamacronymcoders.base.client.gui.IHasGui;
 import com.teamacronymcoders.base.entity.EntityMinecartBase;
 import net.minecraft.block.BlockRailBase;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemMinecart;
@@ -101,16 +103,28 @@ public class EntityMinecartHolder extends EntityMinecartBase
 
     @Override
     public boolean getRedstonePower() {
-        boolean returnBoolean = isPowered;
-        isPowered = false;
-        return returnBoolean;
+        return this.isPowered;
+    }
+
+    public void setRedstonePower(boolean isPowered) {
+        if(this.isPowered != isPowered) {
+            this.isPowered = isPowered;
+            this.getBlockWrapper().getWorldWrapper().notifyBlocks();
+        }
     }
 
     @Override
     public void onActivatorRailPass(int x, int y, int z, boolean isPowered) {
         if(isPowered) {
-            this.isPowered = true;
-            this.getBlockWrapper().getWorldWrapper().notifyBlocks();
+            this.setRedstonePower(true);
+        }
+    }
+
+    @Override
+    protected void moveAlongTrack(BlockPos pos, IBlockState state) {
+        super.moveAlongTrack(pos, state);
+        if (state.getBlock() != Blocks.ACTIVATOR_RAIL) {
+            this.setRedstonePower(false);
         }
     }
 
