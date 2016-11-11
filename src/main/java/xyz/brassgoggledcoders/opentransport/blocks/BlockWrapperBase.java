@@ -15,6 +15,7 @@ import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IGuiInterface;
 import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IInteraction;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.interactions.BaseInteraction;
+import xyz.brassgoggledcoders.opentransport.interactions.BlockActivationInteraction;
 import xyz.brassgoggledcoders.opentransport.interfaces.BaseInterface;
 import xyz.brassgoggledcoders.opentransport.network.HolderUpdatePacket;
 import xyz.brassgoggledcoders.opentransport.registries.BlockWrapperRegistry;
@@ -41,6 +42,7 @@ public class BlockWrapperBase implements IBlockWrapper {
         this.blockState = block.getDefaultState();
         this.unlocalizedName = block.getUnlocalizedName().replaceFirst("tile.", "");
         this.hasTileEntity = block.hasTileEntity(this.blockState);
+        this.clickInteraction = new BlockActivationInteraction();
     }
 
     public <T extends Comparable<T>, V extends T> BlockWrapperBase withProperty(IProperty<T> property, V value) {

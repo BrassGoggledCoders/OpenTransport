@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.opentransport.modules.vanilla;
+package xyz.brassgoggledcoders.opentransport.modules.vanilla.interactions;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryEnderChest;
