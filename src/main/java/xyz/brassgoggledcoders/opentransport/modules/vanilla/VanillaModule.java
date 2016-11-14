@@ -7,8 +7,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.blocks.BlockWrapperBase;
 import xyz.brassgoggledcoders.opentransport.modules.vanilla.guiinterfaces.*;
-import xyz.brassgoggledcoders.opentransport.modules.vanilla.interactions.EnderChestInteraction;
-import xyz.brassgoggledcoders.opentransport.modules.vanilla.interactions.JukeBoxInteraction;
+import xyz.brassgoggledcoders.opentransport.modules.vanilla.interactions.EnderChestAction;
+import xyz.brassgoggledcoders.opentransport.modules.vanilla.interactions.JukeBoxAction;
 
 @Module(OpenTransport.MODID)
 public class VanillaModule extends ModuleBase {
@@ -30,8 +30,8 @@ public class VanillaModule extends ModuleBase {
         //new BlockWrapperBase(Blocks.TNT).register();
 
         //Other Stuff
-        new BlockWrapperBase(Blocks.ENDER_CHEST).setClickInteraction(new EnderChestInteraction()).register();
-        new BlockWrapperBase(Blocks.JUKEBOX).setClickInteraction(new JukeBoxInteraction()).register();
+        new BlockWrapperBase(Blocks.ENDER_CHEST).setClickInteraction(new EnderChestAction()).register();
+        new BlockWrapperBase(Blocks.JUKEBOX).setClickInteraction(new JukeBoxAction()).register();
         new BlockWrapperBase(Blocks.CRAFTING_TABLE).setGuiInterface(new CraftingTableGuiInterface()).register();
         new BlockWrapperBase(Blocks.NOTEBLOCK).register();
         //TODO: Add saving of BlockState changes.

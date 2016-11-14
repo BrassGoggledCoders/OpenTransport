@@ -13,9 +13,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
-import xyz.brassgoggledcoders.opentransport.interactions.BlockActivationInteraction;
+import xyz.brassgoggledcoders.opentransport.actions.BlockActivationAction;
 
-public class JukeBoxInteraction extends BlockActivationInteraction {
+public class JukeBoxAction extends BlockActivationAction {
     @Override
     public boolean interact(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack, IHolderEntity holderEntity,
                             IBlockWrapper blockWrapper) {

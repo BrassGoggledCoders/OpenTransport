@@ -28,7 +28,6 @@ import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRenderHandler*/ {
@@ -105,12 +104,13 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
                         .isEmpty()) {
                     return new ActionResult<>(EnumActionResult.FAIL, itemStack);
                 } else {
-                    if (!world.isRemote) {
-                        world.spawnEntityInWorld(entityBoatHolder);
-                    }
-
                     if (!entityPlayer.capabilities.isCreativeMode) {
                         --itemStack.stackSize;
+                    }
+
+                    if (!world.isRemote) {
+                        world.spawnEntityInWorld(entityBoatHolder);
+                        entityBoatHolder.getBlockWrapper().onPlace(entityPlayer, hand, itemStack);
                     }
 
                     this.increaseStat(entityPlayer);

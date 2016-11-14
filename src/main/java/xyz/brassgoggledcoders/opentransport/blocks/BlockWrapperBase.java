@@ -10,12 +10,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
+import xyz.brassgoggledcoders.opentransport.actions.BlockActivationAction;
+import xyz.brassgoggledcoders.opentransport.actions.BlockPlacedByAction;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.ActionType;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IActionListener;
 import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IGuiInterface;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IInteraction;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
-import xyz.brassgoggledcoders.opentransport.interactions.BaseInteraction;
-import xyz.brassgoggledcoders.opentransport.interactions.BlockActivationInteraction;
 import xyz.brassgoggledcoders.opentransport.interfaces.BaseInterface;
 import xyz.brassgoggledcoders.opentransport.network.HolderUpdatePacket;
 import xyz.brassgoggledcoders.opentransport.registries.BlockWrapperRegistry;
@@ -23,6 +24,8 @@ import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
 import xyz.brassgoggledcoders.opentransport.wrappers.world.WorldWrapper;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockWrapperBase implements IBlockWrapper {
     Block block;
@@ -31,8 +34,8 @@ public class BlockWrapperBase implements IBlockWrapper {
     WorldWrapper world;
     boolean hasTileEntity;
     String unlocalizedName;
-    IInteraction clickInteraction = new BaseInteraction();
-    IGuiInterface guiInterface = new BaseInterface();
+    List<IActionListener> actionListeners;
+    IGuiInterface guiInterface;
     RenderType renderType = RenderType.VMC;
     IHolderEntity holderEntity;
     boolean isDirty;
@@ -42,7 +45,10 @@ public class BlockWrapperBase implements IBlockWrapper {
         this.blockState = block.getDefaultState();
         this.unlocalizedName = block.getUnlocalizedName().replaceFirst("tile.", "");
         this.hasTileEntity = block.hasTileEntity(this.blockState);
-        this.clickInteraction = new BlockActivationInteraction();
+        this.guiInterface = new BaseInterface();
+        this.actionListeners = new ArrayList<>();
+        this.actionListeners.add(new BlockActivationAction());
+        this.actionListeners.add(new BlockPlacedByAction());
     }
 
     public <T extends Comparable<T>, V extends T> BlockWrapperBase withProperty(IProperty<T> property, V value) {
@@ -108,12 +114,17 @@ public class BlockWrapperBase implements IBlockWrapper {
 
     @Override
     @Nonnull
-    public IInteraction getClickInteraction() {
-        return clickInteraction;
+    public List<IActionListener> getActionListeners() {
+        return actionListeners;
     }
 
-    public BlockWrapperBase setClickInteraction(IInteraction interaction) {
-        this.clickInteraction = interaction;
+    public BlockWrapperBase addActionListeners(IActionListener actionListener) {
+        this.actionListeners.add(actionListener);
+        return this;
+    }
+
+    public BlockWrapperBase setActionListeners(List<IActionListener> actionListeners) {
+        this.actionListeners = actionListeners;
         return this;
     }
 
@@ -124,12 +135,22 @@ public class BlockWrapperBase implements IBlockWrapper {
     }
 
     @Override
+    public boolean onPlace(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack) {
+        return iterateActionListeners(ActionType.PLACED, entityPlayer, hand, itemStack);
+    }
+
+    @Override
     public boolean onInteract(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack) {
-        boolean result;
+        return iterateActionListeners(ActionType.INTERACTION, entityPlayer, hand, itemStack);
+    }
+
+    private boolean iterateActionListeners(ActionType actionType, EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack) {
+        boolean result = false;
         this.updateBlockWrapper();
         EntityPlayer entityPlayerWrapper = OpenTransport.proxy.getEntityPlayerWrapper(entityPlayer, this.holderEntity);
-        result = this.getClickInteraction().interact(entityPlayerWrapper, hand, itemStack, this.holderEntity, this);
-        OpenTransport.proxy.resetPlayer(entityPlayer);
+        for(IActionListener actionListener : this.getActionListeners()) {
+            result |= actionListener.actionOccurred(actionType, entityPlayerWrapper, hand, itemStack, this.holderEntity, this);
+        }
         this.updateBlockWrapper();
         return result;
     }
@@ -191,8 +212,8 @@ public class BlockWrapperBase implements IBlockWrapper {
     @Override
     public BlockWrapperBase copy() {
         BlockWrapperBase copyBlockWrapper = new BlockWrapperBase(this.getBlock());
-        copyBlockWrapper.setBlockState(this.getBlockState()).setClickInteraction(this.getClickInteraction())
-                .setGuiInterface(this.guiInterface).setRenderType(this.getRenderType())
+        copyBlockWrapper.setBlockState(this.getBlockState()).setActionListeners(this.getActionListeners())
+                .setGuiInterface(this.getInterface()).setRenderType(this.getRenderType())
                 .setUnlocalizedName(this.getUnlocalizedName());
         return copyBlockWrapper;
     }
