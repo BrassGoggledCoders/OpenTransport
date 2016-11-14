@@ -14,7 +14,6 @@ import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ItemMinecartHolder extends ItemMinecartBase /*implements IHasItemRenderHandler*/ {
@@ -57,8 +56,7 @@ public class ItemMinecartHolder extends ItemMinecartBase /*implements IHasItemRe
     }
 
     @Override
-    public List<String> getModelNames() {
-        List<String> modelNames = new ArrayList<>();
+    public List<String> getModelNames(List<String> modelNames) {
         modelNames.add("minecart");
         return modelNames;
     }
