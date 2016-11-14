@@ -22,7 +22,7 @@ public class IronChestBlockWrappers {
                     .setUnlocalizedName(ironChest.getUnlocalizedName() + "." + type.toString().toLowerCase())
                     .setBlockState(ironChest.getDefaultState().withProperty(BlockIronChest.VARIANT_PROP, type))
                     .setGuiInterface(new IronChestInterface()).setClickInteraction(new BlockActivationInteraction());
-            BlockWrapperRegistry.registerContainer(IRON_CHESTS[i]);
+            BlockWrapperRegistry.registerWrapper(IRON_CHESTS[i]);
         }
         IronChestModule.IRON_CHESTS = IRON_CHESTS;
     }

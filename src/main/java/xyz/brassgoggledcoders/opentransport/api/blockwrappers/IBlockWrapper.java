@@ -9,6 +9,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
+import xyz.brassgoggledcoders.opentransport.wrappers.world.WorldWrapper;
 
 import javax.annotation.Nonnull;
 
@@ -41,6 +42,8 @@ public interface IBlockWrapper {
     boolean hasTileEntity();
 
     TileEntity getTileEntity();
+
+    WorldWrapper getWorldWrapper();
 
     NBTTagCompound writeToNBT(NBTTagCompound tagCompound);
 

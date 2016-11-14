@@ -49,8 +49,8 @@ public class WorldWrapper extends World {
 
     //Enderchest use this for open and close
     @Override
-    public void addBlockEvent(@Nonnull BlockPos blockPos, Block block, int metadata, int p_14745) {
-        //TODO Fix this some day so shit actually opens
+    public void addBlockEvent(@Nonnull BlockPos pos, Block blockIn, int eventID, int eventParam) {
+        this.getBlockWrapper().getBlockState().onBlockEventReceived(this, pos, eventID, eventParam);
     }
 
     @Override
@@ -85,15 +85,8 @@ public class WorldWrapper extends World {
     @Override
     public void spawnParticle(EnumParticleTypes enumParticleType, double posX, double posY, double posZ, double velX,
                               double velY, double velZ, @Nonnull int... what) {
-        int intCartX = (int) Math.floor(this.getPosX());
-        int intCartY = (int) Math.floor(this.getPosY());
-        int intCartZ = (int) Math.floor(this.getPosZ());
-        double changeInX = (this.getPosX() - (double) intCartX) / 2.0;
-        double changeInY = (this.getPosY() - (double) intCartY) / 2.0;
-        double changeInZ = (this.getPosZ() - (double) intCartZ) / 2.0;
-        this.getWorld()
-                .spawnParticle(enumParticleType, posX - changeInX, posY - changeInY, posZ - changeInZ, velX, velY,
-                        velZ);
+        this.getWorld().spawnParticle(enumParticleType,posX + this.getPosX(), posY + this.getPosY(), posZ +
+                this.getPosZ(), velX, velY, velZ);
     }
 
     //Infinitato tries to get Entities and add potion effects
@@ -130,6 +123,11 @@ public class WorldWrapper extends World {
         this.getBlockWrapper().markDirty();
     }
 
+    @Override
+    public boolean isBlockPowered(BlockPos pos) {
+        return this.getHolderEntity().getRedstonePower();
+    }
+
     public Entity getEntity() {
         return this.getHolderEntity().getEntity();
     }
@@ -156,5 +154,9 @@ public class WorldWrapper extends World {
 
     public World getWorld() {
         return this.getEntity().worldObj;
+    }
+
+    public void notifyBlocks() {
+        this.notifyBlockOfStateChange(BlockPos.ORIGIN, this.getBlockState(BlockPos.ORIGIN).getBlock());
     }
 }

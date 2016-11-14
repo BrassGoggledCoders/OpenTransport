@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderBoat;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
@@ -40,6 +41,7 @@ public class RenderHolderBoat extends RenderBoat {
         GlStateManager.pushMatrix();
         GlStateManager.rotate(180, 1, 0, 0);
         GlStateManager.translate(-0.5, -0.20, 0.5);
+        this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         this.renderBlock.renderEntity(entity, boatHolder.getBlockWrapper(), partialTicks);
         GlStateManager.popMatrix();
 
@@ -49,7 +51,7 @@ public class RenderHolderBoat extends RenderBoat {
         }
 
         GlStateManager.popMatrix();
-        super.doRender(entity, x, y, z, entityYaw, partialTicks);
+        //super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 
     public enum Factory implements IRenderFactory<EntityBoatHolder> {

@@ -8,7 +8,7 @@ import java.util.Map;
 public class BlockWrapperRegistry {
     static Map<String, IBlockWrapper> blockWrapperMap = new HashMap<>();
 
-    public static void registerContainer(IBlockWrapper blockWrapper) {
+    public static void registerWrapper(IBlockWrapper blockWrapper) {
         blockWrapperMap.put(blockWrapper.getUnlocalizedName(), blockWrapper);
     }
 

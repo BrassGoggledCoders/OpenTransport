@@ -190,14 +190,8 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
     }
 
     @Override
-    public List<String> getModelNames() {
-        List<String> models = new ArrayList<>();
-        models.add("boat");
-        return models;
+    public List<String> getModelNames(List<String> modelNames) {
+        modelNames.add("boat");
+        return modelNames;
     }
-/* TODO RENDERING AGAIN
-    @Override
-	public String itemRenderPath() {
-		return "xyz.brassgoggledcoders.opentransport.boats.renderers.RenderItemHolderBoat";
-	}*/
 }

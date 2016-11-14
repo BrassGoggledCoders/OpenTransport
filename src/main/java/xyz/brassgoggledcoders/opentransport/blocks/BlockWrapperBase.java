@@ -9,15 +9,16 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
-import net.minecraft.world.World;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IGuiInterface;
 import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IInteraction;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.interactions.BaseInteraction;
+import xyz.brassgoggledcoders.opentransport.interactions.BlockActivationInteraction;
 import xyz.brassgoggledcoders.opentransport.interfaces.BaseInterface;
 import xyz.brassgoggledcoders.opentransport.network.HolderUpdatePacket;
+import xyz.brassgoggledcoders.opentransport.registries.BlockWrapperRegistry;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
 import xyz.brassgoggledcoders.opentransport.wrappers.world.WorldWrapper;
 
@@ -27,7 +28,7 @@ public class BlockWrapperBase implements IBlockWrapper {
     Block block;
     IBlockState blockState;
     TileEntity tileEntity;
-    World world;
+    WorldWrapper world;
     boolean hasTileEntity;
     String unlocalizedName;
     IInteraction clickInteraction = new BaseInteraction();
@@ -40,6 +41,8 @@ public class BlockWrapperBase implements IBlockWrapper {
         this.block = block;
         this.blockState = block.getDefaultState();
         this.unlocalizedName = block.getUnlocalizedName().replaceFirst("tile.", "");
+        this.hasTileEntity = block.hasTileEntity(this.blockState);
+        this.clickInteraction = new BlockActivationInteraction();
     }
 
     public <T extends Comparable<T>, V extends T> BlockWrapperBase withProperty(IProperty<T> property, V value) {
@@ -77,6 +80,7 @@ public class BlockWrapperBase implements IBlockWrapper {
     public BlockWrapperBase setBlockState(IBlockState blockState) {
         this.block = blockState.getBlock();
         this.blockState = blockState;
+        this.hasTileEntity = this.block.hasTileEntity(this.blockState);
         return this;
     }
 
@@ -132,7 +136,7 @@ public class BlockWrapperBase implements IBlockWrapper {
 
     @Override
     public void tick() {
-        if (this.getTileEntity() instanceof ITickable) {
+        if (this.hasTileEntity() && this.getTileEntity() instanceof ITickable) {
             ((ITickable) this.getTileEntity()).update();
         }
     }
@@ -155,7 +159,7 @@ public class BlockWrapperBase implements IBlockWrapper {
 
     @Override
     public TileEntity getTileEntity() {
-        if (this.tileEntity == null) {
+        if (this.tileEntity == null && this.hasTileEntity()) {
             this.tileEntity = this.getBlock().createTileEntity(this.world, this.getBlockState());
             this.tileEntity.setWorldObj(this.world);
         }
@@ -163,8 +167,13 @@ public class BlockWrapperBase implements IBlockWrapper {
     }
 
     @Override
+    public WorldWrapper getWorldWrapper() {
+        return world;
+    }
+
+    @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-        if (world != null && this.getTileEntity() != null) {
+        if (world != null && this.hasTileEntity()) {
             tagCompound.setTag("TILE_DATA", this.getTileEntity().writeToNBT(new NBTTagCompound()));
         }
         return tagCompound;
@@ -191,5 +200,9 @@ public class BlockWrapperBase implements IBlockWrapper {
     private void updateBlockWrapper() {
         OpenTransport.instance.getPacketHandler()
                 .sendToAllAround(new HolderUpdatePacket(this.holderEntity), this.holderEntity.getEntity());
+    }
+
+    public void register() {
+        BlockWrapperRegistry.registerWrapper(this);
     }
 }

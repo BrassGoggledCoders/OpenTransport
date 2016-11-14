@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.opentransport.minecarts.renderers;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderMinecart;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
@@ -87,7 +88,8 @@ public class RenderHolderMinecart extends RenderMinecart<EntityMinecartHolder> {
         float f4 = 0.75F;
         GlStateManager.scale(f4, f4, f4);
         GlStateManager.translate(-0.5F, (float) (j - 8) / 16.0F, 0.5F);
-        renderBlock.renderEntity(entity, entity.getBlockWrapper(), partialTicks);
+        this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        this.renderBlock.renderEntity(entity, entity.getBlockWrapper(), partialTicks);
         GlStateManager.popMatrix();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.bindEntityTexture(entity);

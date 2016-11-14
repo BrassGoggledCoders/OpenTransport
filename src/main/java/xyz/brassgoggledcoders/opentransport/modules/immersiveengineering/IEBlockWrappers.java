@@ -17,17 +17,17 @@ public class IEBlockWrappers {
                 .setUnlocalizedSuffix(BlockTypes_WoodenDevice0.CRATE.getName())
                 .withProperty(blockWoodenDevice0.property, BlockTypes_WoodenDevice0.CRATE)
                 .setClickInteraction(new BlockActivationInteraction()).setGuiInterface(new CrateInterface());
-        BlockWrapperRegistry.registerContainer(woodenStorageCrate);
+        BlockWrapperRegistry.registerWrapper(woodenStorageCrate);
 
         BlockWrapperBase reinforcedWoodenStorageCrate =
                 woodenStorageCrate.copy().setUnlocalizedSuffix(BlockTypes_WoodenDevice0.REINFORCED_CRATE.getName())
                         .withProperty(blockWoodenDevice0.property, BlockTypes_WoodenDevice0.REINFORCED_CRATE);
-        BlockWrapperRegistry.registerContainer(reinforcedWoodenStorageCrate);
+        BlockWrapperRegistry.registerWrapper(reinforcedWoodenStorageCrate);
 
         BlockWrapperBase woodenBarrel =
                 woodenStorageCrate.copy().withProperty(blockWoodenDevice0.property, BlockTypes_WoodenDevice0.BARREL)
                         .setUnlocalizedSuffix(BlockTypes_WoodenDevice0.BARREL.getName());
-        BlockWrapperRegistry.registerContainer(woodenBarrel);
+        BlockWrapperRegistry.registerWrapper(woodenBarrel);
 
         BlockIEBase blockMetalDevice0 = IEContent.blockMetalDevice0;
         for (int i = 0; i < 5; i++) {
@@ -35,7 +35,7 @@ public class IEBlockWrappers {
             BlockWrapperBase metalDevice0 =
                     new BlockWrapperBase(blockMetalDevice0).withProperty(blockMetalDevice0.property, currentDevice)
                             .setUnlocalizedSuffix(currentDevice.getName());
-            BlockWrapperRegistry.registerContainer(metalDevice0);
+            BlockWrapperRegistry.registerWrapper(metalDevice0);
         }
     }
 }
