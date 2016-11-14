@@ -2,12 +2,13 @@ package xyz.brassgoggledcoders.opentransport.wrappers.player;
 
 import com.teamacronymcoders.base.client.gui.GuiCarrier;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityCommandBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
@@ -36,6 +37,14 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
         this.blockWrapper = containerHolder.getBlockWrapper();
         this.worldObj = entityPlayer.worldObj;
         this.connection = entityPlayer.connection;
+        this.capabilities = entityPlayer.capabilities;
+        this.openContainer = entityPlayer.openContainer;
+        this.interactionManager.thisPlayerMP = entityPlayer;
+    }
+
+    private void openGui() {
+        this.getEntityPlayer().openGui(OpenTransport.instance, GuiCarrier.ENTITY.ordinal(),this.getEntityWorld(),
+                this.getEntity().getEntityId(), 0, 0);
     }
 
     @Override
@@ -59,8 +68,7 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
 
     @Override
     public void openGui(@Nonnull Object mod, int id, @Nonnull World world, int posX, int posY, int poxZ) {
-        this.getEntityPlayer().openGui(OpenTransport.instance, GuiCarrier.ENTITY.ordinal(),this.getEntityWorld(),
-                this.getEntity().getEntityId(), 0, 0);
+        this.openGui();
     }
 
     @Override
@@ -112,13 +120,17 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
 
     @Override
     public void displayGUIChest(IInventory iInventory) {
-        this.getEntityPlayer().displayGUIChest(iInventory);
+        this.openGui();
+    }
+
+    @Override
+    public void displayGuiCommandBlock(TileEntityCommandBlock commandBlock) {
+        this.openGui();
     }
 
     @Override
     public void displayGui(IInteractionObject guiOwner) {
-        this.openGui(OpenTransport.instance, GuiCarrier.ENTITY.ordinal(),this.getEntityWorld(),
-                this.getEntity().getEntityId(), 0, 0);
+        this.openGui();
     }
 
     @Override
@@ -149,7 +161,14 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
         return this.getEntityPlayer().hasCapability(capability, facing);
     }
 
-    public EntityPlayer getEntityPlayer() {
+    @Override
+    public void sendContainerToPlayer(Container container)
+    {
+        this.getEntityPlayer().openContainer = this.openContainer;
+        this.getEntityPlayer().sendContainerToPlayer(container);
+    }
+
+    public EntityPlayerMP getEntityPlayer() {
         return entityPlayer;
     }
 

@@ -9,6 +9,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityCommandBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
@@ -38,6 +39,11 @@ public class EntityPlayerSPWrapper extends EntityPlayerSP {
         this.worldObj = entityPlayer.worldObj;
     }
 
+    private void openGui() {
+        this.getEntityPlayer().openGui(OpenTransport.instance, GuiCarrier.ENTITY.ordinal(),this.getEntityWorld(),
+                this.getEntity().getEntityId(), 0, 0);
+    }
+
     @Override
     public void addChatComponentMessage(@Nullable ITextComponent chatComponent) {
         this.getEntityPlayer().addChatComponentMessage(chatComponent);
@@ -59,8 +65,7 @@ public class EntityPlayerSPWrapper extends EntityPlayerSP {
 
     @Override
     public void openGui(@Nonnull Object mod, int id, @Nonnull World world, int posX, int posY, int posZ) {
-        this.getEntityPlayer().openGui(OpenTransport.instance, this.getEntity().getEntityId(),
-                this.getEntity().worldObj, posX, posY, posZ);
+        this.openGui();
     }
 
     @Override
@@ -112,13 +117,17 @@ public class EntityPlayerSPWrapper extends EntityPlayerSP {
 
     @Override
     public void displayGUIChest(@Nonnull IInventory iInventory) {
-        this.getEntityPlayer().displayGUIChest(iInventory);
+        this.openGui();
+    }
+
+    @Override
+    public void displayGuiCommandBlock(@Nullable TileEntityCommandBlock commandBlock) {
+        this.openGui();
     }
 
     @Override
     public void displayGui(IInteractionObject guiOwner) {
-        this.openGui(OpenTransport.instance, GuiCarrier.ENTITY.ordinal(),this.getEntityWorld(),
-                this.getEntity().getEntityId(), 0, 0);
+        this.openGui();
     }
 
     @Override
