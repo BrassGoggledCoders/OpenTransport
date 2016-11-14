@@ -9,6 +9,8 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Achievement;
+import net.minecraft.stats.StatBase;
 import net.minecraft.tileentity.TileEntityCommandBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -145,6 +147,26 @@ public class EntityPlayerSPWrapper extends EntityPlayerSP {
     @Override
     public void setPrimaryHand(EnumHandSide hand) {
         this.getEntityPlayer().setPrimaryHand(hand);
+    }
+
+    @Override
+    public boolean hasAchievement(Achievement achievement) {
+        return this.getEntityPlayer().hasAchievement(achievement);
+    }
+
+    @Override
+    public void addStat(@Nonnull StatBase stat) {
+        this.getEntityPlayer().addStat(stat);
+    }
+
+    @Override
+    public void addStat(StatBase stat, int amount) {
+        this.getEntityPlayer().addStat(stat, amount);
+    }
+
+    @Override
+    public void takeStat(StatBase stat) {
+        this.getEntityPlayer().takeStat(stat);
     }
 
     @Override
