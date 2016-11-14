@@ -11,6 +11,8 @@ public interface IHolderEntity<T extends Entity> {
 
     void setBlockWrapper(IBlockWrapper blockWrapper);
 
+    Entity getEmptyEntity();
+
     default boolean getRedstonePower() {
         return false;
     }

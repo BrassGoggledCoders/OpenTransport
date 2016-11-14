@@ -6,6 +6,8 @@ import com.teamacronymcoders.base.entity.EntityMinecartBase;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityMinecartEmpty;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -99,6 +101,15 @@ public class EntityMinecartHolder extends EntityMinecartBase
         this.dataManager.set(BLOCK_CONTAINER_NAME, blockWrapper.getUnlocalizedName());
         this.blockWrapper = blockWrapper;
         this.blockWrapper.setHolder(this);
+    }
+
+    @Override
+    public Entity getEmptyEntity() {
+        EntityMinecartEmpty entityMinecartEmpty = new EntityMinecartEmpty(this.worldObj);
+        entityMinecartEmpty.setRollingAmplitude(this.getRollingAmplitude());
+        entityMinecartEmpty.setRollingDirection(this.getRollingDirection());
+        entityMinecartEmpty.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
+        return entityMinecartEmpty;
     }
 
     @Override

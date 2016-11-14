@@ -128,6 +128,13 @@ public class WorldWrapper extends World {
         return this.getHolderEntity().getRedstonePower();
     }
 
+    @Override
+    public boolean setBlockToAir(@Nonnull BlockPos pos) {
+        this.getEntity().setDead();
+        this.getWorld().spawnEntityInWorld(this.getHolderEntity().getEmptyEntity());
+        return true;
+    }
+
     public Entity getEntity() {
         return this.getHolderEntity().getEntity();
     }
