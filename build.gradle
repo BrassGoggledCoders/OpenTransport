@@ -18,6 +18,10 @@ buildscript {
 
 repositories {
     maven {
+        name "BGC"
+        url "https://maven.brassgoggledcoders.xyz"
+    }
+    maven {
         name "Base"
         url "http://blamejared.com/maven"
     }
@@ -51,7 +55,8 @@ minecraft {
 
 dependencies {
     compile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}:deobf"
-    compile "cpw.mods:ironchest:${minecraft_version}-${ironchest_version}"
+    compile "cpw.mods:ironchest:${minecraft_version}-${iron_chest_version}"
+    compile "xyz.brassgoggledcoders.modularutilities:ModularUtilities:${minecraft_version}-${modular_utilities_version}:deobf"
 }
 
 task getLibraries {
