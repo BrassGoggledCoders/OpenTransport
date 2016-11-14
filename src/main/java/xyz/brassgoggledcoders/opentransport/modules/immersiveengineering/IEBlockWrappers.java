@@ -6,7 +6,7 @@ import blusunrize.immersiveengineering.common.blocks.metal.BlockTypes_MetalDevic
 import blusunrize.immersiveengineering.common.blocks.wooden.BlockTypes_WoodenDevice0;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.opentransport.blocks.BlockWrapperBase;
-import xyz.brassgoggledcoders.opentransport.interactions.BlockActivationInteraction;
+import xyz.brassgoggledcoders.opentransport.actions.BlockActivationAction;
 import xyz.brassgoggledcoders.opentransport.registries.BlockWrapperRegistry;
 
 public class IEBlockWrappers {
@@ -16,7 +16,7 @@ public class IEBlockWrappers {
         BlockWrapperBase woodenStorageCrate = new BlockWrapperBase(blockWoodenDevice0)
                 .setUnlocalizedSuffix(BlockTypes_WoodenDevice0.CRATE.getName())
                 .withProperty(blockWoodenDevice0.property, BlockTypes_WoodenDevice0.CRATE)
-                .setClickInteraction(new BlockActivationInteraction()).setGuiInterface(new CrateInterface());
+                .setClickInteraction(new BlockActivationAction()).setGuiInterface(new CrateInterface());
         BlockWrapperRegistry.registerWrapper(woodenStorageCrate);
 
         BlockWrapperBase reinforcedWoodenStorageCrate =

@@ -20,12 +20,6 @@ public class CommonProxy {
         return null;
     }
 
-    public void resetPlayer(EntityPlayer player) {
-        if (player instanceof EntityPlayerMP) {
-            ((EntityPlayerMP) player).interactionManager.thisPlayerMP = (EntityPlayerMP) player;
-        }
-    }
-
     public World getWorld(MessageContext ctx) {
         return ctx.getServerHandler().playerEntity.getEntityWorld();
     }

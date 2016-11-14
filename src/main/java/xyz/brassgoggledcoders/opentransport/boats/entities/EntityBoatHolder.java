@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.opentransport.boats.entities;
 import com.google.common.base.Optional;
 import com.teamacronymcoders.base.client.gui.IHasGui;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -80,6 +81,14 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
         this.dataManager.set(BLOCK_CONTAINER_NAME, blockWrapper.getUnlocalizedName());
         this.blockWrapper = blockWrapper;
         this.blockWrapper.setHolder(this);
+    }
+
+    @Override
+    public Entity getEmptyEntity() {
+        EntityBoat entityBoat = new EntityBoat(this.getEntityWorld());
+        entityBoat.setBoatType(this.getBoatType());
+        entityBoat.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
+        return entityBoat;
     }
 
     @Override

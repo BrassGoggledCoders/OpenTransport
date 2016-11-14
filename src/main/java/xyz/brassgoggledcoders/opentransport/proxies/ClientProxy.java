@@ -24,11 +24,6 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void resetPlayer(EntityPlayer player) {
-
-    }
-
-    @Override
     public World getWorld(MessageContext ctx) {
         return Minecraft.getMinecraft().theWorld;
     }
