@@ -33,6 +33,10 @@ repositories {
         name 'JEI'
         url "http://dvs1.progwml6.com/files/maven"
     }
+    ivy {
+        name = "Railcraft"
+        artifactPattern "http://www.railcraft.info/ivy/com.headlamp-games/Railcraft/[version]/[module]_1.10.2-[version]-[classifier].[ext]"
+    }
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -60,6 +64,7 @@ dependencies {
     compile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}:deobf"
     compile "cpw.mods:ironchest:${minecraft_version}-${iron_chest_version}"
     compile "xyz.brassgoggledcoders.modularutilities:ModularUtilities:${minecraft_version}-${modular_utilities_version}:deobf"
+    compile name: "Railcraft", version: ${railcraft_version}, classifier: "dev"
 }
 
 task getLibraries {
@@ -73,11 +78,7 @@ task getLibraries {
     def ie = 'ImmersiveEngineering-' + immersive_engineering_version + '.jar'
     def ieSource = ''
 
-    def railcraft = 'Railcraft_' + minecraft_version + '-' + railcraft_version + '-dev.jar'
-    def railcraftSource = 'http://www.railcraft.info/ivy/com.headlamp-games/Railcraft/' + railcraft_version + '/' + railcraft
-
     downloads.add(new Tuple(ie, ieSource))
-    downloads.add(new Tuple(railcraft, railcraftSource))
 
     libsFolder.listFiles().each { file ->
         def isInDownloadList = false;
