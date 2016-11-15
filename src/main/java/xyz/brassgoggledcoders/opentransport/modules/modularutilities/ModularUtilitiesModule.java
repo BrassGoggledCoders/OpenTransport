@@ -1,29 +1,22 @@
 package xyz.brassgoggledcoders.opentransport.modules.modularutilities;
 
 import com.teamacronymcoders.base.modulesystem.Module;
-import com.teamacronymcoders.base.modulesystem.ModuleBase;
-import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
-import com.teamacronymcoders.base.modulesystem.dependencies.ModDependency;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IHasWrappers;
+import xyz.brassgoggledcoders.opentransport.modulesystem.ModuleWrapperBase;
 
-import java.util.List;
+import javax.annotation.Nonnull;
 
 @Module(OpenTransport.MODID)
-public class ModularUtilitiesModule extends ModuleBase {
+public class ModularUtilitiesModule extends ModuleWrapperBase {
     @Override
     public String getName() {
         return "Modular Utilities";
     }
 
+    @Nonnull
     @Override
-    public List<IDependency> getDependencies(List<IDependency> dependencies) {
-        dependencies.add(new ModDependency("modularutilities"));
-        return dependencies;
-    }
-
-    @Override
-    public void preInit(FMLPreInitializationEvent event) {
-        MoUBlockWrappers.register();
+    public IHasWrappers getWrapperHolder() {
+        return new MoUBlockWrappers();
     }
 }

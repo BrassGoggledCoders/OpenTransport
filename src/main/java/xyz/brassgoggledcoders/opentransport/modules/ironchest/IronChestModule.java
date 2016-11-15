@@ -1,16 +1,17 @@
 package xyz.brassgoggledcoders.opentransport.modules.ironchest;
 
 import com.teamacronymcoders.base.modulesystem.Module;
-import com.teamacronymcoders.base.modulesystem.ModuleBase;
 import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
 import com.teamacronymcoders.base.modulesystem.dependencies.ModDependency;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
+import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IHasWrappers;
+import xyz.brassgoggledcoders.opentransport.modulesystem.ModuleWrapperBase;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 @Module(OpenTransport.MODID)
-public class IronChestModule extends ModuleBase {
+public class IronChestModule extends ModuleWrapperBase {
     @Override
     public String getName() {
         return "Iron Chest";
@@ -22,8 +23,9 @@ public class IronChestModule extends ModuleBase {
         return dependencies;
     }
 
+    @Nonnull
     @Override
-    public void preInit(FMLPreInitializationEvent event) {
-        IronChestBlockWrappers.preInit(event);
+    public IHasWrappers getWrapperHolder() {
+        return new IronChestBlockWrappers();
     }
 }
