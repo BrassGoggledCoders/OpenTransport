@@ -7,8 +7,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.common.capabilities.Capability;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.actions.BlockActivationAction;
 import xyz.brassgoggledcoders.opentransport.actions.BlockPlacedByAction;
@@ -207,6 +209,20 @@ public class BlockWrapperBase implements IBlockWrapper {
                 this.getTileEntity().readFromNBT(tagCompound.getCompoundTag("TILE_DATA"));
             }
         }
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+        return this.hasTileEntity && this.getTileEntity().hasCapability(capability, facing);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+        if(this.hasTileEntity) {
+            return this.getTileEntity().getCapability(capability, facing);
+        }
+        return null;
     }
 
     @Override

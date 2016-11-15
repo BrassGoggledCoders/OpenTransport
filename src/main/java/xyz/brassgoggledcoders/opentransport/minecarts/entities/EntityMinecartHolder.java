@@ -18,10 +18,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.minecarts.items.ItemMinecartHolder;
@@ -193,5 +195,18 @@ public class EntityMinecartHolder extends EntityMinecartBase
     @Override
     public Container getServerGuiElement(int ID, EntityPlayer player, World world, BlockPos blockPos) {
         return this.getBlockWrapper().getInterface().getContainer(player, this, this.getBlockWrapper());
+    }
+
+    @Override
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+        return this.getBlockWrapper().hasCapability(capability, facing) || super.hasCapability(capability, facing);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Nonnull
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+        return this.getBlockWrapper().hasCapability(capability, facing) ?
+                this.getBlockWrapper().getCapability(capability, facing) : super.getCapability(capability, facing);
     }
 }
