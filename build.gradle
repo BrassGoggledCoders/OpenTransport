@@ -62,8 +62,8 @@ minecraft {
 
 dependencies {
     compile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}:deobf"
-    compile "cpw.mods:ironchest:${minecraft_version}-${iron_chest_version}"
-    compile "xyz.brassgoggledcoders.modularutilities:ModularUtilities:${minecraft_version}-${modular_utilities_version}:deobf"
+    deobfcompile "cpw.mods:ironchest:${minecraft_version}-${iron_chest_version}"
+    deobfcompile "xyz.brassgoggledcoders.modularutilities:ModularUtilities:${minecraft_version}-${modular_utilities_version}"
     compile name: "Railcraft", version: ${railcraft_version}, classifier: "dev"
 }
 
