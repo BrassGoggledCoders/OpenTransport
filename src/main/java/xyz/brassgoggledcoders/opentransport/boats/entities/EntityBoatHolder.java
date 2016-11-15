@@ -44,6 +44,12 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
     }
 
     @Override
+    public void onUpdate() {
+        super.onUpdate();
+        this.getBlockWrapper().tick();
+    }
+
+    @Override
     @Nonnull
     public Item getItemBoat() {
         Optional<ItemStack> itemStackBoat = this.dataManager.get(ITEM_BOAT);
