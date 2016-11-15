@@ -34,10 +34,8 @@ public class VanillaModule extends ModuleBase {
         new BlockWrapperBase(Blocks.JUKEBOX).addActionListener(new JukeBoxAction()).register();
         new BlockWrapperBase(Blocks.CRAFTING_TABLE).setGuiInterface(new CraftingTableGuiInterface()).register();
         new BlockWrapperBase(Blocks.NOTEBLOCK).register();
-        //TODO: Add saving of BlockState changes.
         new BlockWrapperBase(Blocks.ANVIL).setGuiInterface(new AnvilGuiInterface()).register();
         new BlockWrapperBase(Blocks.CAULDRON).register();
-        //TODO: Add saving of BlockState changes.
         new BlockWrapperBase(Blocks.CAKE).register();
         new BlockWrapperBase(Blocks.BREWING_STAND).setGuiInterface(new BrewStandGuiInterface()).register();
 
