@@ -32,6 +32,7 @@ import java.util.List;
 
 public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRenderHandler*/ {
     IBlockWrapper firstContainer;
+    boolean creativeTabSet = false;
 
     public ItemBoatHolder(IBlockWrapper firstContainer, CreativeTabs tab) {
         super(EntityBoat.Type.OAK);
@@ -160,6 +161,16 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
         if (stat != null) {
             entityPlayer.addStat(stat);
         }
+    }
+
+    @Override
+    @Nonnull
+    public Item setCreativeTab(@Nonnull CreativeTabs tab) {
+        if (!creativeTabSet) {
+            super.setCreativeTab(tab);
+            this.creativeTabSet = true;
+        }
+        return this;
     }
 
     public EntityBoat.Type getType(ItemStack itemStack) {

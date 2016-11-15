@@ -22,6 +22,7 @@ import java.util.List;
 
 public class ItemMinecartHolder extends ItemMinecartBase /*implements IHasItemRenderHandler*/ {
     private IBlockWrapper blockWrapper;
+    boolean creativeTabSet = false;
 
     public ItemMinecartHolder(IBlockWrapper blockWrapper, CreativeTabs creativeTabs) {
         super("minecart.holder." + blockWrapper.getUnlocalizedName());
@@ -70,6 +71,16 @@ public class ItemMinecartHolder extends ItemMinecartBase /*implements IHasItemRe
         minecart.setBlockWrapper(blockWrapper);
         minecart.setItemCart(itemStack);
         return minecart;
+    }
+
+    @Override
+    @Nonnull
+    public Item setCreativeTab(@Nonnull CreativeTabs tab) {
+        if (!creativeTabSet) {
+            super.setCreativeTab(tab);
+            this.creativeTabSet = true;
+        }
+        return this;
     }
 
     @Override
