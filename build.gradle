@@ -51,6 +51,9 @@ minecraft {
 
     replace "@VERSION@", project.version
     replaceIn "OpenTransport.java"
+
+    replace "base@[0.0.0,)", "base@[" + base_version + ",)"
+    replaceIn "OpenTransport.java"
 }
 
 dependencies {
