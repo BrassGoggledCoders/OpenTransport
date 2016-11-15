@@ -55,6 +55,7 @@ public class BlockWrapperBase implements IBlockWrapper {
 
     public <T extends Comparable<T>, V extends T> BlockWrapperBase withProperty(IProperty<T> property, V value) {
         this.blockState = this.blockState.withProperty(property, value);
+        this.setUnlocalizedSuffix(value.toString().toLowerCase());
         return this;
     }
 
