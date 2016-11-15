@@ -197,6 +197,7 @@ public class BlockWrapperBase implements IBlockWrapper {
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+        tagCompound.setInteger("BLOCK_STATE", this.block.getMetaFromState(this.getBlockState()));
         if (world != null && this.hasTileEntity()) {
             tagCompound.setTag("TILE_DATA", this.getTileEntity().writeToNBT(new NBTTagCompound()));
         }
@@ -204,7 +205,9 @@ public class BlockWrapperBase implements IBlockWrapper {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void readFromNBT(NBTTagCompound tagCompound) {
+        this.setBlockState(this.block.getStateFromMeta(tagCompound.getInteger("BLOCK_STATE")));
         if (world != null && this.getTileEntity() != null) {
             if (tagCompound.hasKey("TILE_DATA")) {
                 this.getTileEntity().readFromNBT(tagCompound.getCompoundTag("TILE_DATA"));
