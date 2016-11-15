@@ -26,6 +26,7 @@ import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.UUID;
 
 public class EntityPlayerSPWrapper extends EntityPlayerSP {
     protected EntityPlayerSP entityPlayer;
@@ -167,6 +168,17 @@ public class EntityPlayerSPWrapper extends EntityPlayerSP {
     @Override
     public void takeStat(StatBase stat) {
         this.getEntityPlayer().takeStat(stat);
+    }
+
+    @Override
+    @Nonnull
+    public UUID getPersistentID() {
+        return this.getEntityPlayer().getPersistentID();
+    }
+
+    @Override
+    public void addChatMessage(@Nonnull ITextComponent component) {
+        this.getEntityPlayer().addChatMessage(component);
     }
 
     @Override
