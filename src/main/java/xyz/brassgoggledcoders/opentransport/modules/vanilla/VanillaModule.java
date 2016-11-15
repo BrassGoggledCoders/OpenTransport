@@ -30,8 +30,8 @@ public class VanillaModule extends ModuleBase {
         //new BlockWrapperBase(Blocks.TNT).register();
 
         //Other Stuff
-        new BlockWrapperBase(Blocks.ENDER_CHEST).setClickInteraction(new EnderChestAction()).register();
-        new BlockWrapperBase(Blocks.JUKEBOX).setClickInteraction(new JukeBoxAction()).register();
+        new BlockWrapperBase(Blocks.ENDER_CHEST).addActionListener(new EnderChestAction()).register();
+        new BlockWrapperBase(Blocks.JUKEBOX).addActionListener(new JukeBoxAction()).register();
         new BlockWrapperBase(Blocks.CRAFTING_TABLE).setGuiInterface(new CraftingTableGuiInterface()).register();
         new BlockWrapperBase(Blocks.NOTEBLOCK).register();
         //TODO: Add saving of BlockState changes.

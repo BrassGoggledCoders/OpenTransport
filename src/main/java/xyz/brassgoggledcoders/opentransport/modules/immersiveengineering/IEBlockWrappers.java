@@ -6,8 +6,6 @@ import blusunrize.immersiveengineering.common.blocks.metal.BlockTypes_MetalDevic
 import blusunrize.immersiveengineering.common.blocks.wooden.BlockTypes_WoodenDevice0;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.opentransport.blocks.BlockWrapperBase;
-import xyz.brassgoggledcoders.opentransport.actions.BlockActivationAction;
-import xyz.brassgoggledcoders.opentransport.registries.BlockWrapperRegistry;
 
 public class IEBlockWrappers {
     @SuppressWarnings("unchecked") //#BlameBlu
@@ -16,26 +14,20 @@ public class IEBlockWrappers {
         BlockWrapperBase woodenStorageCrate = new BlockWrapperBase(blockWoodenDevice0)
                 .setUnlocalizedSuffix(BlockTypes_WoodenDevice0.CRATE.getName())
                 .withProperty(blockWoodenDevice0.property, BlockTypes_WoodenDevice0.CRATE)
-                .setClickInteraction(new BlockActivationAction()).setGuiInterface(new CrateInterface());
-        BlockWrapperRegistry.registerWrapper(woodenStorageCrate);
+                .setGuiInterface(new CrateInterface());
+        woodenStorageCrate.register();
 
-        BlockWrapperBase reinforcedWoodenStorageCrate =
-                woodenStorageCrate.copy().setUnlocalizedSuffix(BlockTypes_WoodenDevice0.REINFORCED_CRATE.getName())
-                        .withProperty(blockWoodenDevice0.property, BlockTypes_WoodenDevice0.REINFORCED_CRATE);
-        BlockWrapperRegistry.registerWrapper(reinforcedWoodenStorageCrate);
+        woodenStorageCrate.copy().setUnlocalizedSuffix(BlockTypes_WoodenDevice0.REINFORCED_CRATE.getName())
+                .withProperty(blockWoodenDevice0.property, BlockTypes_WoodenDevice0.REINFORCED_CRATE).register();
 
-        BlockWrapperBase woodenBarrel =
-                woodenStorageCrate.copy().withProperty(blockWoodenDevice0.property, BlockTypes_WoodenDevice0.BARREL)
-                        .setUnlocalizedSuffix(BlockTypes_WoodenDevice0.BARREL.getName());
-        BlockWrapperRegistry.registerWrapper(woodenBarrel);
+        woodenStorageCrate.copy().withProperty(blockWoodenDevice0.property, BlockTypes_WoodenDevice0.BARREL)
+                .setUnlocalizedSuffix(BlockTypes_WoodenDevice0.BARREL.getName()).register();
 
         BlockIEBase blockMetalDevice0 = IEContent.blockMetalDevice0;
         for (int i = 0; i < 5; i++) {
             BlockTypes_MetalDevice0 currentDevice = BlockTypes_MetalDevice0.values()[i];
-            BlockWrapperBase metalDevice0 =
-                    new BlockWrapperBase(blockMetalDevice0).withProperty(blockMetalDevice0.property, currentDevice)
-                            .setUnlocalizedSuffix(currentDevice.getName());
-            BlockWrapperRegistry.registerWrapper(metalDevice0);
+            new BlockWrapperBase(blockMetalDevice0).withProperty(blockMetalDevice0.property, currentDevice)
+                    .setUnlocalizedSuffix(currentDevice.getName()).register();
         }
     }
 }

@@ -118,7 +118,7 @@ public class BlockWrapperBase implements IBlockWrapper {
         return actionListeners;
     }
 
-    public BlockWrapperBase addActionListeners(IActionListener actionListener) {
+    public BlockWrapperBase addActionListener(IActionListener actionListener) {
         this.actionListeners.add(actionListener);
         return this;
     }
