@@ -19,6 +19,8 @@ public class IEBlockWrappers implements IHasWrappers {
         woodenDevice.copy().withProperty(woodenType, BlockTypes_WoodenDevice0.CRATE).setGuiInterface(new CrateInterface()).register();
         woodenDevice.copy().withProperty(woodenType, BlockTypes_WoodenDevice0.REINFORCED_CRATE).setGuiInterface(new CrateInterface()).register();
         woodenDevice.copy().withProperty(woodenType, BlockTypes_WoodenDevice0.BARREL).register();
+        //TODO: Explosive Blocks
+        //woodenDevice.copy().withProperty(woodenType, BlockTypes_WoodenDevice0.GUNPOWDER_BARREL).register();
 
         BlockIEBase blockMetalDevice0 = IEContent.blockMetalDevice0;
         for (int i = 0; i < 5; i++) {

@@ -24,9 +24,9 @@ public class VanillaModule extends ModuleBase {
         new BlockWrapperBase(Blocks.MOB_SPAWNER).register();
         new BlockWrapperBase(Blocks.FURNACE).setGuiInterface(new FurnaceGuiInterface()).register();
         new BlockWrapperBase(Blocks.HOPPER).setGuiInterface(new HopperGuiInterface()).register();
-        //TODO:Does this even work? Is this even worth it?
-        new BlockWrapperBase(Blocks.COMMAND_BLOCK).setGuiInterface(new CommandGuiInterface()).register();
-        //Still need to deal with Explosive Blocks
+        //TODO: Command Block Wrapper
+        //new BlockWrapperBase(Blocks.COMMAND_BLOCK).setGuiInterface(new CommandGuiInterface()).register();
+        //TODO:Explosive Blocks
         //new BlockWrapperBase(Blocks.TNT).register();
 
         //Other Stuff
