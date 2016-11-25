@@ -63,6 +63,7 @@ dependencies {
     deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
     deobfCompile "slimeknights:TConstruct:${minecraft_version}-${tinkers_version}"
     deobfCompile "slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}"
+    compile "blusunrize:ImmersiveEngineering:${immersive_engineering_version}-+:deobf"
 }
 
 task getLibraries {
@@ -71,15 +72,11 @@ task getLibraries {
         libsFolder.mkdirs()
     }
 
-    def downloads = new ArrayList<Tuple>();
-
-    def ie = 'ImmersiveEngineering-' + immersive_engineering_version + '.jar'
-    def ieSource = ''
+    def downloads = new ArrayList<Tuple>()
 
     def railcraft = 'Railcraft_' + minecraft_version + '-' + railcraft_version + '-dev.jar'
     def railcraftSource = 'http://www.railcraft.info/ivy/com.headlamp-games/Railcraft/' + railcraft_version + '/' + railcraft
 
-    downloads.add(new Tuple(ie, ieSource))
     downloads.add(new Tuple(railcraft, railcraftSource))
 
     libsFolder.listFiles().each { file ->
@@ -153,46 +150,41 @@ idea {
     }
 }
 
-task("uploadJars", dependsOn: "reobf") {
-    description = "uploads JARs"
-    if (System.getenv("bamboo_local_maven") != null) {
-        apply plugin: 'maven'
-        uploadArchives {
-            repositories {
-                mavenDeployer {
-                    repository(url: "file://" + System.getenv("bamboo_local_maven"))
-                    pom {
-                        groupId = project.group
-                        version = project.version
-                        artifactId = project.archivesBaseName
-                        project {
-                            name project.archivesBaseName
-                            packaging 'jar'
-                            description project.archivesBaseName
-                            url ''
-                            scm {
-                                url 'https://github.com/BrassGoggledCoders/OpenTransport'
-                                connection 'scm:git:git@github.com:BrassGoggledCoders/OpenTransport.git'
-                                developerConnection 'scm:git:git@github.com:BrassGoggledCoders/OpenTransport.git'
-                            }
-                            issueManagement {
-                                system 'github'
-                                url 'https://github.com/BrassGoggledCoders/OpenTransport/issues'
-                            }
-                            licenses {
-                                license {
-                                    name 'MIT'
-                                    url 'https://github.com/BrassGoggledCoders/OpenTransport/blob/master/LICENSE'
-                                    distribution 'repo'
-                                }
-                            }
-                            developers {
-                                developer {
-                                    id 'SkySom'
-                                    name 'SkySom'
-                                    roles { role 'developer' }
-                                }
-                            }
+apply plugin: 'maven'
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file://" + System.getenv("bamboo_local_maven"))
+            pom {
+                groupId = project.group
+                version = project.version
+                artifactId = project.archivesBaseName
+                project {
+                    name project.archivesBaseName
+                    packaging 'jar'
+                    description project.archivesBaseName
+                    url ''
+                    scm {
+                        url 'https://github.com/BrassGoggledCoders/OpenTransport'
+                        connection 'scm:git:git@github.com:BrassGoggledCoders/OpenTransport.git'
+                        developerConnection 'scm:git:git@github.com:BrassGoggledCoders/OpenTransport.git'
+                    }
+                    issueManagement {
+                        system 'github'
+                        url 'https://github.com/BrassGoggledCoders/OpenTransport/issues'
+                    }
+                    licenses {
+                        license {
+                            name 'MIT'
+                            url 'https://github.com/BrassGoggledCoders/OpenTransport/blob/master/LICENSE'
+                            distribution 'repo'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'SkySom'
+                            name 'SkySom'
+                            roles { role 'developer' }
                         }
                     }
                 }
@@ -200,3 +192,4 @@ task("uploadJars", dependsOn: "reobf") {
         }
     }
 }
+
