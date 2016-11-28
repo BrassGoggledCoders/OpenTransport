@@ -18,15 +18,11 @@ buildscript {
 
 repositories {
     maven {
-        name "BGC"
-        url "https://maven.brassgoggledcoders.xyz"
-    }
-    maven {
-        name "Base"
+        name "Base/MoU/IE"
         url "http://blamejared.com/maven"
     }
     maven {
-        name 'Mobius'
+        name 'Waila'
         url 'http://mobiusstrip.eu/maven'
     }
     maven {
