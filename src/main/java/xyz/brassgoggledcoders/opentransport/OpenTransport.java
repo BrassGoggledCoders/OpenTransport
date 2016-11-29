@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.opentransport;
 
 import com.teamacronymcoders.base.BaseModFoundation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -11,6 +12,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
+import xyz.brassgoggledcoders.opentransport.api.events.RegisterBlockWrappersEvent;
 import xyz.brassgoggledcoders.opentransport.network.HolderUpdatePacket;
 import xyz.brassgoggledcoders.opentransport.proxies.CommonProxy;
 import xyz.brassgoggledcoders.opentransport.transport.TransportTypeHandler;
@@ -46,6 +48,7 @@ public class OpenTransport extends BaseModFoundation<OpenTransport> {
 
     @Override
     public void modPreInit(FMLPreInitializationEvent event) {
+        MinecraftForge.EVENT_BUS.post(new RegisterBlockWrappersEvent(OpenTransportAPI.getBlockWrapperRegistry()));
         transportTypeHandler = new TransportTypeHandler(event);
         proxy.registerEntityRenders();
     }
