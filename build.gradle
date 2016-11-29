@@ -191,8 +191,9 @@ uploadArchives {
 
 String getVersion() {
     String version = "${minecraft_version}-${opentransport_version}"
-    String branch = System.getenv("BRANCH") != null ? System.getenv("BRANCH") : ""
-
+    String branch = System.getenv("branch") != null ? System.getenv("branch") : ""
+    println "Version: " + version
+    println "Branch : " + branch
     if(branch != "") {
         version += "-" + branch
 
@@ -200,8 +201,9 @@ String getVersion() {
         if(buildNumber != "") {
             version += "." + buildNumber
         }
+        println "Build Number: " + buildNumber
     }
-
+    println "Full Version: " + version
     return version
 }
 
