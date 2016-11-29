@@ -50,6 +50,8 @@ public interface IBlockWrapper {
 
     WorldWrapper getWorldWrapper();
 
+    ItemStack getItemStack();
+
     NBTTagCompound writeToNBT(NBTTagCompound tagCompound);
 
     void readFromNBT(NBTTagCompound tagCompound);

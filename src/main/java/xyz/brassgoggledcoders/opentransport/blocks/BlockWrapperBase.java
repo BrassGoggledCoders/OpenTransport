@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -36,6 +37,8 @@ public class BlockWrapperBase implements IBlockWrapper {
     WorldWrapper world;
     boolean hasTileEntity;
     String unlocalizedName;
+    ItemStack itemStack;
+    boolean itemStackChange = true;
     List<IActionListener> actionListeners;
     IGuiInterface guiInterface;
     RenderType renderType = RenderType.VMC;
@@ -51,10 +54,17 @@ public class BlockWrapperBase implements IBlockWrapper {
         this.actionListeners = new ArrayList<>();
         this.actionListeners.add(new BlockActivationAction());
         this.actionListeners.add(new BlockPlacedByAction());
+        Item item = Item.getItemFromBlock(block);
+        if(item != null) {
+            this.itemStack = new ItemStack(item, 1, block.getMetaFromState(this.blockState));
+        }
     }
 
     public <T extends Comparable<T>, V extends T> BlockWrapperBase withProperty(IProperty<T> property, V value) {
         this.blockState = this.blockState.withProperty(property, value);
+        if(this.itemStackChange) {
+            this.itemStack = new ItemStack(block, 1, block.getMetaFromState(this.blockState));
+        }
         this.setUnlocalizedSuffix(value.toString().toLowerCase());
         return this;
     }
@@ -77,6 +87,12 @@ public class BlockWrapperBase implements IBlockWrapper {
     public BlockWrapperBase setBlock(Block block) {
         this.block = block;
         this.blockState = block.getDefaultState();
+        if(this.itemStackChange) {
+            Item item = Item.getItemFromBlock(block);
+            if(item != null) {
+                this.itemStack = new ItemStack(item, 1, block.getMetaFromState(this.blockState));
+            }
+        }
         return this;
     }
 
@@ -90,6 +106,12 @@ public class BlockWrapperBase implements IBlockWrapper {
         this.block = blockState.getBlock();
         this.blockState = blockState;
         this.hasTileEntity = this.block.hasTileEntity(this.blockState);
+        if(this.itemStackChange) {
+            Item item = Item.getItemFromBlock(block);
+            if(item != null) {
+                this.itemStack = new ItemStack(item, 1, block.getMetaFromState(this.blockState));
+            }
+        }
         return this;
     }
 
@@ -193,6 +215,21 @@ public class BlockWrapperBase implements IBlockWrapper {
     @Override
     public WorldWrapper getWorldWrapper() {
         return world;
+    }
+
+    @Override
+    public ItemStack getItemStack() {
+        return this.itemStack;
+    }
+
+    public BlockWrapperBase setItemStack(ItemStack itemStack) {
+        return setItemStack(itemStack, true);
+    }
+
+    public BlockWrapperBase setItemStack(ItemStack itemStack, boolean changeWithState) {
+        this.itemStack = itemStack;
+        this.itemStackChange = changeWithState;
+        return this;
     }
 
     @Override
