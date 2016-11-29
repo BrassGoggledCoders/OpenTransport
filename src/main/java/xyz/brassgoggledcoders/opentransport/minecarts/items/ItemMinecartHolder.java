@@ -46,16 +46,14 @@ public class ItemMinecartHolder extends ItemMinecartBase /*implements IHasItemRe
     @Override
     @Nonnull
     @SideOnly(Side.CLIENT)
-    public String getItemStackDisplayName(@Nonnull ItemStack itemStack) {
+    public String getItemStackDisplayName(@Nonnull ItemStack cartItemStack) {
         String displayName = "";
 
-        displayName += Items.MINECART.getItemStackDisplayName(itemStack);
+        displayName += Items.MINECART.getItemStackDisplayName(cartItemStack);
 
-        Item blockItem = Item.getItemFromBlock(this.blockWrapper.getBlock());
-        if (blockItem != null) {
-            displayName += " " + I18n.format("separator.with") + " ";
-            displayName += blockItem.getItemStackDisplayName(itemStack);
-        }
+        ItemStack wrapperItemStack = this.blockWrapper.getItemStack();
+        displayName += " " + I18n.format("separator.with") + " ";
+        displayName += wrapperItemStack.getItem().getItemStackDisplayName(wrapperItemStack);
 
         return displayName;
     }

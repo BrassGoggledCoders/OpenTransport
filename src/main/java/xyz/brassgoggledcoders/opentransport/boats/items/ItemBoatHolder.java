@@ -31,14 +31,14 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRenderHandler*/ {
-    IBlockWrapper firstContainer;
+    IBlockWrapper blockWrapper;
     boolean creativeTabSet = false;
 
-    public ItemBoatHolder(IBlockWrapper firstContainer, CreativeTabs tab) {
+    public ItemBoatHolder(IBlockWrapper blockWrapper, CreativeTabs tab) {
         super(EntityBoat.Type.OAK);
-        this.setUnlocalizedName("boat.holder." + firstContainer.getUnlocalizedName());
+        this.setUnlocalizedName("boat.holder." + blockWrapper.getUnlocalizedName());
         this.setCreativeTab(tab);
-        this.firstContainer = firstContainer;
+        this.blockWrapper = blockWrapper;
     }
 
     @Override
@@ -129,16 +129,14 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
 
     @Override
     @Nonnull
-    public String getItemStackDisplayName(@Nonnull ItemStack itemStack) {
+    public String getItemStackDisplayName(@Nonnull ItemStack boatItemStack) {
         String displayName = "";
 
-        displayName += this.getBoatItem(itemStack).getItemStackDisplayName(itemStack);
+        displayName += this.getBoatItem(boatItemStack).getItemStackDisplayName(boatItemStack);
 
-        Item blockItem = Item.getItemFromBlock(this.firstContainer.getBlock());
-        if (blockItem != null) {
-            displayName += " " + I18n.format("separator.with") + " ";
-            displayName += blockItem.getItemStackDisplayName(itemStack);
-        }
+        ItemStack wrapperItemStack = this.blockWrapper.getItemStack();
+        displayName += " " + I18n.format("separator.with") + " ";
+        displayName += wrapperItemStack.getItem().getItemStackDisplayName(wrapperItemStack);
 
         return displayName;
     }
@@ -153,7 +151,7 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
     }
 
     public IBlockWrapper getBlockWrapper(ItemStack itemStack) {
-        return firstContainer;
+        return blockWrapper;
     }
 
     public void increaseStat(EntityPlayer entityPlayer) {
