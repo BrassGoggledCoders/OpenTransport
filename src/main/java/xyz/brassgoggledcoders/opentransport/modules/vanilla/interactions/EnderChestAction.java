@@ -4,9 +4,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.ActionType;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IActionListener;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.ActionType;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.IActionListener;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 public class EnderChestAction implements IActionListener {

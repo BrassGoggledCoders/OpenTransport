@@ -2,7 +2,7 @@ package xyz.brassgoggledcoders.opentransport.modules.immersiveengineering;
 
 import com.teamacronymcoders.base.modulesystem.Module;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IHasWrappers;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IHasWrappers;
 import xyz.brassgoggledcoders.opentransport.modulesystem.ModuleWrapperBase;
 
 import javax.annotation.Nonnull;

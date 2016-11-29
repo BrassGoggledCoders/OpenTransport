@@ -4,7 +4,7 @@ import com.teamacronymcoders.base.modulesystem.Module;
 import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
 import com.teamacronymcoders.base.modulesystem.dependencies.ModDependency;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IHasWrappers;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IHasWrappers;
 import xyz.brassgoggledcoders.opentransport.modulesystem.ModuleWrapperBase;
 
 import javax.annotation.Nonnull;

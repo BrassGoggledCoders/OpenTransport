@@ -2,7 +2,7 @@ package xyz.brassgoggledcoders.opentransport.api.entities;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 
 public interface IHolderEntity<T extends Entity> {
     T getEntity();

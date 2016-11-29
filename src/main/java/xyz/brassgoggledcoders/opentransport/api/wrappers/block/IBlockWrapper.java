@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.opentransport.api.blockwrappers;
+package xyz.brassgoggledcoders.opentransport.api.wrappers.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -9,9 +9,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.common.capabilities.Capability;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.IActionListener;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.IGuiInterface;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
-import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
-import xyz.brassgoggledcoders.opentransport.wrappers.world.WorldWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.rendering.RenderType;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
 
 import javax.annotation.Nonnull;
 import java.util.List;

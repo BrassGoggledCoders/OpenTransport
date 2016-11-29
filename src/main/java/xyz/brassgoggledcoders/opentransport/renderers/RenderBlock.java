@@ -6,7 +6,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.rendering.RenderType;
 
 public class RenderBlock {
     public void renderEntity(Entity entity, IBlockWrapper blockWrapper, float partialTicks) {

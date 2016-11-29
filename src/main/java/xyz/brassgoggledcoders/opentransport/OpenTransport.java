@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
 import xyz.brassgoggledcoders.opentransport.network.HolderUpdatePacket;
 import xyz.brassgoggledcoders.opentransport.proxies.CommonProxy;
 import xyz.brassgoggledcoders.opentransport.transport.TransportTypeHandler;
@@ -34,6 +35,7 @@ public class OpenTransport extends BaseModFoundation<OpenTransport> {
 
     public OpenTransport() {
         super(MODID, MODNAME, VERSION, CreativeTabs.MISC);
+        OpenTransportAPI.setInstance(new OpenTransportAPI(new ModWrapper()));
     }
 
     @EventHandler

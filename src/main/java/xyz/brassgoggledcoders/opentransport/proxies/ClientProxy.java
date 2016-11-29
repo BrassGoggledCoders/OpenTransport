@@ -12,7 +12,7 @@ import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
 import xyz.brassgoggledcoders.opentransport.boats.renderers.RenderHolderBoat;
 import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
 import xyz.brassgoggledcoders.opentransport.minecarts.renderers.RenderHolderMinecart;
-import xyz.brassgoggledcoders.opentransport.wrappers.player.EntityPlayerSPWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.player.EntityPlayerSPWrapper;
 
 public class ClientProxy extends CommonProxy {
     @Override

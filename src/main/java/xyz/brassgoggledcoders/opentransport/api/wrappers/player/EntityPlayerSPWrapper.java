@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.opentransport.wrappers.player;
+package xyz.brassgoggledcoders.opentransport.api.wrappers.player;
 
 import com.teamacronymcoders.base.client.gui.GuiCarrier;
 import net.minecraft.client.Minecraft;
@@ -20,9 +20,9 @@ import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.LockCode;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -43,8 +43,8 @@ public class EntityPlayerSPWrapper extends EntityPlayerSP {
     }
 
     private void openGui() {
-        this.getEntityPlayer().openGui(OpenTransport.instance, GuiCarrier.ENTITY.ordinal(),this.getEntityWorld(),
-                this.getEntity().getEntityId(), 0, 0);
+        this.getEntityPlayer().openGui(OpenTransportAPI.getModWrapper().getModInstance(), GuiCarrier.ENTITY.ordinal(),
+                this.getEntityWorld(), this.getEntity().getEntityId(), 0, 0);
     }
 
     @Override

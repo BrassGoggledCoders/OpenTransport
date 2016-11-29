@@ -19,16 +19,16 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.boats.items.ItemBoatHolder;
-import xyz.brassgoggledcoders.opentransport.registries.BlockWrapperRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<EntityBoatHolder>, IHasGui {
-    private static final DataParameter<String> BLOCK_CONTAINER_NAME =
+    private static final DataParameter<String> BLOCK_WRAPPER_NAME =
             EntityDataManager.createKey(EntityBoat.class, DataSerializers.STRING);
     private static final DataParameter<Optional<ItemStack>> ITEM_BOAT =
             EntityDataManager.createKey(EntityBoat.class, DataSerializers.OPTIONAL_ITEM_STACK);
@@ -41,7 +41,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
     @Override
     protected void entityInit() {
         super.entityInit();
-        this.dataManager.register(BLOCK_CONTAINER_NAME, "");
+        this.dataManager.register(BLOCK_WRAPPER_NAME, "");
         this.dataManager.register(ITEM_BOAT, Optional.<ItemStack>absent());
     }
 
@@ -75,8 +75,8 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
     @Override
     public IBlockWrapper getBlockWrapper() {
         if (this.blockWrapper == null) {
-            String containerName = this.dataManager.get(BLOCK_CONTAINER_NAME);
-            this.blockWrapper = BlockWrapperRegistry.getBlockWrapper(containerName);
+            String containerName = this.dataManager.get(BLOCK_WRAPPER_NAME);
+            this.blockWrapper = OpenTransportAPI.getBlockWrapperRegistry().getBlockWrapper(containerName);
             if (this.blockWrapper != null) {
                 this.blockWrapper.setHolder(this);
             }
@@ -86,7 +86,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 
     @Override
     public void setBlockWrapper(IBlockWrapper blockWrapper) {
-        this.dataManager.set(BLOCK_CONTAINER_NAME, blockWrapper.getUnlocalizedName());
+        this.dataManager.set(BLOCK_WRAPPER_NAME, blockWrapper.getUnlocalizedName());
         this.blockWrapper = blockWrapper;
         this.blockWrapper.setHolder(this);
     }
@@ -115,7 +115,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
             NBTTagCompound itemBoat = new NBTTagCompound();
             nbtTagCompound.setTag("ITEM_BOAT", itemStackBoat.get().writeToNBT(itemBoat));
         }
-        nbtTagCompound.setString("CONTAINER_NAME", this.dataManager.get(BLOCK_CONTAINER_NAME));
+        nbtTagCompound.setString("WRAPPER_NAME", this.dataManager.get(BLOCK_WRAPPER_NAME));
         if (blockWrapper != null) {
             NBTTagCompound containerTag = new NBTTagCompound();
             containerTag = blockWrapper.writeToNBT(containerTag);
@@ -127,8 +127,9 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
     @Override
     public void readFromNBT(NBTTagCompound nbtTagCompound) {
         super.readFromNBT(nbtTagCompound);
-        this.dataManager.set(BLOCK_CONTAINER_NAME, nbtTagCompound.getString("CONTAINER_NAME"));
-        this.setBlockWrapper(BlockWrapperRegistry.getBlockWrapper(nbtTagCompound.getString("CONTAINER_NAME")));
+        String wrapperName = nbtTagCompound.getString("WRAPPER_NAME");
+        this.dataManager.set(BLOCK_WRAPPER_NAME, wrapperName);
+        this.setBlockWrapper(OpenTransportAPI.getBlockWrapperRegistry().getBlockWrapper(wrapperName));
         this.setItemBoat(ItemStack.loadItemStackFromNBT(nbtTagCompound.getCompoundTag("ITEM_BOAT")));
         blockWrapper.setHolder(this);
         blockWrapper.readFromNBT(nbtTagCompound.getCompoundTag("CONTAINER"));

@@ -1,12 +1,12 @@
 package xyz.brassgoggledcoders.opentransport.modules.modularutilities;
 
 import xyz.brassgoggledcoders.modularutilities.modules.ender.EnderModule;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IHasWrappers;
-import xyz.brassgoggledcoders.opentransport.blocks.BlockWrapperBase;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.BlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IHasWrappers;
 
 public class MoUBlockWrappers implements IHasWrappers {
     @Override
     public void registerWrappers() {
-        new BlockWrapperBase(EnderModule.ender_proxy).register();
+        new BlockWrapper(EnderModule.ender_proxy).register();
     }
 }

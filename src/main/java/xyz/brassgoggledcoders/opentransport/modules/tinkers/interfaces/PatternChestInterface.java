@@ -7,8 +7,8 @@ import net.minecraft.util.math.BlockPos;
 import slimeknights.tconstruct.tools.common.client.GuiPatternChest;
 import slimeknights.tconstruct.tools.common.inventory.ContainerPatternChest;
 import slimeknights.tconstruct.tools.common.tileentity.TilePatternChest;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IGuiInterface;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.IGuiInterface;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 import javax.annotation.Nonnull;

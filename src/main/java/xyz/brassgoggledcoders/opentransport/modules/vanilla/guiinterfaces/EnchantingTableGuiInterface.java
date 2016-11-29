@@ -6,8 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerEnchantment;
 import net.minecraft.util.math.BlockPos;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IGuiInterface;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.IGuiInterface;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 import javax.annotation.Nonnull;

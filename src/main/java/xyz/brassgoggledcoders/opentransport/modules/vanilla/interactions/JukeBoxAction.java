@@ -11,9 +11,9 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import xyz.brassgoggledcoders.opentransport.actions.BlockActivationAction;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.ActionType;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.BlockActivationAction;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.ActionType;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 public class JukeBoxAction extends BlockActivationAction {

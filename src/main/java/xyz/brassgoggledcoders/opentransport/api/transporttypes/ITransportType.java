@@ -2,7 +2,7 @@ package xyz.brassgoggledcoders.opentransport.api.transporttypes;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 
 import javax.annotation.Nonnull;
 import java.util.Map;

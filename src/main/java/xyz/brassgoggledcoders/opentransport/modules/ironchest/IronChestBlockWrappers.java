@@ -4,10 +4,10 @@ import cpw.mods.ironchest.BlockIronChest;
 import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.IronChestType;
 import net.minecraft.block.Block;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IHasWrappers;
-import xyz.brassgoggledcoders.opentransport.blocks.BlockWrapperBase;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.BlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IHasWrappers;
 import xyz.brassgoggledcoders.opentransport.modules.ironchest.interfaces.IronChestInterface;
-import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.rendering.RenderType;
 
 public class IronChestBlockWrappers implements IHasWrappers {
     @Override
@@ -15,7 +15,7 @@ public class IronChestBlockWrappers implements IHasWrappers {
         Block ironChest = IronChest.ironChestBlock;
         for(IronChestType type: IronChestType.values()) {
             if(type != IronChestType.WOOD) {
-                new BlockWrapperBase(ironChest).withProperty(BlockIronChest.VARIANT_PROP, type)
+                new BlockWrapper(ironChest).withProperty(BlockIronChest.VARIANT_PROP, type)
                         .setRenderType(RenderType.TESR).setGuiInterface(new IronChestInterface()).register();
             }
         }

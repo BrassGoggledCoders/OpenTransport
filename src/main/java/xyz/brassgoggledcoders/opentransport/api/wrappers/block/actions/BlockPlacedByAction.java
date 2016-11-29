@@ -1,11 +1,10 @@
-package xyz.brassgoggledcoders.opentransport.actions;
+package xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.ActionType;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 public class BlockPlacedByAction extends BaseAction {

@@ -7,7 +7,7 @@ import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.TransportType;
 import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;

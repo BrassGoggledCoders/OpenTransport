@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.opentransport.blocks;
+package xyz.brassgoggledcoders.opentransport.api.wrappers.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
@@ -12,25 +12,22 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
-import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.actions.BlockActivationAction;
-import xyz.brassgoggledcoders.opentransport.actions.BlockPlacedByAction;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.ActionType;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IActionListener;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IGuiInterface;
+import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
-import xyz.brassgoggledcoders.opentransport.interfaces.BaseInterface;
-import xyz.brassgoggledcoders.opentransport.network.HolderUpdatePacket;
-import xyz.brassgoggledcoders.opentransport.registries.BlockWrapperRegistry;
-import xyz.brassgoggledcoders.opentransport.renderers.RenderType;
-import xyz.brassgoggledcoders.opentransport.wrappers.world.WorldWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.ActionType;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.BlockActivationAction;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.BlockPlacedByAction;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.IActionListener;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.BaseInterface;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.IGuiInterface;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.rendering.RenderType;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockWrapperBase implements IBlockWrapper {
+public class BlockWrapper implements IBlockWrapper {
     Block block;
     IBlockState blockState;
     TileEntity tileEntity;
@@ -45,7 +42,7 @@ public class BlockWrapperBase implements IBlockWrapper {
     IHolderEntity holderEntity;
     boolean isDirty;
 
-    public BlockWrapperBase(Block block) {
+    public BlockWrapper(Block block) {
         this.block = block;
         this.blockState = block.getDefaultState();
         this.unlocalizedName = block.getUnlocalizedName().replaceFirst("tile.", "");
@@ -54,26 +51,21 @@ public class BlockWrapperBase implements IBlockWrapper {
         this.actionListeners = new ArrayList<>();
         this.actionListeners.add(new BlockActivationAction());
         this.actionListeners.add(new BlockPlacedByAction());
-        Item item = Item.getItemFromBlock(block);
-        if(item != null) {
-            this.itemStack = new ItemStack(item, 1, block.getMetaFromState(this.blockState));
-        }
+        this.changeItemStack();
     }
 
-    public <T extends Comparable<T>, V extends T> BlockWrapperBase withProperty(IProperty<T> property, V value) {
+    public <T extends Comparable<T>, V extends T> BlockWrapper withProperty(IProperty<T> property, V value) {
         this.blockState = this.blockState.withProperty(property, value);
-        if(this.itemStackChange) {
-            this.itemStack = new ItemStack(block, 1, block.getMetaFromState(this.blockState));
-        }
+        this.changeItemStack();
         this.setUnlocalizedSuffix(value.toString().toLowerCase());
         return this;
     }
 
-    public BlockWrapperBase setUnlocalizedSuffix(String name) {
+    public BlockWrapper setUnlocalizedSuffix(String name) {
         return this.setUnlocalizedName(this.getBlock().getUnlocalizedName() + "." + name);
     }
 
-    public BlockWrapperBase setGuiInterface(IGuiInterface guiInterface) {
+    public BlockWrapper setGuiInterface(IGuiInterface guiInterface) {
         this.guiInterface = guiInterface;
         return this;
     }
@@ -84,15 +76,10 @@ public class BlockWrapperBase implements IBlockWrapper {
         return block;
     }
 
-    public BlockWrapperBase setBlock(Block block) {
+    public BlockWrapper setBlock(Block block) {
         this.block = block;
         this.blockState = block.getDefaultState();
-        if(this.itemStackChange) {
-            Item item = Item.getItemFromBlock(block);
-            if(item != null) {
-                this.itemStack = new ItemStack(item, 1, block.getMetaFromState(this.blockState));
-            }
-        }
+        this.changeItemStack();
         return this;
     }
 
@@ -102,16 +89,11 @@ public class BlockWrapperBase implements IBlockWrapper {
         return blockState;
     }
 
-    public BlockWrapperBase setBlockState(IBlockState blockState) {
+    public BlockWrapper setBlockState(IBlockState blockState) {
         this.block = blockState.getBlock();
         this.blockState = blockState;
         this.hasTileEntity = this.block.hasTileEntity(this.blockState);
-        if(this.itemStackChange) {
-            Item item = Item.getItemFromBlock(block);
-            if(item != null) {
-                this.itemStack = new ItemStack(item, 1, block.getMetaFromState(this.blockState));
-            }
-        }
+        this.changeItemStack();
         return this;
     }
 
@@ -121,7 +103,7 @@ public class BlockWrapperBase implements IBlockWrapper {
         return unlocalizedName;
     }
 
-    public BlockWrapperBase setUnlocalizedName(String name) {
+    public BlockWrapper setUnlocalizedName(String name) {
         this.unlocalizedName = name.replaceFirst("tile.", "");
         return this;
     }
@@ -132,7 +114,7 @@ public class BlockWrapperBase implements IBlockWrapper {
         return renderType;
     }
 
-    public BlockWrapperBase setRenderType(RenderType renderType) {
+    public BlockWrapper setRenderType(RenderType renderType) {
         this.renderType = renderType;
         return this;
     }
@@ -143,12 +125,12 @@ public class BlockWrapperBase implements IBlockWrapper {
         return actionListeners;
     }
 
-    public BlockWrapperBase addActionListener(IActionListener actionListener) {
+    public BlockWrapper addActionListener(IActionListener actionListener) {
         this.actionListeners.add(actionListener);
         return this;
     }
 
-    public BlockWrapperBase setActionListeners(List<IActionListener> actionListeners) {
+    public BlockWrapper setActionListeners(List<IActionListener> actionListeners) {
         this.actionListeners = actionListeners;
         return this;
     }
@@ -172,7 +154,7 @@ public class BlockWrapperBase implements IBlockWrapper {
     private boolean iterateActionListeners(ActionType actionType, EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack) {
         boolean result = false;
         this.updateBlockWrapper();
-        EntityPlayer entityPlayerWrapper = OpenTransport.proxy.getEntityPlayerWrapper(entityPlayer, this.holderEntity);
+        EntityPlayer entityPlayerWrapper = OpenTransportAPI.getModWrapper().getPlayerWrapper(entityPlayer, this.holderEntity);
         for(IActionListener actionListener : this.getActionListeners()) {
             result |= actionListener.actionOccurred(actionType, entityPlayerWrapper, hand, itemStack, this.holderEntity, this);
         }
@@ -222,14 +204,23 @@ public class BlockWrapperBase implements IBlockWrapper {
         return this.itemStack;
     }
 
-    public BlockWrapperBase setItemStack(ItemStack itemStack) {
+    public BlockWrapper setItemStack(ItemStack itemStack) {
         return setItemStack(itemStack, true);
     }
 
-    public BlockWrapperBase setItemStack(ItemStack itemStack, boolean changeWithState) {
+    public BlockWrapper setItemStack(ItemStack itemStack, boolean changeWithState) {
         this.itemStack = itemStack;
         this.itemStackChange = changeWithState;
         return this;
+    }
+
+    public void changeItemStack() {
+        if(this.itemStackChange) {
+            Item item = Item.getItemFromBlock(block);
+            if(item != null) {
+                this.itemStack = new ItemStack(item, 1, block.getMetaFromState(this.blockState));
+            }
+        }
     }
 
     @Override
@@ -267,8 +258,8 @@ public class BlockWrapperBase implements IBlockWrapper {
     }
 
     @Override
-    public BlockWrapperBase copy() {
-        BlockWrapperBase copyBlockWrapper = new BlockWrapperBase(this.getBlock());
+    public BlockWrapper copy() {
+        BlockWrapper copyBlockWrapper = new BlockWrapper(this.getBlock());
         copyBlockWrapper.setBlockState(this.getBlockState()).setActionListeners(this.getActionListeners())
                 .setGuiInterface(this.getInterface()).setRenderType(this.getRenderType())
                 .setUnlocalizedName(this.getUnlocalizedName());
@@ -276,11 +267,10 @@ public class BlockWrapperBase implements IBlockWrapper {
     }
 
     private void updateBlockWrapper() {
-        OpenTransport.instance.getPacketHandler()
-                .sendToAllAround(new HolderUpdatePacket(this.holderEntity), this.holderEntity.getEntity());
+        OpenTransportAPI.getModWrapper().sendBlockWrapperPacket(this.holderEntity);
     }
 
     public void register() {
-        BlockWrapperRegistry.registerWrapper(this);
+        OpenTransportAPI.getBlockWrapperRegistry().registerWrapper(this);
     }
 }

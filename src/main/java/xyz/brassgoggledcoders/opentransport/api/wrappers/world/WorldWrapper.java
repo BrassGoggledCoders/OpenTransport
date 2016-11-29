@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.opentransport.wrappers.world;
+package xyz.brassgoggledcoders.opentransport.api.wrappers.world;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -16,7 +16,7 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
-import xyz.brassgoggledcoders.opentransport.api.blockwrappers.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 import javax.annotation.Nonnull;
