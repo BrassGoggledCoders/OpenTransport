@@ -9,4 +9,6 @@ public interface IModWrapper {
     void sendBlockWrapperPacket(IHolderEntity entity);
 
     EntityPlayer getPlayerWrapper(EntityPlayer entityPlayer, IHolderEntity entity);
+
+    void logError(String error);
 }

@@ -20,4 +20,9 @@ public class ModWrapper implements IModWrapper {
     public EntityPlayer getPlayerWrapper(EntityPlayer entityPlayer, IHolderEntity entity) {
         return OpenTransport.proxy.getEntityPlayerWrapper(entityPlayer, entity);
     }
+
+    @Override
+    public void logError(String error) {
+        OpenTransport.instance.getLogger().error(error);
+    }
 }

@@ -1,6 +1,5 @@
 package xyz.brassgoggledcoders.opentransport.api;
 
-import com.sun.xml.internal.ws.addressing.model.ActionNotSupportedException;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.BlockWrapperRegistry;
 
 public class OpenTransportAPI {
@@ -21,7 +20,7 @@ public class OpenTransportAPI {
         if(instance == null) {
             instance = openTransportAPI;
         } else {
-            throw new ActionNotSupportedException("Something else attempted to set the API Object after creation");
+            instance.modWrapper.logError("Some other mod tried to set instance");
         }
     }
 
