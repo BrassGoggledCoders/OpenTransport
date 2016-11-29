@@ -1,22 +1,30 @@
 package xyz.brassgoggledcoders.opentransport.modules.immersiveengineering;
 
 import com.teamacronymcoders.base.modulesystem.Module;
+import com.teamacronymcoders.base.modulesystem.ModuleBase;
+import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
+import com.teamacronymcoders.base.modulesystem.dependencies.ModDependency;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IHasWrappers;
-import xyz.brassgoggledcoders.opentransport.modulesystem.ModuleWrapperBase;
 
-import javax.annotation.Nonnull;
+import java.util.List;
 
 @Module(OpenTransport.MODID)
-public class IEModule extends ModuleWrapperBase {
+public class IEModule extends ModuleBase {
     @Override
     public String getName() {
         return "Immersive Engineering";
     }
 
-    @Nonnull
     @Override
-    public IHasWrappers getWrapperHolder() {
-        return new IEBlockWrappers();
+    public List<IDependency> getDependencies(List<IDependency> dependencies) {
+        dependencies.add(new ModDependency("immersiveengineering"));
+        return dependencies;
+    }
+
+    @Override
+    public void preInit(FMLPreInitializationEvent event) {
+        MinecraftForge.EVENT_BUS.register(new IEBlockWrappers());
     }
 }

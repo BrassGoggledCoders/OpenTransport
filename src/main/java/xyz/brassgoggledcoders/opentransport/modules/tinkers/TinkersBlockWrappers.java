@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.opentransport.modules.tinkers;
 
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 import slimeknights.tconstruct.smeltery.block.BlockCasting;
 import slimeknights.tconstruct.smeltery.block.BlockCasting.CastingType;
@@ -8,16 +9,16 @@ import slimeknights.tconstruct.smeltery.block.BlockTank.TankType;
 import slimeknights.tconstruct.tools.TinkerTools;
 import slimeknights.tconstruct.tools.common.block.BlockToolTable;
 import slimeknights.tconstruct.tools.common.block.BlockToolTable.TableTypes;
+import xyz.brassgoggledcoders.opentransport.api.events.RegisterBlockWrappersEvent;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.BlockWrapper;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IHasWrappers;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.rendering.RenderType;
 import xyz.brassgoggledcoders.opentransport.modules.tinkers.interfaces.CraftingStationInterface;
 import xyz.brassgoggledcoders.opentransport.modules.tinkers.interfaces.PartChestInterface;
 import xyz.brassgoggledcoders.opentransport.modules.tinkers.interfaces.PatternChestInterface;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.block.rendering.RenderType;
 
-public class TinkersBlockWrappers implements IHasWrappers {
-    @Override
-    public void registerWrappers() {
+public class TinkersBlockWrappers {
+    @SubscribeEvent
+    public void registerWrappers(RegisterBlockWrappersEvent event) {
         new BlockWrapper(TinkerSmeltery.castingBlock).withProperty(BlockCasting.TYPE, CastingType.BASIN).register();
         new BlockWrapper(TinkerSmeltery.castingBlock).withProperty(BlockCasting.TYPE, CastingType.TABLE).register();
 

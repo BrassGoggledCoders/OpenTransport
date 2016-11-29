@@ -1,17 +1,17 @@
 package xyz.brassgoggledcoders.opentransport.modules.tinkers;
 
 import com.teamacronymcoders.base.modulesystem.Module;
+import com.teamacronymcoders.base.modulesystem.ModuleBase;
 import com.teamacronymcoders.base.modulesystem.dependencies.IDependency;
 import com.teamacronymcoders.base.modulesystem.dependencies.ModDependency;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IHasWrappers;
-import xyz.brassgoggledcoders.opentransport.modulesystem.ModuleWrapperBase;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 @Module(OpenTransport.MODID)
-public class TinkersModule extends ModuleWrapperBase {
+public class TinkersModule extends ModuleBase {
     @Override
     public String getName() {
         return "Tinkers' Construct";
@@ -23,9 +23,9 @@ public class TinkersModule extends ModuleWrapperBase {
         return dependencies;
     }
 
-    @Nonnull
     @Override
-    public IHasWrappers getWrapperHolder() {
-        return new TinkersBlockWrappers();
+    public void preInit(FMLPreInitializationEvent event) {
+        super.preInit(event);
+        MinecraftForge.EVENT_BUS.register(new TinkersBlockWrappers());
     }
 }

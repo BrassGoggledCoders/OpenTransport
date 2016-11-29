@@ -5,14 +5,15 @@ import blusunrize.immersiveengineering.common.blocks.BlockIEBase;
 import blusunrize.immersiveengineering.common.blocks.metal.BlockTypes_MetalDevice0;
 import blusunrize.immersiveengineering.common.blocks.wooden.BlockTypes_WoodenDevice0;
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import xyz.brassgoggledcoders.opentransport.api.events.RegisterBlockWrappersEvent;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.BlockWrapper;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IHasWrappers;
 import xyz.brassgoggledcoders.opentransport.modules.immersiveengineering.interfaces.CrateInterface;
 
-public class IEBlockWrappers implements IHasWrappers {
-    @Override
+public class IEBlockWrappers {
+    @SubscribeEvent
     @SuppressWarnings("unchecked")//#BlameBlu
-    public void registerWrappers() {
+    public void registerWrappers(RegisterBlockWrappersEvent event) {
         BlockIEBase blockWoodenDevice0 = IEContent.blockWoodenDevice0;
         PropertyEnum woodenType = blockWoodenDevice0.property;
         BlockWrapper woodenDevice = new BlockWrapper(blockWoodenDevice0);
