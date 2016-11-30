@@ -43,13 +43,17 @@ public class OpenTransport extends BaseModFoundation<OpenTransport> {
     @EventHandler
     @Override
     public void preInit(FMLPreInitializationEvent event) {
-        transportTypeHandler = new TransportTypeHandler(event);
         super.preInit(event);
     }
 
     @Override
-    public void modPreInit(FMLPreInitializationEvent event) {
+    public void beforeModuleHandlerInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.post(new RegisterBlockWrappersEvent(OpenTransportAPI.getBlockWrapperRegistry()));
+        transportTypeHandler = new TransportTypeHandler(event);
+    }
+
+    @Override
+    public void afterModuleHandlerInit(FMLPreInitializationEvent event) {
         transportTypeHandler.registerItemsAndEntities();
         proxy.registerEntityRenders();
     }
