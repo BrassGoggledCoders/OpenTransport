@@ -18,14 +18,17 @@ public class TransportTypeHandler {
     public TransportTypeHandler(FMLPreInitializationEvent event) {
         transportTypes = ClassLoading.getInstances(event.getAsmData(), TransportType.class, ITransportType.class);
 
-        for (ITransportType transportType : this.getTransportTypes()) {
+        transportTypes.forEach(transportType -> {
             this.getConfig().addEntry(transportType.getName(), new TransportTypeEntry(transportType));
             transportType.setIsActive(this.getConfig().getBoolean(transportType.getName(), true));
-            if (transportType.getIsActive()) {
-                transportType.registerItems(OpenTransportAPI.getBlockWrapperRegistry().getAllBlockWrappers());
-                transportType.registerEntities();
-            }
-        }
+        });
+    }
+
+    public void registerItemsAndEntities() {
+        transportTypes.stream().filter(ITransportType::getIsActive).forEach(transportType -> {
+            transportType.registerItems(OpenTransportAPI.getBlockWrapperRegistry().getAllBlockWrappers());
+            transportType.registerEntities();
+        });
     }
 
     public List<ITransportType> getTransportTypes() {
