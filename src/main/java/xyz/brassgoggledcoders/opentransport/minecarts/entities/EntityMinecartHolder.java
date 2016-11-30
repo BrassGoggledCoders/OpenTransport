@@ -1,9 +1,8 @@
 package xyz.brassgoggledcoders.opentransport.minecarts.entities;
 
 import com.google.common.base.Optional;
-import com.teamacronymcoders.base.client.gui.IHasGui;
 import com.teamacronymcoders.base.entity.EntityMinecartBase;
-import net.minecraft.block.BlockRailBase;
+import com.teamacronymcoders.base.guisystem.IHasGui;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.Entity;
@@ -21,7 +20,6 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
@@ -178,24 +176,14 @@ public class EntityMinecartHolder extends EntityMinecartBase
         this.setItemCart(ItemStack.loadItemStackFromNBT(nbtTagCompound.getCompoundTag("ITEM_BOAT")));
     }
 
-    protected BlockPos getRailPosition()
-    {
-        int x = MathHelper.floor_double(this.posX);
-        int y = MathHelper.floor_double(this.posY);
-        int z = MathHelper.floor_double(this.posZ);
-
-        if (BlockRailBase.isRailBlock(this.worldObj, new BlockPos(x, y - 1, z))) y--;
-        return new BlockPos(x, y, z);
+    @Override
+    public Gui getGui(EntityPlayer entityPlayer, World world, NBTTagCompound context) {
+        return this.getBlockWrapper().getInterface().getGUI(entityPlayer, this, this.getBlockWrapper());
     }
 
     @Override
-    public Gui getClientGuiElement(int ID, EntityPlayer player, World world, BlockPos blockPos) {
-        return this.getBlockWrapper().getInterface().getGUI(player, this, this.getBlockWrapper());
-    }
-
-    @Override
-    public Container getServerGuiElement(int ID, EntityPlayer player, World world, BlockPos blockPos) {
-        return this.getBlockWrapper().getInterface().getContainer(player, this, this.getBlockWrapper());
+    public Container getContainer(EntityPlayer entityPlayer, World world, NBTTagCompound context) {
+        return this.getBlockWrapper().getInterface().getContainer(entityPlayer, this, this.getBlockWrapper());
     }
 
     @Override

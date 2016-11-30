@@ -1,6 +1,5 @@
 package xyz.brassgoggledcoders.opentransport.api.wrappers.player;
 
-import com.teamacronymcoders.base.client.gui.GuiCarrier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
@@ -30,21 +29,20 @@ import java.util.UUID;
 
 public class EntityPlayerSPWrapper extends EntityPlayerSP {
     protected EntityPlayerSP entityPlayer;
-    protected IHolderEntity containerHolder;
+    protected IHolderEntity holderEntity;
     protected IBlockWrapper blockWrapper;
 
-    public EntityPlayerSPWrapper(EntityPlayerSP entityPlayer, IHolderEntity containerHolder) {
+    public EntityPlayerSPWrapper(EntityPlayerSP entityPlayer, IHolderEntity holderEntity) {
         super(Minecraft.getMinecraft(), entityPlayer.worldObj, entityPlayer.connection,
                 entityPlayer.getStatFileWriter());
         this.entityPlayer = entityPlayer;
-        this.containerHolder = containerHolder;
-        this.blockWrapper = containerHolder.getBlockWrapper();
+        this.holderEntity = holderEntity;
+        this.blockWrapper = holderEntity.getBlockWrapper();
         this.worldObj = entityPlayer.worldObj;
     }
 
     private void openGui() {
-        this.getEntityPlayer().openGui(OpenTransportAPI.getModWrapper().getModInstance(), GuiCarrier.ENTITY.ordinal(),
-                this.getEntityWorld(), this.getEntity().getEntityId(), 0, 0);
+        OpenTransportAPI.getModWrapper().openGui(this.holderEntity, this.getEntityPlayer(), this.getEntityWorld());
     }
 
     @Override
@@ -197,6 +195,6 @@ public class EntityPlayerSPWrapper extends EntityPlayerSP {
     }
 
     public Entity getEntity() {
-        return this.containerHolder.getEntity();
+        return this.holderEntity.getEntity();
     }
 }

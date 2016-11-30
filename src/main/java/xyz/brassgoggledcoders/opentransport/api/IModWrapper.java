@@ -1,6 +1,7 @@
 package xyz.brassgoggledcoders.opentransport.api;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 /*
@@ -15,4 +16,6 @@ public interface IModWrapper {
     EntityPlayer getPlayerWrapper(EntityPlayer entityPlayer, IHolderEntity entity);
 
     void logError(String error);
+
+    void openGui(IHolderEntity entity, EntityPlayer player, World world);
 }
