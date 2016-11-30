@@ -16,11 +16,15 @@ public class OpenTransportAPI {
         return instance;
     }
 
+    /*
+     * Method called from OpenTransport's Mod Constructor
+     * ONLY TO BE CALLED BY OPENTRANSPORT
+     */
     public static void setInstance(OpenTransportAPI openTransportAPI) {
         if(instance == null) {
             instance = openTransportAPI;
         } else {
-            instance.modWrapper.logError("Some other mod tried to set instance");
+            instance.modWrapper.logError("Some other mod tried to set api instance");
         }
     }
 
