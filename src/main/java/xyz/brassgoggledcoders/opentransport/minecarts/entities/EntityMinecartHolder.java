@@ -158,8 +158,8 @@ public class EntityMinecartHolder extends EntityMinecartBase
         }
         Optional<ItemStack> itemStackCart = this.dataManager.get(ITEM_CART);
         if (itemStackCart.isPresent()) {
-            NBTTagCompound itemBoat = new NBTTagCompound();
-            nbtTagCompound.setTag("ITEM_BOAT", itemStackCart.get().writeToNBT(itemBoat));
+            NBTTagCompound itemCart = new NBTTagCompound();
+            nbtTagCompound.setTag("ITEM_MINECART", itemStackCart.get().writeToNBT(itemCart));
         }
 
         return nbtTagCompound;
@@ -173,7 +173,7 @@ public class EntityMinecartHolder extends EntityMinecartBase
         this.setBlockWrapper(OpenTransportAPI.getBlockWrapperRegistry().getBlockWrapper(wrapperName));
         blockWrapper.setHolder(this);
         blockWrapper.readFromNBT(nbtTagCompound.getCompoundTag("CONTAINER"));
-        this.setItemCart(ItemStack.loadItemStackFromNBT(nbtTagCompound.getCompoundTag("ITEM_BOAT")));
+        this.setItemCart(ItemStack.loadItemStackFromNBT(nbtTagCompound.getCompoundTag("ITEM_MINECART")));
     }
 
     @Override
