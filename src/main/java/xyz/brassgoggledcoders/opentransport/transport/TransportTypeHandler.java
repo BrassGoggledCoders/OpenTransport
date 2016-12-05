@@ -3,10 +3,12 @@ package xyz.brassgoggledcoders.opentransport.transport;
 import com.teamacronymcoders.base.registry.config.ConfigEntry;
 import com.teamacronymcoders.base.registry.config.ConfigRegistry;
 import com.teamacronymcoders.base.util.ClassLoading;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
+import xyz.brassgoggledcoders.opentransport.api.events.RegisterBlockWrappersEvent;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.TransportType;
 
@@ -25,6 +27,7 @@ public class TransportTypeHandler {
     }
 
     public void registerItemsAndEntities() {
+        MinecraftForge.EVENT_BUS.post(new RegisterBlockWrappersEvent(OpenTransportAPI.getBlockWrapperRegistry()));
         transportTypes.stream().filter(ITransportType::getIsActive).forEach(transportType -> {
             transportType.registerItems(OpenTransportAPI.getBlockWrapperRegistry().getAllBlockWrappers());
             transportType.registerEntities();

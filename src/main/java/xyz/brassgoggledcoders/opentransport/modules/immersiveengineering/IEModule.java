@@ -26,5 +26,6 @@ public class IEModule extends ModuleBase {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(new IEBlockWrappers());
+        super.preInit(event);
     }
 }
