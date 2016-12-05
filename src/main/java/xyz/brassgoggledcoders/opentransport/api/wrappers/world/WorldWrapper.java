@@ -16,8 +16,8 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -85,7 +85,7 @@ public class WorldWrapper extends World {
     @Override
     public void spawnParticle(EnumParticleTypes enumParticleType, double posX, double posY, double posZ, double velX,
                               double velY, double velZ, @Nonnull int... what) {
-        this.getWorld().spawnParticle(enumParticleType,posX + this.getPosX(), posY + this.getPosY(), posZ +
+        this.getWorld().spawnParticle(enumParticleType, posX + this.getPosX(), posY + this.getPosY(), posZ +
                 this.getPosZ(), velX, velY, velZ);
     }
 
@@ -131,7 +131,18 @@ public class WorldWrapper extends World {
     @Override
     public boolean setBlockToAir(@Nonnull BlockPos pos) {
         this.getEntity().setDead();
-        this.getWorld().spawnEntityInWorld(this.getHolderEntity().getEmptyEntity());
+        if(!this.getWorld().isRemote) {
+            Entity emptyEntity = this.getHolderEntity().getEmptyEntity();
+            this.getWorld().spawnEntityInWorld(emptyEntity);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean setBlockState(BlockPos pos, @Nonnull IBlockState newState, int flags) {
+        if(BlockPos.ORIGIN.equals(pos)) {
+            this.getHolderEntity().getBlockWrapper().alterBlockState(newState);
+        }
         return true;
     }
 

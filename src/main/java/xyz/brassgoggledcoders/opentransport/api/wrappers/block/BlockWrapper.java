@@ -89,6 +89,10 @@ public class BlockWrapper implements IBlockWrapper {
         return blockState;
     }
 
+    public void alterBlockState(IBlockState blockState) {
+        this.setBlockState(blockState);
+    }
+
     public BlockWrapper setBlockState(IBlockState blockState) {
         this.block = blockState.getBlock();
         this.blockState = blockState;

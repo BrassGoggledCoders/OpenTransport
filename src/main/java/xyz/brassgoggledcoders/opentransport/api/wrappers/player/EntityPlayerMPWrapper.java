@@ -13,6 +13,7 @@ import net.minecraft.tileentity.TileEntityCommandBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
+import net.minecraft.util.FoodStats;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.LockCode;
@@ -172,6 +173,11 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
     }
 
     @Override
+    public boolean canEat(boolean ignoreHunger) {
+        return this.getEntityPlayer().canEat(ignoreHunger);
+    }
+
+    @Override
     @Nonnull
     public <T> T getCapability(@Nonnull Capability<T> capability, @Nonnull EnumFacing facing) {
         return this.getEntityPlayer().getCapability(capability, facing);
@@ -183,8 +189,7 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
     }
 
     @Override
-    public void sendContainerToPlayer(Container container)
-    {
+    public void sendContainerToPlayer(Container container) {
         this.getEntityPlayer().openContainer = this.openContainer;
         this.getEntityPlayer().sendContainerToPlayer(container);
     }
@@ -198,6 +203,12 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
     @Override
     public void addChatMessage(@Nonnull ITextComponent component) {
         this.getEntityPlayer().addChatMessage(component);
+    }
+
+    @Override
+    @Nonnull
+    public FoodStats getFoodStats() {
+        return this.getEntityPlayer().getFoodStats();
     }
 
     public EntityPlayerMP getEntityPlayer() {

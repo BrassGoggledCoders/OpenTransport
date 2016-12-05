@@ -25,6 +25,16 @@ public interface IBlockWrapper {
     @Nonnull
     IBlockState getBlockState();
 
+    /*
+     * This method is called from World Wrapper to change the blockstate in an entity.
+     * It's not recommended to use this to set blockstate for Registration.
+     *
+     * @param newBlockState The new Block State for the block to use
+     *
+     * @return if the blockstate has changed
+     */
+    void alterBlockState(IBlockState newBlockState);
+
     @Nonnull
     String getUnlocalizedName();
 

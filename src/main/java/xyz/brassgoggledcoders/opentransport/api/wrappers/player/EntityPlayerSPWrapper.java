@@ -14,6 +14,7 @@ import net.minecraft.tileentity.TileEntityCommandBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
+import net.minecraft.util.FoodStats;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.LockCode;
@@ -177,6 +178,17 @@ public class EntityPlayerSPWrapper extends EntityPlayerSP {
     @Override
     public void addChatMessage(@Nonnull ITextComponent component) {
         this.getEntityPlayer().addChatMessage(component);
+    }
+
+    @Override
+    @Nonnull
+    public FoodStats getFoodStats() {
+        return this.getEntityPlayer().getFoodStats();
+    }
+
+    @Override
+    public boolean canEat(boolean ignoreHunger) {
+        return this.getEntityPlayer().canEat(ignoreHunger);
     }
 
     @Override
