@@ -24,8 +24,8 @@ public class TinkersBlockWrappers {
 
         BlockWrapper searedTank = new BlockWrapper(TinkerSmeltery.searedTank).setRenderType(RenderType.COMBO);
         searedTank.register();
-        searedTank.withProperty(BlockTank.TYPE, TankType.GAUGE).register();
-        searedTank.withProperty(BlockTank.TYPE, TankType.WINDOW).register();
+        searedTank.copy().withProperty(BlockTank.TYPE, TankType.GAUGE).register();
+        searedTank.copy().withProperty(BlockTank.TYPE, TankType.WINDOW).register();
 
         new BlockWrapper(TinkerTools.toolTables).withProperty(BlockToolTable.TABLES, TableTypes.PartChest)
                 .setGuiInterface(new PartChestInterface()).register();
