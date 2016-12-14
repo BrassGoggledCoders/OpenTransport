@@ -1,17 +1,22 @@
 package xyz.brassgoggledcoders.opentransport.modules.manasteam.entities;
 
+import mods.railcraft.api.carts.CartToolsAPI;
 import mods.railcraft.api.carts.locomotive.LocomotiveRenderType;
 import mods.railcraft.common.carts.EntityLocomotiveSteam;
 import mods.railcraft.common.carts.IRailcraftCartContainer;
 import mods.railcraft.common.carts.RailcraftCarts;
+import mods.railcraft.common.fluids.Fluids;
+import mods.railcraft.common.util.misc.Game;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 import vazkii.botania.common.block.tile.mana.TilePool;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.modules.manasteam.ManaFuelProvider;
@@ -28,14 +33,14 @@ public class EntityManaSteamLocomotive extends EntityLocomotiveSteam {
 
     private IManaHolder manaHolder;
     private ManaFuelProvider manaFuel;
-
-
+    private IInventory ticketInventory;
 
     public EntityManaSteamLocomotive(World world) {
         super(world);
         manaHolder = new ManaHolderLocomotive(TilePool.MAX_MANA, 10000);
         manaFuel = new ManaFuelProvider(manaHolder);
         boiler.setFuelProvider(manaFuel);
+        ticketInventory = new InventoryBasic("Tickets", true, 1);
     }
 
     @Override
@@ -45,11 +50,22 @@ public class EntityManaSteamLocomotive extends EntityLocomotiveSteam {
     }
 
     @Override
+    public void onUpdate() {
+        super.onUpdate();
+        if (Game.isHost(worldObj)) {
+            if (isSafeToFill() && tankWater.getFluidAmount() < tankWater.getCapacity() / 2) {
+                FluidStack pulled = CartToolsAPI.transferHelper.pullFluid(this, Fluids.WATER.getB(1));
+                if (pulled != null)
+                    tankWater.fill(pulled, true);
+            }
+        }
+    }
+
+    @Override
     public void moveMinecartOnRail(BlockPos railPos) {
         super.moveMinecartOnRail(railPos);
         ManaUtils.tryLoadMana(this.manaHolder, railPos, this.getEntityWorld());
-        //TODO: Figure out way to interact with ExoFlames
-        //this.manaFuel.setNearExoFlame(ManaUtils.findExoFlame(railPos, this.getEntityWorld()));
+        this.manaFuel.setNearExoFlame(ManaUtils.findExoFlame(railPos, this.getEntityWorld()));
     }
 
     @Override
@@ -68,12 +84,15 @@ public class EntityManaSteamLocomotive extends EntityLocomotiveSteam {
     @Override
     @Nonnull
     protected IInventory getTicketInventory() {
-        return null;
+        return ticketInventory;
     }
 
     @Override
     public boolean needsFuel() {
-        return this.manaHolder.getMana() < (this.manaHolder.getMaxMana() / 4.0);
+        boolean needsMana = this.manaHolder.getMana() < (this.manaHolder.getMaxMana() / 4.0);
+        FluidStack water = tankWater.getFluid();
+        boolean needsWater = water == null || water.amount < tankWater.getCapacity() / 3;
+        return needsMana || needsWater;
     }
 
     private class ManaHolderLocomotive extends ManaHolder {

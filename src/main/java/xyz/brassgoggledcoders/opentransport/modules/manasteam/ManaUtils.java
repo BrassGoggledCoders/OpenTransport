@@ -73,4 +73,9 @@ public class ManaUtils {
             }
         }
     }
+
+    public static boolean findExoFlame(BlockPos railPos, World world) {
+        //TODO Figure out way to check for ExoFlame
+        return false;
+    }
 }
