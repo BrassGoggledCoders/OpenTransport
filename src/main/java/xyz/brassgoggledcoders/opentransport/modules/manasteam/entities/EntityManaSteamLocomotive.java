@@ -4,17 +4,18 @@ import mods.railcraft.api.carts.locomotive.LocomotiveRenderType;
 import mods.railcraft.common.carts.EntityLocomotiveSteam;
 import mods.railcraft.common.carts.IRailcraftCartContainer;
 import mods.railcraft.common.carts.RailcraftCarts;
-import mods.railcraft.common.util.steam.IFuelProvider;
-import mods.railcraft.common.util.steam.Steam;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import vazkii.botania.common.block.tile.mana.TilePool;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
+import xyz.brassgoggledcoders.opentransport.modules.manasteam.ManaFuelProvider;
+import xyz.brassgoggledcoders.opentransport.modules.manasteam.ManaUtils;
 import xyz.brassgoggledcoders.opentransport.modules.manasteam.capabilities.IManaHolder;
 import xyz.brassgoggledcoders.opentransport.modules.manasteam.capabilities.ManaHolder;
 
@@ -25,35 +26,30 @@ public class EntityManaSteamLocomotive extends EntityLocomotiveSteam {
     private static final DataParameter<Integer> MANA =
             EntityDataManager.createKey(EntityManaSteamLocomotive.class, DataSerializers.VARINT);
 
-    private IManaHolder manaHolder = new ManaHolderLocomotive(TilePool.MAX_MANA, 10000);
-    private boolean nearExoFlame = false;
+    private IManaHolder manaHolder;
+    private ManaFuelProvider manaFuel;
+
+
 
     public EntityManaSteamLocomotive(World world) {
         super(world);
-        boiler.setFuelProvider(new IFuelProvider() {
-            IManaHolder manaHolder = EntityManaSteamLocomotive.this.manaHolder;
-            @Override
-            public double getMoreFuel() {
-                int burnTime = 0;
-                if(manaHolder.getMana() > 100) {
-                    manaHolder.setMana(manaHolder.getMana() - 100);
-                    burnTime = 50;
-                }
-                return burnTime;
-            }
-
-            @Override
-            public double getHeatStep() {
-                return nearExoFlame ? Steam.HEAT_STEP * 30 : Steam.HEAT_STEP;
-            }
-        });
+        manaHolder = new ManaHolderLocomotive(TilePool.MAX_MANA, 10000);
+        manaFuel = new ManaFuelProvider(manaHolder);
+        boiler.setFuelProvider(manaFuel);
     }
-
 
     @Override
     protected void entityInit() {
         super.entityInit();
         dataManager.register(MANA, 0);
+    }
+
+    @Override
+    public void moveMinecartOnRail(BlockPos railPos) {
+        super.moveMinecartOnRail(railPos);
+        ManaUtils.tryLoadMana(this.manaHolder, railPos, this.getEntityWorld());
+        //TODO: Figure out way to interact with ExoFlames
+        //this.manaFuel.setNearExoFlame(ManaUtils.findExoFlame(railPos, this.getEntityWorld()));
     }
 
     @Override
