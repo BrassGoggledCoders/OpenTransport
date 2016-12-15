@@ -144,10 +144,7 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
-        for (int i = 0; i < EntityBoat.Type.values().length; i++) {
-            ItemStack stack = new ItemStack(item, 1, i);
-            list.add(stack);
-        }
+        list.addAll(this.getAllSubItems(list));
     }
 
     public IBlockWrapper getBlockWrapper(ItemStack itemStack) {
@@ -202,5 +199,14 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
     public List<String> getModelNames(List<String> modelNames) {
         modelNames.add("boat");
         return modelNames;
+    }
+
+    @Override
+    public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
+        for (int i = 0; i < EntityBoat.Type.values().length; i++) {
+            ItemStack stack = new ItemStack(this, 1, i);
+            itemStacks.add(stack);
+        }
+        return itemStacks;
     }
 }

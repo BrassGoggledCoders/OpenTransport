@@ -20,7 +20,7 @@ import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHol
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class ItemMinecartHolder extends ItemMinecartBase /*implements IHasItemRenderHandler*/ {
+public class ItemMinecartHolder extends ItemMinecartBase {
     private IBlockWrapper blockWrapper;
     boolean creativeTabSet = false;
 
@@ -87,9 +87,9 @@ public class ItemMinecartHolder extends ItemMinecartBase /*implements IHasItemRe
         return modelNames;
     }
 
-    //TODO RENDERING
-    /*@Override
-    public String itemRenderPath() {
-		return "xyz.brassgoggledcoders.opentransport.minecarts.renderers.RenderItemHolderMinecart";
-	}*/
+    @Override
+    public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
+        itemStacks.add(new ItemStack(this));
+        return itemStacks;
+    }
 }
