@@ -21,4 +21,9 @@ public class ManaSteamModule extends ModuleBase {
         dependencies.add(new ModDependency("botania"));
         return dependencies;
     }
+
+    @Override
+    public String getClientProxyPath() {
+        return "xyz.brassgoggledcoders.opentransport.modules.manasteam.proxies.ClientProxy";
+    }
 }
