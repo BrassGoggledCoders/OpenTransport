@@ -12,7 +12,7 @@ import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.minecarts.items.ItemMinecartHolder;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderBlock;
 
-public class RenderItemHolderMinecart extends TileEntitySpecialRenderer {
+public class RenderItemHolderMinecart extends TileEntitySpecialRenderer<RenderItemHolderMinecart.DummyTile> {
     private RenderBlock renderBlock;
     private ModelMinecart modelMinecart;
     private ResourceLocation minecartTexture = new ResourceLocation("textures/entity/minecart.png");
@@ -26,7 +26,7 @@ public class RenderItemHolderMinecart extends TileEntitySpecialRenderer {
         modelMinecart = new ModelMinecart();
     }
 
-    public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void renderTileEntityAt(DummyTile tileEntity, double x, double y, double z, float partialTicks, int destroyStage) {
         IBlockWrapper blockWrapper = itemMinecartHolder.getBlockWrapper();
 
         GlStateManager.pushMatrix();
@@ -76,5 +76,9 @@ public class RenderItemHolderMinecart extends TileEntitySpecialRenderer {
 
     protected void renderBlockWrapper(IBlockWrapper blockWrapper) {
         renderBlock.renderEntity(Minecraft.getMinecraft().thePlayer, blockWrapper, Minecraft.getMinecraft().getRenderPartialTicks());
+    }
+
+    public static class DummyTile extends TileEntity {
+
     }
 }
