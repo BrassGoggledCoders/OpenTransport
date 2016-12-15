@@ -1,13 +1,19 @@
 package xyz.brassgoggledcoders.opentransport.proxies;
 
+import com.teamacronymcoders.base.util.ClassLoading;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
+import xyz.brassgoggledcoders.opentransport.api.transporttypes.IClientTransportType;
+import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.player.EntityPlayerSPWrapper;
+
+import java.util.List;
 
 public class ClientProxy extends CommonProxy {
     @Override
@@ -29,7 +35,18 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void registerEntityRenders() {
+    public List<ITransportType> getTransportTypes(ASMDataTable dataTable) {
+        return ClassLoading.getInstances(dataTable, IClientTransportType.class, ITransportType.class);
+    }
 
+    @Override
+    public void registerRenderers(List<ITransportType> transportTypes) {
+        transportTypes.forEach(transportType -> {
+            if(transportType instanceof IClientTransportType) {
+                IClientTransportType clientTransportType = (IClientTransportType)transportType;
+                clientTransportType.registerEntityRenderer();
+                clientTransportType.registerItemRenderer();
+            }
+        });
     }
 }

@@ -2,7 +2,6 @@ package xyz.brassgoggledcoders.opentransport.transport;
 
 import com.teamacronymcoders.base.registry.config.ConfigEntry;
 import com.teamacronymcoders.base.registry.config.ConfigRegistry;
-import com.teamacronymcoders.base.util.ClassLoading;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -10,7 +9,6 @@ import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
 import xyz.brassgoggledcoders.opentransport.api.events.RegisterBlockWrappersEvent;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
-import xyz.brassgoggledcoders.opentransport.api.transporttypes.TransportType;
 
 import java.util.List;
 
@@ -18,7 +16,7 @@ public class TransportTypeHandler {
     private List<ITransportType> transportTypes;
 
     public TransportTypeHandler(FMLPreInitializationEvent event) {
-        transportTypes = ClassLoading.getInstances(event.getAsmData(), TransportType.class, ITransportType.class);
+        transportTypes = OpenTransport.proxy.getTransportTypes(event.getAsmData());
 
         transportTypes.forEach(transportType -> {
             this.getConfig().addEntry(transportType.getName(), new TransportTypeEntry(transportType));
@@ -32,6 +30,8 @@ public class TransportTypeHandler {
             transportType.registerItems(OpenTransportAPI.getBlockWrapperRegistry().getAllBlockWrappers());
             transportType.registerEntities();
         });
+        OpenTransport.proxy.registerRenderers(transportTypes);
+
     }
 
     public List<ITransportType> getTransportTypes() {
