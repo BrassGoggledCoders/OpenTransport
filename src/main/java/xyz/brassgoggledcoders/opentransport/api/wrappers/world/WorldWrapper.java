@@ -16,7 +16,6 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
-import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 
 import javax.annotation.Nonnull;
@@ -24,16 +23,16 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class WorldWrapper extends World {
-    private IHolderEntity entity;
+    private IWorldHarness worldHarness;
     private BlockPos originPos = new BlockPos(0, 0, 0);
 
-    public WorldWrapper(IHolderEntity entity) {
-        this(entity.getEntity().worldObj, entity);
+    public WorldWrapper(IWorldHarness worldHarness) {
+        this(worldHarness.getRealWorld(), worldHarness);
     }
 
-    protected WorldWrapper(World world, IHolderEntity entity) {
+    protected WorldWrapper(World world, IWorldHarness worldHarness) {
         super(world.getSaveHandler(), world.getWorldInfo(), world.provider, world.theProfiler, world.isRemote);
-        this.entity = entity;
+        this.worldHarness = worldHarness;
     }
 
     @Override
@@ -109,7 +108,7 @@ public class WorldWrapper extends World {
     @Override
     public void playSound(@Nullable EntityPlayer player, BlockPos pos, @Nonnull SoundEvent sound,
                           @Nonnull SoundCategory category, float volume, float pitch) {
-        this.getWorld().playSound(player, this.getEntity().getPosition(), sound, category, volume, pitch);
+        this.getWorld().playSound(player, this.getBlockPos(), sound, category, volume, pitch);
     }
 
     @Override
@@ -125,53 +124,52 @@ public class WorldWrapper extends World {
 
     @Override
     public boolean isBlockPowered(BlockPos pos) {
-        return this.getHolderEntity().getRedstonePower();
+        return this.getWorldHarness().getRedstonePower();
     }
 
     @Override
     public boolean setBlockToAir(@Nonnull BlockPos pos) {
-        this.getEntity().setDead();
-        if(!this.getWorld().isRemote) {
-            Entity emptyEntity = this.getHolderEntity().getEmptyEntity();
-            this.getWorld().spawnEntityInWorld(emptyEntity);
+        if(pos.equals(BlockPos.ORIGIN)) {
+            this.getWorldHarness().setBlockToAir();
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
     public boolean setBlockState(BlockPos pos, @Nonnull IBlockState newState, int flags) {
         if(BlockPos.ORIGIN.equals(pos)) {
-            this.getHolderEntity().getBlockWrapper().alterBlockState(newState);
+            this.getBlockWrapper().alterBlockState(newState);
         }
         return true;
     }
 
-    public Entity getEntity() {
-        return this.getHolderEntity().getEntity();
-    }
-
-    public IHolderEntity getHolderEntity() {
-        return this.entity;
-    }
-
     public IBlockWrapper getBlockWrapper() {
-        return this.getHolderEntity().getBlockWrapper();
+        return this.getWorldHarness().getBlockWrapper();
+    }
+
+    public IWorldHarness getWorldHarness() {
+        return this.worldHarness;
     }
 
     public double getPosX() {
-        return this.getEntity().posX;
+        return this.getWorldHarness().getPosX();
     }
 
     public double getPosY() {
-        return this.getEntity().posY;
+        return this.getWorldHarness().getPosY();
     }
 
     public double getPosZ() {
-        return this.getEntity().posZ;
+        return this.getWorldHarness().getPosZ();
+    }
+
+    public BlockPos getBlockPos() {
+        return new BlockPos(this.getPosX(), this.getPosY(), this.getPosZ());
     }
 
     public World getWorld() {
-        return this.getEntity().worldObj;
+        return this.worldHarness.getRealWorld();
     }
 
     public void notifyBlocks() {
