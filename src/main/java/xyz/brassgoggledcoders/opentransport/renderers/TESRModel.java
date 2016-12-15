@@ -4,6 +4,8 @@ import com.google.common.base.Function;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.common.model.IModelState;
@@ -12,15 +14,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class TESRModel implements IModel {
+public class TESRModel<ITEM extends Item> implements IModel {
     private IModelState emptyModelState;
     private List<ResourceLocation> emptyList;
-    private TESRBakedModel bakedModel;
+    private TESRBakedModel<ITEM> bakedModel;
 
-    public TESRModel() {
+    public TESRModel(ITEM item, IItemTESRAccessor<ITEM> tesrAccessor) {
         emptyModelState = new EmptyModelState();
         emptyList = Collections.emptyList();
-        bakedModel = new TESRBakedModel();
+        bakedModel = new TESRBakedModel<>(item, tesrAccessor);
     }
 
     @Override

@@ -8,9 +8,11 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.IPerspectiveAwareModel;
 import net.minecraftforge.common.model.TRSRTransformation;
 import org.apache.commons.lang3.tuple.Pair;
@@ -25,9 +27,9 @@ public class TESRBakedModel<ITEM extends Item> implements IPerspectiveAwareModel
     private ITEM item;
     private ItemStack itemStack;
     private IItemTESRAccessor<ITEM> itemTESRAccessor;
-    public TESRBakedModel(ITEM item, ItemStack itemStack, IItemTESRAccessor<ITEM> itemTESRAccessor) {
+
+    public TESRBakedModel(ITEM item, IItemTESRAccessor<ITEM> itemTESRAccessor) {
         this.item = item;
-        this.itemStack = itemStack;
         this.itemTESRAccessor = itemTESRAccessor;
     }
 
@@ -68,12 +70,20 @@ public class TESRBakedModel<ITEM extends Item> implements IPerspectiveAwareModel
     @Override
     @Nonnull
     public ItemOverrideList getOverrides() {
-        return new ItemOverrideList(Collections.emptyList());
+        return new ItemOverrideList(Collections.emptyList()) {
+            @Override
+            @Nonnull
+            public IBakedModel handleItemState(@Nonnull IBakedModel originalModel, ItemStack stack, @Nonnull World world,
+                                               @Nonnull EntityLivingBase entity) {
+                TESRBakedModel.this.itemStack = stack;
+                return originalModel;
+            }
+        };
     }
 
     @Override
     public Pair<? extends IBakedModel, Matrix4f> handlePerspective(TransformType cameraTransformType) {
         this.itemTESRAccessor.setCameraTransformType(cameraTransformType);
-        return  Pair.of(this, TRSRTransformation.identity().getMatrix());
+        return Pair.of(this, TRSRTransformation.identity().getMatrix());
     }
 }
