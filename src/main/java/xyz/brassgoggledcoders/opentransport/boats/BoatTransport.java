@@ -7,19 +7,22 @@ import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.TransportType;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
 import xyz.brassgoggledcoders.opentransport.boats.items.ItemBoatHolder;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @TransportType
 public class BoatTransport implements ITransportType<EntityBoat> {
     private CreativeTabs boatsTab = new BoatCreativeTab();
     private boolean isActive = true;
+    protected List<ItemBoatHolder> holderList = new ArrayList<>();
 
     @Override
     @Nonnull
@@ -43,6 +46,7 @@ public class BoatTransport implements ITransportType<EntityBoat> {
     public void registerItems(Map<String, IBlockWrapper> blockWrappers) {
         blockWrappers.forEach((name, blockWrapper) -> {
             ItemBoatHolder holder = new ItemBoatHolder(blockWrapper, this.getCreativeTab());
+            holderList.add(holder);
             OpenTransport.instance.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(holder);
         });
     }
