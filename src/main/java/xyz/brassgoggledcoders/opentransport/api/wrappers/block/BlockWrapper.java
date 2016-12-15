@@ -21,6 +21,7 @@ import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.IActionLi
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.BaseInterface;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.IGuiInterface;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.rendering.RenderType;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.world.IWorldHarness;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldHarnessEntity;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
 
@@ -182,7 +183,12 @@ public class BlockWrapper implements IBlockWrapper {
     @Override
     public void setHolder(IHolderEntity holderEntity) {
         this.holderEntity = holderEntity;
-        this.world = new WorldWrapper(new WorldHarnessEntity(holderEntity));
+        this.setWorldHarness(new WorldHarnessEntity(holderEntity));
+    }
+
+    @Override
+    public void setWorldHarness(IWorldHarness worldHarness) {
+        this.world = new WorldWrapper(worldHarness);
     }
 
     @Override

@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldHarnessItem;
 import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
 
 import javax.annotation.Nonnull;
@@ -27,7 +28,7 @@ public class ItemMinecartHolder extends ItemMinecartBase {
     public ItemMinecartHolder(IBlockWrapper blockWrapper, CreativeTabs creativeTabs) {
         super("minecart.holder." + blockWrapper.getUnlocalizedName());
         this.setCreativeTab(creativeTabs);
-        this.blockWrapper = blockWrapper;
+        setBlockWrapper(blockWrapper);
     }
 
     @Override
@@ -51,14 +52,19 @@ public class ItemMinecartHolder extends ItemMinecartBase {
 
         displayName += Items.MINECART.getItemStackDisplayName(cartItemStack);
 
-        ItemStack wrapperItemStack = this.blockWrapper.getItemStack();
+        ItemStack wrapperItemStack = this.getBlockWrapper().getItemStack();
         displayName += " " + I18n.format("separator.with") + " ";
         displayName += wrapperItemStack.getItem().getItemStackDisplayName(wrapperItemStack);
 
         return displayName;
     }
 
-    public IBlockWrapper getBlockWrapper(ItemStack itemStack) {
+    public void setBlockWrapper(IBlockWrapper blockWrapper) {
+        this.blockWrapper = blockWrapper;
+        this.blockWrapper.setWorldHarness(new WorldHarnessItem(blockWrapper));
+    }
+
+    public IBlockWrapper getBlockWrapper() {
         return this.blockWrapper;
     }
 
@@ -66,7 +72,7 @@ public class ItemMinecartHolder extends ItemMinecartBase {
     @Override
     public EntityMinecartHolder getEntityFromItem(World world, ItemStack itemStack) {
         EntityMinecartHolder minecart = new EntityMinecartHolder(world);
-        minecart.setBlockWrapper(blockWrapper);
+        minecart.setBlockWrapper(this.getBlockWrapper());
         minecart.setItemCart(itemStack);
         return minecart;
     }
