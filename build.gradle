@@ -75,7 +75,15 @@ task getLibraries {
     def railcraft = 'Railcraft_' + minecraft_version + '-' + railcraft_version + '-dev.jar'
     def railcraftSource = 'http://www.railcraft.info/ivy/com.headlamp-games/Railcraft/' + railcraft_version + '/' + railcraft
 
+    def botania = 'Botania r' + botania_version + '-deobf.jar'
+    def botaniaSource = 'http://botaniamod.net/files/deobf/' + botania
+
+    def baubles = 'Baubles-' + minecraft_version + '-' + baubles_version + '-deobf.jar'
+    def baublesSource = 'https://dl.dropboxusercontent.com/u/47135879/' + baubles
+
     downloads.add(new Tuple(railcraft, railcraftSource))
+    downloads.add(new Tuple(botania, botaniaSource))
+    downloads.add(new Tuple(baubles, baublesSource))
 
     libsFolder.listFiles().each { file ->
         def isInDownloadList = false;
@@ -86,7 +94,7 @@ task getLibraries {
         }
         if (!isInDownloadList || file.size() < 5) {
             println "Deleting file " + file.name
-            file.delete();
+            file.delete()
         }
     }
 
