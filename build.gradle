@@ -19,7 +19,7 @@ buildscript {
 repositories {
     maven {
         name "Base/MoU/IE"
-        url "http://blamejared.com/maven"
+        url "http://maven.blamejared.com"
     }
     maven {
         name 'Waila'
