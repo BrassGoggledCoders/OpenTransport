@@ -21,6 +21,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldHarnessEntity;
 import xyz.brassgoggledcoders.opentransport.boats.items.ItemBoatHolder;
 
 import javax.annotation.Nonnull;
@@ -88,6 +89,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
         this.dataManager.set(BLOCK_WRAPPER_NAME, blockWrapper.getUnlocalizedName());
         this.blockWrapper = blockWrapper;
         this.blockWrapper.setHolder(this);
+        this.blockWrapper.setWorldHarness(new WorldHarnessEntity(this));
     }
 
     @Override
