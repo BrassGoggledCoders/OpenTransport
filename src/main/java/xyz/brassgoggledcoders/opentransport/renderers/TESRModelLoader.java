@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static xyz.brassgoggledcoders.opentransport.OpenTransport.MODID;
+
 public class TESRModelLoader implements ICustomModelLoader {
     private static Map<ResourceLocation, TESRModel> modelMap = new HashMap<>();
 
@@ -21,11 +23,17 @@ public class TESRModelLoader implements ICustomModelLoader {
 
     @Override
     public boolean accepts(ResourceLocation modelLocation) {
+        if(modelLocation.getResourceDomain().equalsIgnoreCase(MODID)) {
+            modelLocation = new ResourceLocation(MODID, modelLocation.getResourcePath().replace("models/item/", ""));
+        }
         return modelMap.containsKey(modelLocation);
     }
 
     @Override
     public IModel loadModel(ResourceLocation modelLocation) throws Exception {
+        if(modelLocation.getResourceDomain().equalsIgnoreCase(MODID)) {
+            modelLocation = new ResourceLocation(MODID, modelLocation.getResourcePath().replace("model/item/", ""));
+        }
         return modelMap.get(modelLocation);
     }
 

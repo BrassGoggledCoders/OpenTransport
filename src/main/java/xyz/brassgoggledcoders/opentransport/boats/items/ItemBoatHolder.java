@@ -25,14 +25,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldHarnessItem;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
 import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRenderHandler*/ {
-    IBlockWrapper blockWrapper;
+public class ItemBoatHolder extends ItemBoat implements IHasModel {
+    private IBlockWrapper blockWrapper;
+    private WorldWrapper worldWrapper;
     boolean creativeTabSet = false;
 
     public ItemBoatHolder(IBlockWrapper blockWrapper, CreativeTabs tab) {
@@ -145,12 +147,11 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
-        list.addAll(this.getAllSubItems(list));
+        list.addAll(this.getAllSubItems(new ArrayList<>()));
     }
 
     public void setBlockWrapper(IBlockWrapper blockWrapper) {
         this.blockWrapper = blockWrapper;
-        this.blockWrapper.setWorldHarness(new WorldHarnessItem(blockWrapper));
     }
 
     public IBlockWrapper getBlockWrapper() {
@@ -203,7 +204,7 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
 
     @Override
     public List<String> getModelNames(List<String> modelNames) {
-        modelNames.add("boat");
+        modelNames.add("boat.holder." + this.getBlockWrapper().getUnlocalizedName());
         return modelNames;
     }
 
@@ -214,5 +215,14 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
             itemStacks.add(stack);
         }
         return itemStacks;
+    }
+
+    public WorldWrapper getWorldWrapper() {
+        return worldWrapper;
+    }
+
+    public void setWorldWrapper(WorldWrapper worldWrapper) {
+        this.worldWrapper = worldWrapper;
+        this.blockWrapper.setWorldWrapper(worldWrapper);
     }
 }

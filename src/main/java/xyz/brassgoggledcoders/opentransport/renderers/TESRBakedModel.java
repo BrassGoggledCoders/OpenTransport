@@ -63,6 +63,7 @@ public class TESRBakedModel<ITEM extends Item> implements IPerspectiveAwareModel
 
     @Override
     @Nonnull
+    @SuppressWarnings("deprecation")
     public ItemCameraTransforms getItemCameraTransforms() {
         return ItemCameraTransforms.DEFAULT;
     }
@@ -73,8 +74,8 @@ public class TESRBakedModel<ITEM extends Item> implements IPerspectiveAwareModel
         return new ItemOverrideList(Collections.emptyList()) {
             @Override
             @Nonnull
-            public IBakedModel handleItemState(@Nonnull IBakedModel originalModel, ItemStack stack, @Nonnull World world,
-                                               @Nonnull EntityLivingBase entity) {
+            public IBakedModel handleItemState(@Nonnull IBakedModel originalModel, ItemStack stack, @Nullable World world,
+                                               @Nullable EntityLivingBase entity) {
                 TESRBakedModel.this.itemStack = stack;
                 return originalModel;
             }

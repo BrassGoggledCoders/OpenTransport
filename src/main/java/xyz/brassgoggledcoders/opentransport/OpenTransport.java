@@ -42,6 +42,7 @@ public class OpenTransport extends BaseModFoundation<OpenTransport> {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
+        proxy.registerCustomModelLoader();
     }
 
     @Override
@@ -52,7 +53,6 @@ public class OpenTransport extends BaseModFoundation<OpenTransport> {
     @Override
     public void afterModuleHandlerInit(FMLPreInitializationEvent event) {
         transportTypeHandler.registerItemsAndEntities();
-        proxy.registerEntityRenders();
     }
 
     @EventHandler

@@ -9,6 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldHarnessRenderItem;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
 import xyz.brassgoggledcoders.opentransport.minecarts.items.ItemMinecartHolder;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderBlock;
 
@@ -28,6 +30,11 @@ public class RenderItemHolderMinecart extends TileEntitySpecialRenderer<RenderIt
 
     public void renderTileEntityAt(DummyTile tileEntity, double x, double y, double z, float partialTicks, int destroyStage) {
         IBlockWrapper blockWrapper = itemMinecartHolder.getBlockWrapper();
+        if(itemMinecartHolder.getWorldWrapper() == null) {
+            WorldWrapper worldWrapper = new WorldWrapper(new WorldHarnessRenderItem(blockWrapper));
+            itemMinecartHolder.setWorldWrapper(worldWrapper);
+        }
+
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(.5, .55, .5);
@@ -60,8 +67,8 @@ public class RenderItemHolderMinecart extends TileEntitySpecialRenderer<RenderIt
         }
         renderMinecart();
         GlStateManager.rotate(90, 0, 1, 0);
-        GlStateManager.scale(1.5, 1.5, 1.5);
-        GlStateManager.translate(-.5, -0.25, .5);
+        GlStateManager.scale(1.25, 1.25, 1.25);
+        GlStateManager.translate(-.5, -0.15, .5);
         renderBlockWrapper(blockWrapper);
         GlStateManager.popMatrix();
     }
@@ -69,6 +76,7 @@ public class RenderItemHolderMinecart extends TileEntitySpecialRenderer<RenderIt
     protected void renderMinecart() {
         GlStateManager.pushMatrix();
         GlStateManager.rotate(180, 0, 0, 1);
+        GlStateManager.rotate(90, 0, 1, 0);
         Minecraft.getMinecraft().renderEngine.bindTexture(minecartTexture);
         modelMinecart.render(Minecraft.getMinecraft().thePlayer, 0, 0, 0, 0, 0, 0.1F);
         GlStateManager.popMatrix();

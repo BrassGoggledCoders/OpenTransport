@@ -13,6 +13,8 @@ import xyz.brassgoggledcoders.opentransport.boats.renderers.RenderItemHolderBoat
 import xyz.brassgoggledcoders.opentransport.renderers.TESRModel;
 import xyz.brassgoggledcoders.opentransport.renderers.TESRModelLoader;
 
+import java.util.ArrayList;
+
 @ClientTransportType
 public class BoatClientTransport extends BoatTransport implements IClientTransportType<EntityBoat> {
     @Override
@@ -25,7 +27,8 @@ public class BoatClientTransport extends BoatTransport implements IClientTranspo
         ClientRegistry.bindTileEntitySpecialRenderer(RenderItemHolderBoat.DummyTile.class, new RenderItemHolderBoat());
         RenderItemHolderBoatAccessor accessor = new RenderItemHolderBoatAccessor();
         this.holderList.forEach(itemBoatHolder -> {
-            ForgeHooksClient.registerTESRItemStack(itemBoatHolder, 0, RenderItemHolderBoat.DummyTile.class);
+            itemBoatHolder.getAllSubItems(new ArrayList<>()).forEach(itemStack ->
+                    ForgeHooksClient.registerTESRItemStack(itemBoatHolder, itemStack.getMetadata(), RenderItemHolderBoat.DummyTile.class));
             TESRModelLoader.addTESRModel(itemBoatHolder, new TESRModel<>(itemBoatHolder, accessor));
         });
     }

@@ -206,6 +206,11 @@ public class BlockWrapper implements IBlockWrapper {
     }
 
     @Override
+    public void setWorldWrapper(WorldWrapper worldWrapper) {
+        this.world = worldWrapper;
+    }
+
+    @Override
     public WorldWrapper getWorldWrapper() {
         return world;
     }

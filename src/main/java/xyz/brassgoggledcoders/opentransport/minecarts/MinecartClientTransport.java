@@ -22,6 +22,7 @@ public class MinecartClientTransport extends MinecartTransport implements IClien
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void registerItemRenderer() {
         ClientRegistry.bindTileEntitySpecialRenderer(DummyTile.class, new RenderItemHolderMinecart());
         RenderItemHolderMinecartAccessor accessor = new RenderItemHolderMinecartAccessor();

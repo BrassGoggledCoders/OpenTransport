@@ -4,10 +4,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 
-public class WorldHarnessItem implements IWorldHarness {
+public class WorldHarnessRenderItem implements IWorldHarness {
     private IBlockWrapper blockWrapper;
 
-    public WorldHarnessItem(IBlockWrapper blockWrapper) {
+    public WorldHarnessRenderItem(IBlockWrapper blockWrapper) {
         this.blockWrapper = blockWrapper;
     }
 

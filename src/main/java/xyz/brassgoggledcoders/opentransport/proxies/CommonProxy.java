@@ -38,6 +38,10 @@ public class CommonProxy {
         return ClassLoading.getInstances(dataTable, TransportType.class, ITransportType.class);
     }
 
+    public void registerCustomModelLoader() {
+
+    }
+
     public void registerRenderers(List<ITransportType> transportTypes) {
 
     }

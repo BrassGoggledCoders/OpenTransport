@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldHarnessItem;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
 import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
 
 import javax.annotation.Nonnull;
@@ -23,6 +23,7 @@ import java.util.List;
 
 public class ItemMinecartHolder extends ItemMinecartBase {
     private IBlockWrapper blockWrapper;
+    private WorldWrapper worldWrapper;
     boolean creativeTabSet = false;
 
     public ItemMinecartHolder(IBlockWrapper blockWrapper, CreativeTabs creativeTabs) {
@@ -61,7 +62,6 @@ public class ItemMinecartHolder extends ItemMinecartBase {
 
     public void setBlockWrapper(IBlockWrapper blockWrapper) {
         this.blockWrapper = blockWrapper;
-        this.blockWrapper.setWorldHarness(new WorldHarnessItem(blockWrapper));
     }
 
     public IBlockWrapper getBlockWrapper() {
@@ -89,7 +89,7 @@ public class ItemMinecartHolder extends ItemMinecartBase {
 
     @Override
     public List<String> getModelNames(List<String> modelNames) {
-        modelNames.add("minecart");
+        modelNames.add("minecart.holder." + this.getBlockWrapper().getUnlocalizedName());
         return modelNames;
     }
 
@@ -97,5 +97,14 @@ public class ItemMinecartHolder extends ItemMinecartBase {
     public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
         itemStacks.add(new ItemStack(this));
         return itemStacks;
+    }
+
+    public WorldWrapper getWorldWrapper() {
+        return this.worldWrapper;
+    }
+
+    public void setWorldWrapper(WorldWrapper worldWrapper) {
+        this.worldWrapper = worldWrapper;
+        this.blockWrapper.setWorldWrapper(worldWrapper);
     }
 }

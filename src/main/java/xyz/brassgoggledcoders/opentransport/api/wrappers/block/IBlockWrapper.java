@@ -63,6 +63,8 @@ public interface IBlockWrapper {
 
     TileEntity getTileEntity();
 
+    void setWorldWrapper(WorldWrapper worldWrapper);
+
     WorldWrapper getWorldWrapper();
 
     ItemStack getItemStack();
