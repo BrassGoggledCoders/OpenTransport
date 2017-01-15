@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.opentransport.renderers;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
@@ -35,6 +36,7 @@ public class RenderBlock {
 
     public void renderVMC(IBlockState blockState, float brightness) {
         GlStateManager.pushMatrix();
+        Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlockBrightness(blockState, brightness);
         GlStateManager.popMatrix();
     }

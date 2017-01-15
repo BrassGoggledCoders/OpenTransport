@@ -13,6 +13,7 @@ import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.IActionLi
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.IGuiInterface;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.rendering.RenderType;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.world.IWorldHarness;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
 
 import javax.annotation.Nonnull;
@@ -56,9 +57,13 @@ public interface IBlockWrapper {
 
     void setHolder(IHolderEntity entity);
 
+    void setWorldHarness(IWorldHarness worldHarness);
+
     boolean hasTileEntity();
 
     TileEntity getTileEntity();
+
+    void setWorldWrapper(WorldWrapper worldWrapper);
 
     WorldWrapper getWorldWrapper();
 

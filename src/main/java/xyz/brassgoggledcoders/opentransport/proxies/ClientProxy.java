@@ -1,18 +1,21 @@
 package xyz.brassgoggledcoders.opentransport.proxies;
 
+import com.teamacronymcoders.base.util.ClassLoading;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
-import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
-import xyz.brassgoggledcoders.opentransport.boats.renderers.RenderHolderBoat;
-import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
-import xyz.brassgoggledcoders.opentransport.minecarts.renderers.RenderHolderMinecart;
+import xyz.brassgoggledcoders.opentransport.api.transporttypes.ClientTransportType;
+import xyz.brassgoggledcoders.opentransport.api.transporttypes.IClientTransportType;
+import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.player.EntityPlayerSPWrapper;
+import xyz.brassgoggledcoders.opentransport.renderers.TESRModelLoader;
+
+import java.util.List;
 
 public class ClientProxy extends CommonProxy {
     @Override
@@ -34,8 +37,23 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void registerEntityRenders() {
-        RenderingRegistry.registerEntityRenderingHandler(EntityBoatHolder.class, RenderHolderBoat::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityMinecartHolder.class, RenderHolderMinecart::new);
+    public List<ITransportType> getTransportTypes(ASMDataTable dataTable) {
+        return ClassLoading.getInstances(dataTable, ClientTransportType.class, ITransportType.class);
+    }
+
+    @Override
+    public void registerCustomModelLoader() {
+        TESRModelLoader tesrModelLoader = new TESRModelLoader();
+    }
+
+    @Override
+    public void registerRenderers(List<ITransportType> transportTypes) {
+        transportTypes.forEach(transportType -> {
+            if(transportType instanceof IClientTransportType) {
+                IClientTransportType clientTransportType = (IClientTransportType)transportType;
+                clientTransportType.registerEntityRenderer();
+                clientTransportType.registerItemRenderer();
+            }
+        });
     }
 }

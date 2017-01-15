@@ -1,79 +1,92 @@
 package xyz.brassgoggledcoders.opentransport.minecarts.renderers;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelMinecart;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldHarnessRenderItem;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
+import xyz.brassgoggledcoders.opentransport.minecarts.items.ItemMinecartHolder;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderBlock;
 
-public class RenderItemHolderMinecart /*implements IItemRenderingHandler*/ {
+public class RenderItemHolderMinecart extends TileEntitySpecialRenderer<RenderItemHolderMinecart.DummyTile> {
     private RenderBlock renderBlock;
-    private EntityMinecartHolder minecartHolder;
     private ModelMinecart modelMinecart;
     private ResourceLocation minecartTexture = new ResourceLocation("textures/entity/minecart.png");
+
+    public static ItemMinecartHolder itemMinecartHolder;
+    public static ItemStack itemStackMinecartHolder;
+    public static ItemCameraTransforms.TransformType transformType;
 
     public RenderItemHolderMinecart() {
         renderBlock = new RenderBlock();
         modelMinecart = new ModelMinecart();
     }
-/*TODO: RENDERING CODE
-    @Override
-	public void render(World world, Item item, ItemStack itemStack, TransformType type) {
-		if(minecartHolder == null) {
-			minecartHolder = new EntityMinecartHolder(Minecraft.getMinecraft().theWorld);
-		}
-		if(minecartHolder.getEntity().worldObj != null && item instanceof ItemMinecartHolder) {
-			ItemMinecartHolder itemMinecartHolder = (ItemMinecartHolder) item;
-			IBlockWrapper blockWrapper = itemMinecartHolder.getBlockWrapper(itemStack);
-			blockWrapper.setHolder(minecartHolder);
-			minecartHolder.setBlockWrapper(blockWrapper);
 
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(.5, .55, .5);
-			switch(type) {
-				case GROUND:
-					GlStateManager.scale(.15, .15, .15);
-					break;
-				case GUI:
-					GlStateManager.scale(.25, .25, .25);
-					GlStateManager.rotate(45, 1, -1, 0);
-					break;
-				case FIRST_PERSON_LEFT_HAND:
-					GlStateManager.scale(.2, .2, .2);
-					GlStateManager.rotate(45, 1, 0, 0);
-					break;
-				case FIRST_PERSON_RIGHT_HAND:
-					GlStateManager.scale(.2, .2, .2);
-					GlStateManager.rotate(45, 1, 0, 0);
-					break;
-				case THIRD_PERSON_LEFT_HAND:
-					GlStateManager.scale(.15, .15, .15);
-					GlStateManager.rotate(45, 1, 0, 0);
-					break;
-				case THIRD_PERSON_RIGHT_HAND:
-					GlStateManager.scale(.15, .15, .15);
-					GlStateManager.rotate(45, 1, 0, 0);
-					break;
-				default:
-					break;
-			}
-			renderMinecart();
-			GlStateManager.rotate(90, 0, 1, 0);
-			GlStateManager.scale(1.5, 1.5, 1.5);
-			GlStateManager.translate(-.5, -0.25, .5);
-			renderBlockWrapper(blockWrapper);
-			GlStateManager.popMatrix();
-		}
-	}
+    public void renderTileEntityAt(DummyTile tileEntity, double x, double y, double z, float partialTicks, int destroyStage) {
+        IBlockWrapper blockWrapper = itemMinecartHolder.getBlockWrapper();
+        if(itemMinecartHolder.getWorldWrapper() == null) {
+            WorldWrapper worldWrapper = new WorldWrapper(new WorldHarnessRenderItem(blockWrapper));
+            itemMinecartHolder.setWorldWrapper(worldWrapper);
+        }
 
-	protected void renderMinecart() {
-		GlStateManager.pushMatrix();
-		GlStateManager.rotate(180, 0, 0, 1);
-		Minecraft.getMinecraft().renderEngine.bindTexture(minecartTexture);
-		modelMinecart.render(ClientHelper.player(), 0, 0, 0, 0, 0, 0.1F);
-		GlStateManager.popMatrix();
-	}
 
-	protected void renderBlockWrapper(IBlockWrapper blockWrapper) {
-		renderBlock.renderEntity(ClientHelper.player(), blockWrapper, 0);
-	}*/
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(.5, .55, .5);
+        switch (transformType) {
+            case GROUND:
+                GlStateManager.scale(.15, .15, .15);
+                break;
+            case GUI:
+                GlStateManager.scale(.25, .25, .25);
+                GlStateManager.rotate(45, 1, -1, 0);
+                break;
+            case FIRST_PERSON_LEFT_HAND:
+                GlStateManager.scale(.2, .2, .2);
+                GlStateManager.rotate(45, 1, 0, 0);
+                break;
+            case FIRST_PERSON_RIGHT_HAND:
+                GlStateManager.scale(.2, .2, .2);
+                GlStateManager.rotate(45, 1, 0, 0);
+                break;
+            case THIRD_PERSON_LEFT_HAND:
+                GlStateManager.scale(.15, .15, .15);
+                GlStateManager.rotate(45, 1, 0, 0);
+                break;
+            case THIRD_PERSON_RIGHT_HAND:
+                GlStateManager.scale(.15, .15, .15);
+                GlStateManager.rotate(45, 1, 0, 0);
+                break;
+            default:
+                break;
+        }
+        renderMinecart();
+        GlStateManager.rotate(90, 0, 1, 0);
+        GlStateManager.scale(1.25, 1.25, 1.25);
+        GlStateManager.translate(-.5, -0.15, .5);
+        renderBlockWrapper(blockWrapper);
+        GlStateManager.popMatrix();
+    }
+
+    protected void renderMinecart() {
+        GlStateManager.pushMatrix();
+        GlStateManager.rotate(180, 0, 0, 1);
+        GlStateManager.rotate(90, 0, 1, 0);
+        Minecraft.getMinecraft().renderEngine.bindTexture(minecartTexture);
+        modelMinecart.render(Minecraft.getMinecraft().thePlayer, 0, 0, 0, 0, 0, 0.1F);
+        GlStateManager.popMatrix();
+    }
+
+    protected void renderBlockWrapper(IBlockWrapper blockWrapper) {
+        renderBlock.renderEntity(Minecraft.getMinecraft().thePlayer, blockWrapper, Minecraft.getMinecraft().getRenderPartialTicks());
+    }
+
+    public static class DummyTile extends TileEntity {
+
+    }
 }

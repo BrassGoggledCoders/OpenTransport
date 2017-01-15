@@ -25,20 +25,23 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
 import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRenderHandler*/ {
-    IBlockWrapper blockWrapper;
+public class ItemBoatHolder extends ItemBoat implements IHasModel {
+    private IBlockWrapper blockWrapper;
+    private WorldWrapper worldWrapper;
     boolean creativeTabSet = false;
 
     public ItemBoatHolder(IBlockWrapper blockWrapper, CreativeTabs tab) {
         super(EntityBoat.Type.OAK);
         this.setUnlocalizedName("boat.holder." + blockWrapper.getUnlocalizedName());
         this.setCreativeTab(tab);
-        this.blockWrapper = blockWrapper;
+        setBlockWrapper(blockWrapper);
     }
 
     @Override
@@ -98,7 +101,7 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
                 entityBoatHolder.setPosition(boatPosX, boatPosY, boatPosZ);
                 entityBoatHolder.setBoatType(this.getType(itemStack));
                 entityBoatHolder.setItemBoat(itemStack);
-                entityBoatHolder.setBlockWrapper(this.getBlockWrapper(itemStack));
+                entityBoatHolder.setBlockWrapper(this.getBlockWrapper());
                 entityBoatHolder.rotationYaw = entityPlayer.rotationYaw;
 
                 if (!world.getCollisionBoxes(entityBoatHolder, entityBoatHolder.getEntityBoundingBox().expandXyz(-0.1D))
@@ -134,7 +137,7 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
 
         displayName += this.getBoatItem(boatItemStack).getItemStackDisplayName(boatItemStack);
 
-        ItemStack wrapperItemStack = this.blockWrapper.getItemStack();
+        ItemStack wrapperItemStack = this.getBlockWrapper().getItemStack();
         displayName += " " + I18n.format("separator.with") + " ";
         displayName += wrapperItemStack.getItem().getItemStackDisplayName(wrapperItemStack);
 
@@ -144,14 +147,15 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
-        for (int i = 0; i < EntityBoat.Type.values().length; i++) {
-            ItemStack stack = new ItemStack(item, 1, i);
-            list.add(stack);
-        }
+        list.addAll(this.getAllSubItems(new ArrayList<>()));
     }
 
-    public IBlockWrapper getBlockWrapper(ItemStack itemStack) {
-        return blockWrapper;
+    public void setBlockWrapper(IBlockWrapper blockWrapper) {
+        this.blockWrapper = blockWrapper;
+    }
+
+    public IBlockWrapper getBlockWrapper() {
+        return this.blockWrapper;
     }
 
     public void increaseStat(EntityPlayer entityPlayer) {
@@ -200,7 +204,25 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel/*, IHasItemRen
 
     @Override
     public List<String> getModelNames(List<String> modelNames) {
-        modelNames.add("boat");
+        modelNames.add("boat.holder." + this.getBlockWrapper().getUnlocalizedName());
         return modelNames;
+    }
+
+    @Override
+    public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
+        for (int i = 0; i < EntityBoat.Type.values().length; i++) {
+            ItemStack stack = new ItemStack(this, 1, i);
+            itemStacks.add(stack);
+        }
+        return itemStacks;
+    }
+
+    public WorldWrapper getWorldWrapper() {
+        return worldWrapper;
+    }
+
+    public void setWorldWrapper(WorldWrapper worldWrapper) {
+        this.worldWrapper = worldWrapper;
+        this.blockWrapper.setWorldWrapper(worldWrapper);
     }
 }
