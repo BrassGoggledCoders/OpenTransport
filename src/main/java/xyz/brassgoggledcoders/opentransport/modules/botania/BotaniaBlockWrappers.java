@@ -13,23 +13,22 @@ import xyz.brassgoggledcoders.opentransport.api.wrappers.block.rendering.RenderT
 public class BotaniaBlockWrappers {
     @SubscribeEvent
     public void registerBlockWrappers(RegisterBlockWrappersEvent event) {
-        BlockWrapper manaPool = new BlockWrapper(ModBlocks.pool).setRenderType(RenderType.TESR);
+        BlockWrapper manaPool = new BlockWrapper(ModBlocks.pool).setRenderType(RenderType.COMBO);
         for(PoolVariant variant: BotaniaStateProps.POOL_VARIANT.getAllowedValues()) {
-            manaPool.withProperty(BotaniaStateProps.POOL_VARIANT, variant).register();
+            manaPool.copy().withProperty(BotaniaStateProps.POOL_VARIANT, variant).register();
         }
 
         BlockWrapper drum = new BlockWrapper(ModBlocks.forestDrum);
         for(DrumVariant variant: BotaniaStateProps.DRUM_VARIANT.getAllowedValues()) {
-            drum.withProperty(BotaniaStateProps.DRUM_VARIANT, variant).register();
+            drum.copy().withProperty(BotaniaStateProps.DRUM_VARIANT, variant).register();
         }
 
-        BlockWrapper pedalApothecary = new BlockWrapper(ModBlocks.altar).setRenderType(RenderType.TESR);
+        BlockWrapper pedalApothecary = new BlockWrapper(ModBlocks.altar).setRenderType(RenderType.COMBO);
         for(AltarVariant variant: BotaniaStateProps.ALTAR_VARIANT.getAllowedValues()) {
-            pedalApothecary.withProperty(BotaniaStateProps.ALTAR_VARIANT, variant).register();
+            pedalApothecary.copy().withProperty(BotaniaStateProps.ALTAR_VARIANT, variant).register();
         }
 
         new BlockWrapper(ModBlocks.tinyPotato).setRenderType(RenderType.COMBO).register();
         new BlockWrapper(ModBlocks.teruTeruBozu).setRenderType(RenderType.TESR).register();
-
     }
 }

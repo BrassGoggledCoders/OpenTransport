@@ -19,7 +19,7 @@ public class BotaniaModule extends ModuleBase {
 
     @Override
     public List<IDependency> getDependencies(List<IDependency> dependencies) {
-        dependencies.add(new ModDependency("botania"));
+        dependencies.add(new ModDependency("Botania"));
         return dependencies;
     }
 
