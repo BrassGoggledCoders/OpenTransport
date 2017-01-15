@@ -16,6 +16,7 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.storage.WorldInfo;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 
 import javax.annotation.Nonnull;
@@ -129,7 +130,7 @@ public class WorldWrapper extends World {
 
     @Override
     public boolean setBlockToAir(@Nonnull BlockPos pos) {
-        if(pos.equals(BlockPos.ORIGIN)) {
+        if (pos.equals(BlockPos.ORIGIN)) {
             this.getWorldHarness().setBlockToAir();
             return true;
         }
@@ -138,7 +139,7 @@ public class WorldWrapper extends World {
 
     @Override
     public boolean setBlockState(BlockPos pos, @Nonnull IBlockState newState, int flags) {
-        if(BlockPos.ORIGIN.equals(pos)) {
+        if (BlockPos.ORIGIN.equals(pos)) {
             this.getBlockWrapper().alterBlockState(newState);
         }
         return true;
@@ -146,6 +147,17 @@ public class WorldWrapper extends World {
 
     public IBlockWrapper getBlockWrapper() {
         return this.getWorldHarness().getBlockWrapper();
+    }
+
+    @Override
+    @Nonnull
+    public WorldInfo getWorldInfo() {
+        return this.getWorld().getWorldInfo();
+    }
+
+    @Override
+    public boolean isRaining() {
+        return this.getWorld().isRaining();
     }
 
     public IWorldHarness getWorldHarness() {

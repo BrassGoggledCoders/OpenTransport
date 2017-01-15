@@ -44,7 +44,7 @@ public class BlockWrapper implements IBlockWrapper {
     IHolderEntity holderEntity;
     boolean isDirty;
 
-    public BlockWrapper(Block block) {
+    public BlockWrapper(@Nonnull Block block) {
         this.block = block;
         this.blockState = block.getDefaultState();
         this.unlocalizedName = block.getUnlocalizedName().replaceFirst("tile.", "");
