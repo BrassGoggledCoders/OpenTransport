@@ -23,6 +23,7 @@ public class BoatClientTransport extends BoatTransport implements IClientTranspo
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void registerItemRenderer() {
         ClientRegistry.bindTileEntitySpecialRenderer(RenderItemHolderBoat.DummyTile.class, new RenderItemHolderBoat());
         RenderItemHolderBoatAccessor accessor = new RenderItemHolderBoatAccessor();

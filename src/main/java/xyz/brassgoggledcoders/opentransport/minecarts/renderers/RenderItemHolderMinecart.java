@@ -43,8 +43,10 @@ public class RenderItemHolderMinecart extends TileEntitySpecialRenderer<RenderIt
                 GlStateManager.scale(.15, .15, .15);
                 break;
             case GUI:
-                GlStateManager.scale(.25, .25, .25);
-                GlStateManager.rotate(45, 1, -1, 0);
+                GlStateManager.scale(.35, .35, .35);
+                GlStateManager.rotate(45, 1, 0, 0);
+                GlStateManager.rotate(45, 0, -1, 0);
+                GlStateManager.translate(0, -0.25, 0);
                 break;
             case FIRST_PERSON_LEFT_HAND:
                 GlStateManager.scale(.2, .2, .2);
