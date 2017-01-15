@@ -12,7 +12,7 @@ import xyz.brassgoggledcoders.opentransport.modules.manasteam.entities.EntityMan
 import javax.annotation.Nonnull;
 
 public class ManaSteamLocomotiveRenderer extends Render<EntityManaSteamLocomotive> {
-    public static ResourceLocation texture = new ResourceLocation(OpenTransport.MODID, "/manasteam/manasteam_locomotive.png");
+    public static ResourceLocation texture = new ResourceLocation(OpenTransport.MODID, "textures/entity/manasteam/manasteam_locomotive.png");
     public static ManaSteamLocomotiveModel model = new ManaSteamLocomotiveModel();
 
     public ManaSteamLocomotiveRenderer(RenderManager renderManager) {
@@ -75,17 +75,17 @@ public class ManaSteamLocomotiveRenderer extends Render<EntityManaSteamLocomotiv
                             0.0F);
         }
 
-        int j = entity.getDisplayTileOffset();
-
         if (this.renderOutlines) {
             GlStateManager.enableColorMaterial();
             GlStateManager.enableOutlineMode(this.getTeamColor(entity));
         }
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.rotate(180, 1, 0, 0);
+        GlStateManager.translate(0, -1, 0);
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         this.bindEntityTexture(entity);
-
-        GlStateManager.scale(-1.0F, -1.0F, 1.0F);
         model.render(entity, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
         GlStateManager.popMatrix();
 

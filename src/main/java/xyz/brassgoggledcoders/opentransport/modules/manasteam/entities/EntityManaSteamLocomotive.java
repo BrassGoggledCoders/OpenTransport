@@ -40,7 +40,7 @@ public class EntityManaSteamLocomotive extends EntityLocomotiveSteam {
         manaHolder = new ManaHolderLocomotive(TilePool.MAX_MANA, 10000);
         manaFuel = new ManaFuelProvider(manaHolder);
         boiler.setFuelProvider(manaFuel);
-        ticketInventory = new InventoryBasic("Tickets", true, 1);
+        ticketInventory = new InventoryBasic("Tickets", true, 2);
     }
 
     @Override
