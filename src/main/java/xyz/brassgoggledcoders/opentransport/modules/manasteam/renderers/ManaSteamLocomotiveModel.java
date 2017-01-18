@@ -2,7 +2,6 @@ package xyz.brassgoggledcoders.opentransport.modules.manasteam.renderers;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
 /**
@@ -64,7 +63,6 @@ public class ManaSteamLocomotiveModel extends ModelBase {
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
         this.shape1_3.render(f5);
         this.shape1_4.render(f5);
-        this.tank.render(f5);
         this.tube_1.render(f5);
         this.shape1_1.render(f5);
         this.front.render(f5);
@@ -73,6 +71,10 @@ public class ManaSteamLocomotiveModel extends ModelBase {
         this.grass.render(f5);
         this.shape1.render(f5);
         this.railing.render(f5);
+    }
+
+    public void renderSecondPass(Entity entity, float scale) {
+        this.tank.render(scale);
     }
 
     /**

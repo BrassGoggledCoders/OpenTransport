@@ -10,6 +10,7 @@ import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.modules.manasteam.entities.EntityManaSteamLocomotive;
 
 import javax.annotation.Nonnull;
+import java.util.function.Consumer;
 
 public class ManaSteamLocomotiveRenderer extends Render<EntityManaSteamLocomotive> {
     public static ResourceLocation texture = new ResourceLocation(OpenTransport.MODID, "textures/entity/manasteam/manasteam_locomotive.png");
@@ -21,6 +22,27 @@ public class ManaSteamLocomotiveRenderer extends Render<EntityManaSteamLocomotiv
 
     @Override
     public void doRender(@Nonnull EntityManaSteamLocomotive entity, double x, double y, double z, float entityYaw, float partialTicks) {
+        renderPass(entity, x, y, z, entityYaw, partialTicks, manaSteamLocomotive -> {
+            model.render(manaSteamLocomotive, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+        });
+
+    }
+
+    public boolean isMultipass() {
+        return true;
+    }
+
+    public void renderMultipass(EntityManaSteamLocomotive entity, double x, double y, double z, float entityYaw, float partialTicks) {
+        renderPass(entity, x, y, z, entityYaw, partialTicks, manaSteamLocomotive -> {
+            GlStateManager.enableBlend();
+            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+            model.renderSecondPass(manaSteamLocomotive, 0.0625F);
+            GlStateManager.disableBlend();
+        });
+    }
+
+    public void renderPass(EntityManaSteamLocomotive entity, double x, double y, double z, float entityYaw,
+                                float partialTicks, Consumer<EntityManaSteamLocomotive> render) {
         GlStateManager.pushMatrix();
         long i = (long) entity.getEntityId() * 493286711L;
         i = i * i * 4392167121L + i * 98761L;
@@ -83,10 +105,8 @@ public class ManaSteamLocomotiveRenderer extends Render<EntityManaSteamLocomotiv
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.rotate(180, 1, 0, 0);
         GlStateManager.translate(0, -1, 0);
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         this.bindEntityTexture(entity);
-        model.render(entity, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+        render.accept(entity);
         GlStateManager.popMatrix();
 
         if (this.renderOutlines) {
