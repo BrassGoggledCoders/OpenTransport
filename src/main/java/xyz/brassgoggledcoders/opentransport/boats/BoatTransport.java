@@ -14,15 +14,14 @@ import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
 import xyz.brassgoggledcoders.opentransport.boats.items.ItemBoatHolder;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @TransportType
 public class BoatTransport implements ITransportType<EntityBoat> {
     private CreativeTabs boatsTab = new BoatCreativeTab();
     private boolean isActive = true;
-    protected List<ItemBoatHolder> holderList = new ArrayList<>();
+
+    public static ItemBoatHolder itemBoatHolder;
 
     @Override
     @Nonnull
@@ -44,11 +43,8 @@ public class BoatTransport implements ITransportType<EntityBoat> {
 
     @Override
     public void registerItems(Map<String, IBlockWrapper> blockWrappers) {
-        blockWrappers.forEach((name, blockWrapper) -> {
-            ItemBoatHolder holder = new ItemBoatHolder(blockWrapper, this.getCreativeTab());
-            holderList.add(holder);
-            OpenTransport.instance.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(holder);
-        });
+        itemBoatHolder = new ItemBoatHolder(this.getCreativeTab());
+        OpenTransport.instance.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(itemBoatHolder);
     }
 
     @Override

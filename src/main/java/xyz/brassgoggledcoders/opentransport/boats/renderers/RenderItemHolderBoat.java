@@ -8,8 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldHarnessRenderItem;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
 import xyz.brassgoggledcoders.opentransport.boats.items.ItemBoatHolder;
 import xyz.brassgoggledcoders.opentransport.boats.models.ModelBoatNoPaddles;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderBlock;
@@ -34,11 +32,8 @@ public class RenderItemHolderBoat extends TileEntitySpecialRenderer<RenderItemHo
     }
 
     public void renderTileEntityAt(DummyTile te, double x, double y, double z, float partialTicks, int destroyStage) {
-        IBlockWrapper blockWrapper = itemBoatHolder.getBlockWrapper();
-        if(itemBoatHolder.getWorldWrapper() != null) {
-            WorldWrapper worldWrapper = new WorldWrapper(new WorldHarnessRenderItem(blockWrapper));
-            itemBoatHolder.setWorldWrapper(worldWrapper);
-        }
+        IBlockWrapper blockWrapper = itemBoatHolder.getBlockWrapper(itemStack
+        );
         GlStateManager.pushMatrix();
         GlStateManager.translate(.5, .55, .5);
         switch (type) {

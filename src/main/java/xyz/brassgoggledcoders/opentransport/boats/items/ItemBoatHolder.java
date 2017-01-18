@@ -12,6 +12,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBoat;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
@@ -24,8 +25,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
 import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;
 
 import javax.annotation.Nonnull;
@@ -33,15 +34,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemBoatHolder extends ItemBoat implements IHasModel {
-    private IBlockWrapper blockWrapper;
-    private WorldWrapper worldWrapper;
     boolean creativeTabSet = false;
 
-    public ItemBoatHolder(IBlockWrapper blockWrapper, CreativeTabs tab) {
+    public ItemBoatHolder(CreativeTabs tab) {
         super(EntityBoat.Type.OAK);
-        this.setUnlocalizedName("boat.holder." + blockWrapper.getUnlocalizedName());
+        this.setUnlocalizedName("boat.holder");
         this.setCreativeTab(tab);
-        setBlockWrapper(blockWrapper);
     }
 
     @Override
@@ -101,7 +99,7 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel {
                 entityBoatHolder.setPosition(boatPosX, boatPosY, boatPosZ);
                 entityBoatHolder.setBoatType(this.getType(itemStack));
                 entityBoatHolder.setItemBoat(itemStack);
-                entityBoatHolder.setBlockWrapper(this.getBlockWrapper());
+                entityBoatHolder.setBlockWrapper(this.getBlockWrapper(itemStack));
                 entityBoatHolder.rotationYaw = entityPlayer.rotationYaw;
 
                 if (!world.getCollisionBoxes(entityBoatHolder, entityBoatHolder.getEntityBoundingBox().expandXyz(-0.1D))
@@ -137,25 +135,11 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel {
 
         displayName += this.getBoatItem(boatItemStack).getItemStackDisplayName(boatItemStack);
 
-        ItemStack wrapperItemStack = this.getBlockWrapper().getItemStack();
+        ItemStack wrapperItemStack = this.getBlockWrapper(boatItemStack).getItemStack();
         displayName += " " + I18n.format("separator.with") + " ";
         displayName += wrapperItemStack.getItem().getItemStackDisplayName(wrapperItemStack);
 
         return displayName;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
-        list.addAll(this.getAllSubItems(new ArrayList<>()));
-    }
-
-    public void setBlockWrapper(IBlockWrapper blockWrapper) {
-        this.blockWrapper = blockWrapper;
-    }
-
-    public IBlockWrapper getBlockWrapper() {
-        return this.blockWrapper;
     }
 
     public void increaseStat(EntityPlayer entityPlayer) {
@@ -173,6 +157,10 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel {
             this.creativeTabSet = true;
         }
         return this;
+    }
+
+    public IBlockWrapper getBlockWrapper(ItemStack itemStack) {
+        return OpenTransportAPI.getBlockWrapperRegistry().getLoadedBlockWrapper(itemStack);
     }
 
     public EntityBoat.Type getType(ItemStack itemStack) {
@@ -204,25 +192,25 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel {
 
     @Override
     public List<String> getModelNames(List<String> modelNames) {
-        modelNames.add("boat.holder." + this.getBlockWrapper().getUnlocalizedName());
+        modelNames.add("boat.holder");
         return modelNames;
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> itemStacks) {
+        itemStacks.addAll(this.getAllSubItems(new ArrayList<>()));
+    }
+
+    @Override
     public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
-        for (int i = 0; i < EntityBoat.Type.values().length; i++) {
-            ItemStack stack = new ItemStack(this, 1, i);
-            itemStacks.add(stack);
-        }
+        OpenTransportAPI.getBlockWrapperRegistry().getAllBlockWrappers().forEach((name, blockWrapper) -> {
+            for (EntityBoat.Type type : EntityBoat.Type.values()) {
+                ItemStack itemStack = new ItemStack(this, 1, type.ordinal());
+                NBTTagCompound nbtTagCompound = itemStack.getSubCompound("blockWrapper", true);
+                nbtTagCompound.setString("name", blockWrapper.getUnlocalizedName());
+            }
+        });
         return itemStacks;
-    }
-
-    public WorldWrapper getWorldWrapper() {
-        return worldWrapper;
-    }
-
-    public void setWorldWrapper(WorldWrapper worldWrapper) {
-        this.worldWrapper = worldWrapper;
-        this.blockWrapper.setWorldWrapper(worldWrapper);
     }
 }

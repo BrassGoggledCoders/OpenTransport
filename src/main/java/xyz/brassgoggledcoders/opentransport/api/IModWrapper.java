@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.opentransport.api;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 
 /*
  * Interface to proxy calls to @see xyz.brassgoggledcoders.opentransport.OpenTransport
@@ -18,4 +19,6 @@ public interface IModWrapper {
     void logError(String error);
 
     void openGui(IHolderEntity entity, EntityPlayer player, World world);
+
+    void setWorldHarness(IBlockWrapper blockWrapper);
 }

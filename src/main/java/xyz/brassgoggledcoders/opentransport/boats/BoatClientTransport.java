@@ -27,10 +27,8 @@ public class BoatClientTransport extends BoatTransport implements IClientTranspo
     public void registerItemRenderer() {
         ClientRegistry.bindTileEntitySpecialRenderer(RenderItemHolderBoat.DummyTile.class, new RenderItemHolderBoat());
         RenderItemHolderBoatAccessor accessor = new RenderItemHolderBoatAccessor();
-        this.holderList.forEach(itemBoatHolder -> {
-            itemBoatHolder.getAllSubItems(new ArrayList<>()).forEach(itemStack ->
-                    ForgeHooksClient.registerTESRItemStack(itemBoatHolder, itemStack.getMetadata(), RenderItemHolderBoat.DummyTile.class));
-            TESRModelLoader.addTESRModel(itemBoatHolder, new TESRModel<>(itemBoatHolder, accessor));
-        });
+        itemBoatHolder.getAllSubItems(new ArrayList<>()).forEach(itemStack ->
+                ForgeHooksClient.registerTESRItemStack(itemBoatHolder, itemStack.getMetadata(), RenderItemHolderBoat.DummyTile.class));
+        TESRModelLoader.addTESRModel(itemBoatHolder, new TESRModel<>(itemBoatHolder, accessor));
     }
 }

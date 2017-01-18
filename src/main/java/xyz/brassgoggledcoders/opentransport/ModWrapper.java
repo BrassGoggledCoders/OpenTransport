@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.opentransport.api.IModWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.network.HolderUpdatePacket;
 
 public class ModWrapper implements IModWrapper {
@@ -33,5 +34,10 @@ public class ModWrapper implements IModWrapper {
     public void openGui(IHolderEntity entity, EntityPlayer player, World world) {
         OpenTransport.instance.getGuiHandler().openGui(new GuiEntityTarget(entity.getEntity()), new NBTTagCompound(),
                 false, player, world);
+    }
+
+    @Override
+    public void setWorldHarness(IBlockWrapper blockWrapper) {
+        OpenTransport.proxy.setWorldHarness(blockWrapper);
     }
 }

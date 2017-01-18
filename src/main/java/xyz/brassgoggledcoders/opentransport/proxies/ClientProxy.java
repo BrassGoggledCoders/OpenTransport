@@ -12,7 +12,9 @@ import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ClientTransportType;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.IClientTransportType;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.player.EntityPlayerSPWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldHarnessRenderItem;
 import xyz.brassgoggledcoders.opentransport.renderers.TESRModelLoader;
 
 import java.util.List;
@@ -55,5 +57,10 @@ public class ClientProxy extends CommonProxy {
                 clientTransportType.registerItemRenderer();
             }
         });
+    }
+
+    @Override
+    public void setWorldHarness(IBlockWrapper blockWrapper) {
+        blockWrapper.setWorldHarness(new WorldHarnessRenderItem(blockWrapper));
     }
 }

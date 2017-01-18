@@ -9,8 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldHarnessRenderItem;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
 import xyz.brassgoggledcoders.opentransport.minecarts.items.ItemMinecartHolder;
 import xyz.brassgoggledcoders.opentransport.renderers.RenderBlock;
 
@@ -29,12 +27,7 @@ public class RenderItemHolderMinecart extends TileEntitySpecialRenderer<RenderIt
     }
 
     public void renderTileEntityAt(DummyTile tileEntity, double x, double y, double z, float partialTicks, int destroyStage) {
-        IBlockWrapper blockWrapper = itemMinecartHolder.getBlockWrapper();
-        if(itemMinecartHolder.getWorldWrapper() == null) {
-            WorldWrapper worldWrapper = new WorldWrapper(new WorldHarnessRenderItem(blockWrapper));
-            itemMinecartHolder.setWorldWrapper(worldWrapper);
-        }
-
+        IBlockWrapper blockWrapper = itemMinecartHolder.getBlockWrapper(itemStackMinecartHolder);
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(.5, .55, .5);

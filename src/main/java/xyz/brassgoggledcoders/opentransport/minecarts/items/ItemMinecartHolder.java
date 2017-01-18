@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -14,22 +15,20 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
 import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemMinecartHolder extends ItemMinecartBase {
-    private IBlockWrapper blockWrapper;
-    private WorldWrapper worldWrapper;
     boolean creativeTabSet = false;
 
-    public ItemMinecartHolder(IBlockWrapper blockWrapper, CreativeTabs creativeTabs) {
-        super("minecart.holder." + blockWrapper.getUnlocalizedName());
+    public ItemMinecartHolder(CreativeTabs creativeTabs) {
+        super("minecart.holder");
         this.setCreativeTab(creativeTabs);
-        setBlockWrapper(blockWrapper);
     }
 
     @Override
@@ -53,26 +52,22 @@ public class ItemMinecartHolder extends ItemMinecartBase {
 
         displayName += Items.MINECART.getItemStackDisplayName(cartItemStack);
 
-        ItemStack wrapperItemStack = this.getBlockWrapper().getItemStack();
+        ItemStack wrapperItemStack = this.getBlockWrapper(cartItemStack).getItemStack();
         displayName += " " + I18n.format("separator.with") + " ";
         displayName += wrapperItemStack.getItem().getItemStackDisplayName(wrapperItemStack);
 
         return displayName;
     }
 
-    public void setBlockWrapper(IBlockWrapper blockWrapper) {
-        this.blockWrapper = blockWrapper;
-    }
-
-    public IBlockWrapper getBlockWrapper() {
-        return this.blockWrapper;
+    public IBlockWrapper getBlockWrapper(ItemStack itemStack) {
+        return OpenTransportAPI.getBlockWrapperRegistry().getLoadedBlockWrapper(itemStack);
     }
 
     @Nonnull
     @Override
     public EntityMinecartHolder getEntityFromItem(World world, ItemStack itemStack) {
         EntityMinecartHolder minecart = new EntityMinecartHolder(world);
-        minecart.setBlockWrapper(this.getBlockWrapper());
+        minecart.setBlockWrapper(this.getBlockWrapper(itemStack));
         minecart.setItemCart(itemStack);
         return minecart;
     }
@@ -89,22 +84,23 @@ public class ItemMinecartHolder extends ItemMinecartBase {
 
     @Override
     public List<String> getModelNames(List<String> modelNames) {
-        modelNames.add("minecart.holder." + this.getBlockWrapper().getUnlocalizedName());
+        modelNames.add("minecart.holder");
         return modelNames;
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> itemStacks) {
+        itemStacks.addAll(this.getAllSubItems(new ArrayList<>()));
+    }
+
+    @Override
     public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
-        itemStacks.add(new ItemStack(this));
+        OpenTransportAPI.getBlockWrapperRegistry().getAllBlockWrappers().forEach((name, blockWrapper) -> {
+            ItemStack itemStack = new ItemStack(this, 1, 0);
+            NBTTagCompound nbtTagCompound = itemStack.getSubCompound("blockWrapper", true);
+            nbtTagCompound.setString("name", blockWrapper.getUnlocalizedName());
+        });
         return itemStacks;
-    }
-
-    public WorldWrapper getWorldWrapper() {
-        return this.worldWrapper;
-    }
-
-    public void setWorldWrapper(WorldWrapper worldWrapper) {
-        this.worldWrapper = worldWrapper;
-        this.blockWrapper.setWorldWrapper(worldWrapper);
     }
 }

@@ -12,7 +12,9 @@ import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.TransportType;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.player.EntityPlayerMPWrapper;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldHarnessRenderItem;
 
 import java.util.List;
 
@@ -44,5 +46,9 @@ public class CommonProxy {
 
     public void registerRenderers(List<ITransportType> transportTypes) {
 
+    }
+
+    public void setWorldHarness(IBlockWrapper blockWrapper) {
+        blockWrapper.setWorldHarness(new WorldHarnessRenderItem(blockWrapper));
     }
 }

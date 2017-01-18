@@ -14,15 +14,14 @@ import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHol
 import xyz.brassgoggledcoders.opentransport.minecarts.items.ItemMinecartHolder;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @TransportType
 public class MinecartTransport implements ITransportType<EntityMinecart> {
     private CreativeTabs cartsTab = new MinecartsCreativeTab();
     private boolean isActive = true;
-    protected List<ItemMinecartHolder> holderList = new ArrayList<>();
+
+    public static ItemMinecartHolder itemMinecartHolder;
 
     @Nonnull
     @Override
@@ -44,11 +43,8 @@ public class MinecartTransport implements ITransportType<EntityMinecart> {
 
     @Override
     public void registerItems(Map<String, IBlockWrapper> blockWrappers) {
-        blockWrappers.forEach((name, blockWrapper) -> {
-            ItemMinecartHolder holder = new ItemMinecartHolder(blockWrapper, this.getCreativeTab());
-            holderList.add(holder);
-            OpenTransport.instance.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(holder);
-        });
+        itemMinecartHolder = new ItemMinecartHolder(this.getCreativeTab());
+        OpenTransport.instance.getRegistryHolder().getRegistry(ItemRegistry.class, "ITEM").register(itemMinecartHolder);
     }
 
     @Override

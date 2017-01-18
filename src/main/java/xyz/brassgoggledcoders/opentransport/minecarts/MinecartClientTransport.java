@@ -26,9 +26,8 @@ public class MinecartClientTransport extends MinecartTransport implements IClien
     public void registerItemRenderer() {
         ClientRegistry.bindTileEntitySpecialRenderer(DummyTile.class, new RenderItemHolderMinecart());
         RenderItemHolderMinecartAccessor accessor = new RenderItemHolderMinecartAccessor();
-        this.holderList.forEach(itemMinecartHolder -> {
-            ForgeHooksClient.registerTESRItemStack(itemMinecartHolder, 0, DummyTile.class);
-            TESRModelLoader.addTESRModel(itemMinecartHolder, new TESRModel<>(itemMinecartHolder, accessor));
-        });
+        ForgeHooksClient.registerTESRItemStack(itemMinecartHolder, 0, DummyTile.class);
+        TESRModelLoader.addTESRModel(itemMinecartHolder, new TESRModel<>(itemMinecartHolder, accessor));
+
     }
 }
