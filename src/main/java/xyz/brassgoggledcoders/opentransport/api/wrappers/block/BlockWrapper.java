@@ -278,7 +278,7 @@ public class BlockWrapper implements IBlockWrapper {
         BlockWrapper copyBlockWrapper = new BlockWrapper(this.getBlock());
         copyBlockWrapper.setBlockState(this.getBlockState()).setActionListeners(this.getActionListeners())
                 .setGuiInterface(this.getInterface()).setRenderType(this.getRenderType())
-                .setUnlocalizedName(this.getUnlocalizedName());
+                .setUnlocalizedName(this.getUnlocalizedName()).setItemStack(this.getItemStack(), this.itemStackChange);
         return copyBlockWrapper;
     }
 

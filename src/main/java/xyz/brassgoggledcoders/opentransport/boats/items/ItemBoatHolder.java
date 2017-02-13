@@ -209,6 +209,7 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel {
                 ItemStack itemStack = new ItemStack(this, 1, type.ordinal());
                 NBTTagCompound nbtTagCompound = itemStack.getSubCompound("blockWrapper", true);
                 nbtTagCompound.setString("name", blockWrapper.getUnlocalizedName());
+                itemStacks.add(itemStack);
             }
         });
         return itemStacks;

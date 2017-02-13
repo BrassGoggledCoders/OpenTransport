@@ -37,7 +37,9 @@ public class ModWrapper implements IModWrapper {
     }
 
     @Override
-    public void setWorldHarness(IBlockWrapper blockWrapper) {
-        OpenTransport.proxy.setWorldHarness(blockWrapper);
+    public IBlockWrapper getLoadedBlockWrapper(String name) {
+        return OpenTransport.proxy.getLoadedBlockWrapper(name);
     }
+
+
 }

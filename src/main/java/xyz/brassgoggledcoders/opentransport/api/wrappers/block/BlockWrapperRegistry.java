@@ -11,8 +11,6 @@ import java.util.Map;
 
 public class BlockWrapperRegistry {
     private Map<String, IBlockWrapper> blockWrapperMap;
-    private Map<String, IBlockWrapper> loadedBlockWrapperMap;
-    private SecureRandom random = new SecureRandom();
 
     public BlockWrapperRegistry() {
         blockWrapperMap = new HashMap<>();
@@ -23,10 +21,13 @@ public class BlockWrapperRegistry {
     }
 
     public IBlockWrapper getBlockWrapper(String name) {
+        IBlockWrapper blockWrapper;
         if (blockWrapperMap.containsKey(name)) {
-            return blockWrapperMap.get(name).copy();
+            blockWrapper = blockWrapperMap.get(name).copy();
+        } else {
+            blockWrapper = blockWrapperMap.entrySet().iterator().next().getValue().copy();
         }
-        return null;
+        return blockWrapper;
     }
 
     public Map<String, IBlockWrapper> getAllBlockWrappers() {
@@ -34,28 +35,7 @@ public class BlockWrapperRegistry {
     }
 
     public IBlockWrapper getLoadedBlockWrapper(ItemStack itemStack) {
-        String loadedId;
-        NBTTagCompound tagCompound = itemStack.getSubCompound("blockWrapper", true);
-        if(tagCompound.hasKey("loadedId")) {
-            loadedId = tagCompound.getString("loadedId");
-        } else {
-            loadedId = nextNextLoadedId(tagCompound.getString("name"));
-            tagCompound.setString("loadedId", loadedId);
-        }
-
-        IBlockWrapper blockWrapper;
-        if(loadedBlockWrapperMap.containsKey(loadedId)) {
-            blockWrapper = loadedBlockWrapperMap.get(loadedId);
-        } else {
-            blockWrapper = this.getBlockWrapper(loadedId.substring(0, loadedId.indexOf(".") - 1));
-            OpenTransportAPI.getModWrapper().setWorldHarness(blockWrapper);
-            loadedBlockWrapperMap.put(loadedId, blockWrapper);
-        }
-
-        return blockWrapper;
-    }
-
-    public String nextNextLoadedId(String blockWrapperName) {
-        return blockWrapperName + "." + new BigInteger(130, random).toString(32);
+        String blockWrapperName = itemStack.getSubCompound("blockWrapper", true).getString("name");
+        return OpenTransportAPI.getModWrapper().getLoadedBlockWrapper(blockWrapperName);
     }
 }

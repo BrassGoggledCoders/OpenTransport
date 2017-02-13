@@ -20,5 +20,5 @@ public interface IModWrapper {
 
     void openGui(IHolderEntity entity, EntityPlayer player, World world);
 
-    void setWorldHarness(IBlockWrapper blockWrapper);
+    IBlockWrapper getLoadedBlockWrapper(String name);
 }

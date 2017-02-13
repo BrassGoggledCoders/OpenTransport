@@ -9,6 +9,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
+import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.TransportType;
@@ -49,6 +50,10 @@ public class CommonProxy {
     }
 
     public void setWorldHarness(IBlockWrapper blockWrapper) {
-        blockWrapper.setWorldHarness(new WorldHarnessRenderItem(blockWrapper));
+
+    }
+
+    public IBlockWrapper getLoadedBlockWrapper(String name) {
+        return OpenTransportAPI.getBlockWrapperRegistry().getBlockWrapper(name);
     }
 }

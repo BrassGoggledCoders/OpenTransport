@@ -23,7 +23,7 @@ public class BotaniaBlockWrappers {
             drum.copy().withProperty(BotaniaStateProps.DRUM_VARIANT, variant).register();
         }
 
-        BlockWrapper pedalApothecary = new BlockWrapper(ModBlocks.altar).setRenderType(RenderType.COMBO);
+        BlockWrapper pedalApothecary = new BlockWrapper(ModBlocks.altar).setRenderType(RenderType.VMC);
         for(AltarVariant variant: BotaniaStateProps.ALTAR_VARIANT.getAllowedValues()) {
             pedalApothecary.copy().withProperty(BotaniaStateProps.ALTAR_VARIANT, variant).register();
         }

@@ -8,6 +8,7 @@ import net.minecraft.util.IThreadListener;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ClientTransportType;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.IClientTransportType;
@@ -17,7 +18,9 @@ import xyz.brassgoggledcoders.opentransport.api.wrappers.player.EntityPlayerSPWr
 import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldHarnessRenderItem;
 import xyz.brassgoggledcoders.opentransport.renderers.TESRModelLoader;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ClientProxy extends CommonProxy {
     @Override
@@ -51,8 +54,8 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void registerRenderers(List<ITransportType> transportTypes) {
         transportTypes.forEach(transportType -> {
-            if(transportType instanceof IClientTransportType) {
-                IClientTransportType clientTransportType = (IClientTransportType)transportType;
+            if (transportType instanceof IClientTransportType) {
+                IClientTransportType clientTransportType = (IClientTransportType) transportType;
                 clientTransportType.registerEntityRenderer();
                 clientTransportType.registerItemRenderer();
             }
@@ -62,5 +65,24 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void setWorldHarness(IBlockWrapper blockWrapper) {
         blockWrapper.setWorldHarness(new WorldHarnessRenderItem(blockWrapper));
+    }
+
+    private Map<String, IBlockWrapper> loadedBlockWrapperMap = new HashMap<>();
+
+    @Override
+    public IBlockWrapper getLoadedBlockWrapper(String name) {
+        IBlockWrapper blockWrapper;
+        if (Minecraft.getMinecraft().theWorld != null) {
+            if (loadedBlockWrapperMap.containsKey(name)) {
+                blockWrapper = loadedBlockWrapperMap.get(name);
+            } else {
+                blockWrapper = OpenTransportAPI.getBlockWrapperRegistry().getBlockWrapper(name);
+                blockWrapper.setWorldHarness(new WorldHarnessRenderItem(blockWrapper));
+                loadedBlockWrapperMap.put(name, blockWrapper);
+            }
+        } else {
+            blockWrapper = OpenTransportAPI.getBlockWrapperRegistry().getBlockWrapper(name);
+        }
+        return blockWrapper;
     }
 }

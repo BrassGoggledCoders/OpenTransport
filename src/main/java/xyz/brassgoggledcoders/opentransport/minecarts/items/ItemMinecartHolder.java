@@ -100,6 +100,7 @@ public class ItemMinecartHolder extends ItemMinecartBase {
             ItemStack itemStack = new ItemStack(this, 1, 0);
             NBTTagCompound nbtTagCompound = itemStack.getSubCompound("blockWrapper", true);
             nbtTagCompound.setString("name", blockWrapper.getUnlocalizedName());
+            itemStacks.add(itemStack);
         });
         return itemStacks;
     }
