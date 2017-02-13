@@ -22,11 +22,7 @@ repositories {
         url "http://maven.blamejared.com"
     }
     maven {
-        name 'Waila'
-        url 'http://mobiusstrip.eu/maven'
-    }
-    maven {
-        name 'JEI'
+        name 'JEI/Tinkers'
         url "http://dvs1.progwml6.com/files/maven"
     }
 }
