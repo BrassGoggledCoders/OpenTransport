@@ -29,9 +29,9 @@ import javax.annotation.Nullable;
 
 public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<EntityBoatHolder>, IHasGui {
     private static final DataParameter<String> BLOCK_WRAPPER_NAME =
-            EntityDataManager.createKey(EntityBoat.class, DataSerializers.STRING);
+            EntityDataManager.createKey(EntityBoatHolder.class, DataSerializers.STRING);
     private static final DataParameter<Optional<ItemStack>> ITEM_BOAT =
-            EntityDataManager.createKey(EntityBoat.class, DataSerializers.OPTIONAL_ITEM_STACK);
+            EntityDataManager.createKey(EntityBoatHolder.class, DataSerializers.OPTIONAL_ITEM_STACK);
     IBlockWrapper blockWrapper;
 
     public EntityBoatHolder(World world) {
