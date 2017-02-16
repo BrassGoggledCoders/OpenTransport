@@ -32,8 +32,7 @@ public class RenderItemHolderBoat extends TileEntitySpecialRenderer<RenderItemHo
     }
 
     public void renderTileEntityAt(DummyTile te, double x, double y, double z, float partialTicks, int destroyStage) {
-        IBlockWrapper blockWrapper = itemBoatHolder.getBlockWrapper(itemStack
-        );
+        IBlockWrapper blockWrapper = itemBoatHolder.getBlockWrapper(itemStack);
         GlStateManager.pushMatrix();
         GlStateManager.translate(.5, .55, .5);
         switch (type) {

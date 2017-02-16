@@ -88,7 +88,6 @@ public class RenderHolderMinecart extends RenderMinecart<EntityMinecartHolder> {
         float f4 = 0.75F;
         GlStateManager.scale(f4, f4, f4);
         GlStateManager.translate(-0.5F, (float) (j - 8) / 16.0F, 0.5F);
-        this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         this.renderBlock.renderEntity(entity, entity.getBlockWrapper(), partialTicks);
         GlStateManager.popMatrix();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
