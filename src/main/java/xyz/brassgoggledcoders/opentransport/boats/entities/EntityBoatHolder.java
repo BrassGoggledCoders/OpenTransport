@@ -5,6 +5,7 @@ import com.teamacronymcoders.base.guisystem.IHasGui;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
@@ -49,6 +50,11 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
     public void onUpdate() {
         super.onUpdate();
         this.getBlockWrapper().tick();
+    }
+
+    @Override
+    public ItemStack getBoatItemStack() {
+        return ItemBoatHolder.getItemStackForBlockWrapper(this.getBoatType(), this.getBlockWrapper());
     }
 
     @Override
