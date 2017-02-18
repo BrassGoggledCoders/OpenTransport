@@ -16,7 +16,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.BlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
+import xyz.brassgoggledcoders.opentransport.minecarts.MinecartTransport;
 import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
 
 import javax.annotation.Nonnull;
@@ -37,7 +39,7 @@ public class ItemMinecartHolder extends ItemMinecartBase {
                                       @Nonnull BlockPos blockPos, EnumHand hand, EnumFacing facing, float hitX,
                                       float hitY, float hitZ) {
         EntityMinecartHolder entityFromItem = this.getEntityFromItem(world, itemStack);
-        EnumActionResult placed = placeCart(itemStack, world, blockPos, this.getEntityFromItem(world, itemStack));
+        EnumActionResult placed = placeCart(itemStack, world, blockPos, entityFromItem);
         if(placed == EnumActionResult.SUCCESS) {
             entityFromItem.getBlockWrapper().onPlace(player, hand, itemStack);
         }
@@ -67,7 +69,7 @@ public class ItemMinecartHolder extends ItemMinecartBase {
     @Override
     public EntityMinecartHolder getEntityFromItem(World world, ItemStack itemStack) {
         EntityMinecartHolder minecart = new EntityMinecartHolder(world);
-        minecart.setBlockWrapper(this.getBlockWrapper(itemStack));
+        minecart.setBlockWrapper(this.getBlockWrapper(itemStack).copy());
         minecart.setItemCart(itemStack);
         return minecart;
     }
@@ -96,12 +98,15 @@ public class ItemMinecartHolder extends ItemMinecartBase {
 
     @Override
     public List<ItemStack> getAllSubItems(List<ItemStack> itemStacks) {
-        OpenTransportAPI.getBlockWrapperRegistry().getAllBlockWrappers().forEach((name, blockWrapper) -> {
-            ItemStack itemStack = new ItemStack(this, 1, 0);
-            NBTTagCompound nbtTagCompound = itemStack.getSubCompound("blockWrapper", true);
-            nbtTagCompound.setString("name", blockWrapper.getUnlocalizedName());
-            itemStacks.add(itemStack);
-        });
+        OpenTransportAPI.getBlockWrapperRegistry().getAllBlockWrappers().forEach((name, blockWrapper) ->
+                itemStacks.add(getStackForBlockWrapper(blockWrapper)));
         return itemStacks;
+    }
+
+    public static ItemStack getStackForBlockWrapper(IBlockWrapper blockWrapper) {
+        ItemStack itemStack = new ItemStack(MinecartTransport.itemMinecartHolder, 1, 0);
+        NBTTagCompound nbtTagCompound = itemStack.getSubCompound("blockWrapper", true);
+        nbtTagCompound.setString("name", blockWrapper.getUnlocalizedName());
+        return itemStack;
     }
 }

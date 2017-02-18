@@ -17,6 +17,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -62,6 +63,24 @@ public class EntityMinecartHolder extends EntityMinecartBase
                 isPowered = false;
             }
         }
+    }
+
+    @Override
+    public void killMinecart(DamageSource damageSource) {
+        super.killMinecart(damageSource);
+        this.getBlockWrapper().onBreak();
+    }
+
+    @Override
+    @Nonnull
+    public ItemStack getCartItem() {
+        ItemStack cartItemStack = ItemMinecartHolder.getStackForBlockWrapper(this.getBlockWrapper());
+
+        if(this.hasCustomName()) {
+            cartItemStack.setStackDisplayName(this.getName());
+        }
+
+        return cartItemStack;
     }
 
     @Nonnull
