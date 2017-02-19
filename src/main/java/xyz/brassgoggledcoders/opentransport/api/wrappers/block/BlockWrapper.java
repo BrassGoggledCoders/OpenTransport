@@ -30,19 +30,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlockWrapper implements IBlockWrapper {
-    Block block;
-    IBlockState blockState;
-    TileEntity tileEntity;
-    WorldWrapper world;
-    boolean hasTileEntity;
-    String unlocalizedName;
-    ItemStack itemStack;
-    boolean itemStackChange = true;
-    List<IActionListener> actionListeners;
-    IGuiInterface guiInterface;
-    RenderType renderType = RenderType.VMC;
-    IHolderEntity holderEntity;
-    boolean isDirty;
+    private Block block;
+    private IBlockState blockState;
+    private TileEntity tileEntity;
+    private WorldWrapper world;
+    private boolean hasTileEntity;
+    private String unlocalizedName;
+    private ItemStack itemStack;
+    private boolean itemStackChange = true;
+    private List<IActionListener> actionListeners;
+    private IGuiInterface guiInterface;
+    private RenderType renderType = RenderType.VMC;
+    private IHolderEntity holderEntity;
 
     public BlockWrapper(@Nonnull Block block) {
         this.block = block;
@@ -157,10 +156,18 @@ public class BlockWrapper implements IBlockWrapper {
         return iterateActionListeners(ActionType.INTERACTION, entityPlayer, hand, itemStack);
     }
 
+    @Override
+    public void onBreak() {
+        iterateActionListeners(ActionType.BROKEN, null, null, null);
+    }
+
     private boolean iterateActionListeners(ActionType actionType, EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack) {
         boolean result = false;
         this.updateBlockWrapper();
-        EntityPlayer entityPlayerWrapper = OpenTransportAPI.getModWrapper().getPlayerWrapper(entityPlayer, this.holderEntity);
+        EntityPlayer entityPlayerWrapper = null;
+        if(entityPlayer != null) {
+            entityPlayerWrapper = OpenTransportAPI.getModWrapper().getPlayerWrapper(entityPlayer, this.holderEntity);
+        }
         for(IActionListener actionListener : this.getActionListeners()) {
             result |= actionListener.actionOccurred(actionType, entityPlayerWrapper, hand, itemStack, this.holderEntity, this);
         }
@@ -173,11 +180,6 @@ public class BlockWrapper implements IBlockWrapper {
         if (this.hasTileEntity() && this.getTileEntity() instanceof ITickable) {
             ((ITickable) this.getTileEntity()).update();
         }
-    }
-
-    @Override
-    public void markDirty() {
-        isDirty = true;
     }
 
     @Override

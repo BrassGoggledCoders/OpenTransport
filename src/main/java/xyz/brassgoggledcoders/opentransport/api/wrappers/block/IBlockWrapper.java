@@ -9,9 +9,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.common.capabilities.Capability;
+import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.IActionListener;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.IGuiInterface;
-import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.rendering.RenderType;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.world.IWorldHarness;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
@@ -51,9 +51,9 @@ public interface IBlockWrapper {
 
     boolean onInteract(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack);
 
-    void tick();
+    void onBreak();
 
-    void markDirty();
+    void tick();
 
     void setHolder(IHolderEntity entity);
 
