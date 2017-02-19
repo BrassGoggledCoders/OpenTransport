@@ -56,7 +56,7 @@ public class EntityMinecartHolder extends EntityMinecartBase
     @Override
     public void onUpdate() {
         super.onUpdate();
-        this.getBlockWrapper().tick();
+        this.getBlockWrapper().onUpdate();
         if(poweredReset > 0) {
             poweredReset--;
             if(poweredReset == 0) {

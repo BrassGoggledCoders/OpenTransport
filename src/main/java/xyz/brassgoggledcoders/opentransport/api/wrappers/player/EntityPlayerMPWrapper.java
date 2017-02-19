@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class EntityPlayerMPWrapper extends EntityPlayerMP {
+public class EntityPlayerMPWrapper extends EntityPlayerMP implements IPlayerWrapper {
     protected EntityPlayerMP entityPlayer;
     protected IHolderEntity holderEntity;
     protected IBlockWrapper blockWrapper;
@@ -211,6 +211,7 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP {
         return this.getEntityPlayer().getFoodStats();
     }
 
+    @Override
     public EntityPlayerMP getEntityPlayer() {
         return entityPlayer;
     }

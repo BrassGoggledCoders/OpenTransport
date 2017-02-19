@@ -6,7 +6,12 @@ import net.minecraft.util.EnumHand;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public interface IActionListener {
-    boolean actionOccurred(ActionType actionType, EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack,
-                           IHolderEntity holderEntity, IBlockWrapper blockWrapper);
+    boolean hasActionForType(@Nonnull ActionType actionType);
+
+    boolean actionOccurred(@Nullable EntityPlayer entityPlayer, @Nullable EnumHand hand, @Nullable ItemStack itemStack,
+                           @Nonnull IHolderEntity holderEntity, @Nonnull IBlockWrapper blockWrapper);
 }

@@ -53,7 +53,9 @@ public interface IBlockWrapper {
 
     void onBreak();
 
-    void tick();
+    void onUpdate();
+
+    void markDirty();
 
     void setHolder(IHolderEntity entity);
 

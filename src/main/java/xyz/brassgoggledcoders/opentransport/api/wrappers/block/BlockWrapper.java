@@ -26,6 +26,7 @@ import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldHarnessEntit
 import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -161,25 +162,31 @@ public class BlockWrapper implements IBlockWrapper {
         iterateActionListeners(ActionType.BROKEN, null, null, null);
     }
 
-    private boolean iterateActionListeners(ActionType actionType, EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack) {
+    private boolean iterateActionListeners(@Nonnull ActionType actionType, @Nullable EntityPlayer entityPlayer,
+                                           @Nullable EnumHand hand, @Nullable ItemStack itemStack) {
         boolean result = false;
         this.updateBlockWrapper();
         EntityPlayer entityPlayerWrapper = null;
         if(entityPlayer != null) {
             entityPlayerWrapper = OpenTransportAPI.getModWrapper().getPlayerWrapper(entityPlayer, this.holderEntity);
         }
-        for(IActionListener actionListener : this.getActionListeners()) {
-            result |= actionListener.actionOccurred(actionType, entityPlayerWrapper, hand, itemStack, this.holderEntity, this);
+        for(IActionListener listener : this.getActionListeners()) {
+            if(listener.hasActionForType(actionType)) {
+                result |= listener.actionOccurred(entityPlayerWrapper, hand, itemStack, this.holderEntity, this);
+            }
         }
         this.updateBlockWrapper();
         return result;
     }
 
     @Override
-    public void tick() {
-        if (this.hasTileEntity() && this.getTileEntity() instanceof ITickable) {
-            ((ITickable) this.getTileEntity()).update();
-        }
+    public void onUpdate() {
+        this.iterateActionListeners(ActionType.UPDATE, null, null, null);
+    }
+
+    @Override
+    public void markDirty() {
+        updateBlockWrapper();
     }
 
     @Override

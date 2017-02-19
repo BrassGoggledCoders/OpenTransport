@@ -7,14 +7,19 @@ import net.minecraft.util.math.BlockPos;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
-public class BlockPlacedByAction extends BaseAction {
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+public class BlockPlacedByAction extends ActionBase {
+    public BlockPlacedByAction() {
+        super(ActionType.PLACED);
+    }
+
     @Override
-    public boolean actionOccurred(ActionType actionType, EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack,
-                                  IHolderEntity holderEntity, IBlockWrapper blockWrapper) {
-        if(actionType == ActionType.PLACED) {
-            blockWrapper.getBlock().onBlockPlacedBy(getWorldWrapper(holderEntity),
+    public boolean actionOccurred(@Nullable EntityPlayer entityPlayer, @Nullable EnumHand hand, @Nullable ItemStack itemStack,
+                                  @Nonnull IHolderEntity holderEntity, @Nonnull IBlockWrapper blockWrapper) {
+        blockWrapper.getBlock().onBlockPlacedBy(getWorldWrapper(holderEntity),
                     BlockPos.ORIGIN, blockWrapper.getBlockState(), entityPlayer, itemStack);
-        }
-        return actionType == ActionType.PLACED;
+        return true;
     }
 }

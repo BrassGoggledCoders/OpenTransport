@@ -49,7 +49,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
     @Override
     public void onUpdate() {
         super.onUpdate();
-        this.getBlockWrapper().tick();
+        this.getBlockWrapper().onUpdate();
     }
 
     @Override

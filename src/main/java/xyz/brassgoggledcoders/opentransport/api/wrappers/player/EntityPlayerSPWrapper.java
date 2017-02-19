@@ -28,7 +28,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class EntityPlayerSPWrapper extends EntityPlayerSP {
+public class EntityPlayerSPWrapper extends EntityPlayerSP implements IPlayerWrapper {
     protected EntityPlayerSP entityPlayer;
     protected IHolderEntity holderEntity;
     protected IBlockWrapper blockWrapper;
@@ -202,6 +202,7 @@ public class EntityPlayerSPWrapper extends EntityPlayerSP {
         return this.getEntityPlayer().hasCapability(capability, facing);
     }
 
+    @Override
     public EntityPlayer getEntityPlayer() {
         return entityPlayer;
     }

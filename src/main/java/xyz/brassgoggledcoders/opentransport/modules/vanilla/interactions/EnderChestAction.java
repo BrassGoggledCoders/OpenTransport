@@ -5,23 +5,27 @@ import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.ActionType;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.BlockActivationAction;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.IActionListener;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.player.IPlayerWrapper;
 
-public class EnderChestAction implements IActionListener {
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+public class EnderChestAction extends BlockActivationAction {
     @Override
-    public boolean actionOccurred(ActionType actionType, EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack,
-                                  IHolderEntity holderEntity, IBlockWrapper blockWrapper) {
-        if(actionType == ActionType.INTERACTION) {
-            InventoryEnderChest inventoryenderchest = entityPlayer.getInventoryEnderChest();
-
-            if (!entityPlayer.worldObj.isRemote && !entityPlayer.isSneaking()) {
-                entityPlayer.displayGUIChest(inventoryenderchest);
-                return true;
+    public boolean actionOccurred(@Nullable EntityPlayer entityPlayer, @Nullable EnumHand hand, @Nullable ItemStack itemStack,
+                                  @Nonnull IHolderEntity holderEntity, @Nonnull IBlockWrapper blockWrapper) {
+        if (entityPlayer != null && !entityPlayer.worldObj.isRemote && !entityPlayer.isSneaking()) {
+            if(entityPlayer instanceof IPlayerWrapper) {
+                InventoryEnderChest inventoryenderchest = entityPlayer.getInventoryEnderChest();
+                ((IPlayerWrapper) entityPlayer).getEntityPlayer().displayGUIChest(inventoryenderchest);
             }
+            return true;
         }
 
-        return false;
+        return super.actionOccurred(entityPlayer, hand, itemStack, holderEntity, blockWrapper);
     }
 }
