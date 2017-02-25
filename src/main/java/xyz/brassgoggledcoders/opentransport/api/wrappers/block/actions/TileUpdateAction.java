@@ -7,6 +7,8 @@ import net.minecraft.util.ITickable;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 
+import javax.annotation.Nonnull;
+
 import static xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.ActionType.UPDATE;
 
 public class TileUpdateAction implements IActionListener {
@@ -17,7 +19,7 @@ public class TileUpdateAction implements IActionListener {
     }
 
     @Override
-    public boolean hasActionForType(ActionType actionType) {
+    public boolean hasActionForType(@Nonnull ActionType actionType) {
         return actionType == UPDATE;
     }
 

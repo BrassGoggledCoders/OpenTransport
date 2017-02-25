@@ -10,6 +10,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.common.capabilities.Capability;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.ActionType;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.IActionListener;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.IGuiInterface;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.rendering.RenderType;
@@ -18,6 +19,7 @@ import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Map;
 
 public interface IBlockWrapper {
     @Nonnull
@@ -43,7 +45,7 @@ public interface IBlockWrapper {
     RenderType getRenderType();
 
     @Nonnull
-    List<IActionListener> getActionListeners();
+    Map<ActionType, List<IActionListener>> getActionListeners();
 
     IGuiInterface getInterface();
 

@@ -14,10 +14,7 @@ import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.ActionType;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.BlockActivationAction;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.BlockPlacedByAction;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.IActionListener;
+import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.*;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.BaseInterface;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.IGuiInterface;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.rendering.RenderType;
@@ -28,7 +25,9 @@ import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlockWrapper implements IBlockWrapper {
     private Block block;
@@ -39,10 +38,12 @@ public class BlockWrapper implements IBlockWrapper {
     private String unlocalizedName;
     private ItemStack itemStack;
     private boolean itemStackChange = true;
-    private List<IActionListener> actionListeners;
+    private Map<ActionType, List<IActionListener>> actionListeners;
     private IGuiInterface guiInterface;
     private RenderType renderType = RenderType.VMC;
     private IHolderEntity holderEntity;
+
+    private TileUpdateAction tileUpdateAction = null;
 
     public BlockWrapper(@Nonnull Block block) {
         this.block = block;
@@ -50,9 +51,13 @@ public class BlockWrapper implements IBlockWrapper {
         this.unlocalizedName = block.getUnlocalizedName().replaceFirst("tile.", "");
         this.hasTileEntity = block.hasTileEntity(this.blockState);
         this.guiInterface = new BaseInterface();
-        this.actionListeners = new ArrayList<>();
-        this.actionListeners.add(new BlockActivationAction());
-        this.actionListeners.add(new BlockPlacedByAction());
+        this.actionListeners = new HashMap<>();
+        for (ActionType actionType : ActionType.values()) {
+            this.actionListeners.put(actionType, new ArrayList<>());
+        }
+        this.addActionListener(new BlockActivationAction());
+        this.addActionListener(new BlockPlacedByAction());
+        this.addActionListener(new BlockBreakAction());
         this.changeItemStack();
     }
 
@@ -127,16 +132,20 @@ public class BlockWrapper implements IBlockWrapper {
 
     @Override
     @Nonnull
-    public List<IActionListener> getActionListeners() {
+    public Map<ActionType, List<IActionListener>> getActionListeners() {
         return actionListeners;
     }
 
     public BlockWrapper addActionListener(IActionListener actionListener) {
-        this.actionListeners.add(actionListener);
+        for (ActionType actionType : ActionType.values()) {
+            if(actionListener.hasActionForType(actionType)) {
+                this.actionListeners.get(actionType).add(actionListener);
+            }
+        }
         return this;
     }
 
-    public BlockWrapper setActionListeners(List<IActionListener> actionListeners) {
+    public BlockWrapper setActionListeners(Map<ActionType, List<IActionListener>> actionListeners) {
         this.actionListeners = actionListeners;
         return this;
     }
@@ -170,7 +179,7 @@ public class BlockWrapper implements IBlockWrapper {
         if(entityPlayer != null) {
             entityPlayerWrapper = OpenTransportAPI.getModWrapper().getPlayerWrapper(entityPlayer, this.holderEntity);
         }
-        for(IActionListener listener : this.getActionListeners()) {
+        for(IActionListener listener : this.getActionListeners().get(actionType)) {
             if(listener.hasActionForType(actionType)) {
                 result |= listener.actionOccurred(entityPlayerWrapper, hand, itemStack, this.holderEntity, this);
             }
@@ -198,6 +207,7 @@ public class BlockWrapper implements IBlockWrapper {
     @Override
     public void setWorldHarness(IWorldHarness worldHarness) {
         this.world = new WorldWrapper(worldHarness);
+        this.getTileEntity();
     }
 
     @Override
@@ -210,6 +220,10 @@ public class BlockWrapper implements IBlockWrapper {
         if (this.tileEntity == null && this.hasTileEntity()) {
             this.tileEntity = this.getBlock().createTileEntity(this.world, this.getBlockState());
             this.tileEntity.setWorldObj(this.world);
+            if(this.tileEntity instanceof ITickable && tileUpdateAction == null) {
+                this.tileUpdateAction = new TileUpdateAction((ITickable)this.getTileEntity());
+                this.addActionListener(tileUpdateAction);
+            }
         }
         return this.tileEntity;
     }
