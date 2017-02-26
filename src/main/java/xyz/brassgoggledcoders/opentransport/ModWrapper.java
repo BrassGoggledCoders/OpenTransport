@@ -1,8 +1,7 @@
 package xyz.brassgoggledcoders.opentransport;
 
-import com.teamacronymcoders.base.guisystem.target.GuiEntityTarget;
+import com.teamacronymcoders.base.guisystem.GuiOpener;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import xyz.brassgoggledcoders.opentransport.api.IModWrapper;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
@@ -32,8 +31,7 @@ public class ModWrapper implements IModWrapper {
 
     @Override
     public void openGui(IHolderEntity entity, EntityPlayer player, World world) {
-        OpenTransport.instance.getGuiHandler().openGui(new GuiEntityTarget(entity.getEntity()), new NBTTagCompound(),
-                false, player, world);
+        GuiOpener.openEntityGui(OpenTransport.instance, entity.getEntity(), player, world);
     }
 
     @Override

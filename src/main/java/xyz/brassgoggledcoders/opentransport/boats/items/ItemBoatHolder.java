@@ -220,4 +220,9 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel {
         nbtTagCompound.setString("name", blockWrapper.getUnlocalizedName());
         return itemStack;
     }
+
+    @Override
+    public Item getItem() {
+        return this;
+    }
 }

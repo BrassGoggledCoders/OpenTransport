@@ -109,4 +109,9 @@ public class ItemMinecartHolder extends ItemMinecartBase {
         nbtTagCompound.setString("name", blockWrapper.getUnlocalizedName());
         return itemStack;
     }
+
+    @Override
+    public Item getItem() {
+        return this;
+    }
 }
