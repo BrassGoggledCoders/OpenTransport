@@ -145,6 +145,14 @@ public class WorldWrapper extends World {
         return true;
     }
 
+    @Override
+    public boolean spawnEntityInWorld(@Nonnull Entity entity) {
+        entity.posX += this.getPosX();
+        entity.posY += this.getPosY();
+        entity.posZ += this.getPosZ();
+        return this.getWorld().spawnEntityInWorld(entity);
+    }
+
     public IBlockWrapper getBlockWrapper() {
         return this.getWorldHarness().getBlockWrapper();
     }
