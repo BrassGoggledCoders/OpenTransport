@@ -109,8 +109,8 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
     }
 
     @Override
-    public boolean processInitialInteract(@Nonnull EntityPlayer entityPlayer, @Nullable ItemStack itemStack,
-                                          EnumHand hand) {
+    public boolean processInitialInteract(@Nonnull EntityPlayer entityPlayer, EnumHand hand) {
+        ItemStack itemStack = entityPlayer.getHeldItem(hand);
         return this.getBlockWrapper() != null && this.getBlockWrapper().onInteract(entityPlayer, hand, itemStack);
     }
 
@@ -151,7 +151,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
 
     @SuppressWarnings("unchecked")
     @Override
-    @Nonnull
+    @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
         return this.getBlockWrapper().hasCapability(capability, facing) ?
                 this.getBlockWrapper().getCapability(capability, facing) : super.getCapability(capability, facing);

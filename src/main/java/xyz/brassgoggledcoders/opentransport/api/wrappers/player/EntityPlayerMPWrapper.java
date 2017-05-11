@@ -38,11 +38,10 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP implements IPlayerWrap
         this.entityPlayer = entityPlayer;
         this.holderEntity = holderEntity;
         this.blockWrapper = holderEntity.getBlockWrapper();
-        this.worldObj = entityPlayer.worldObj;
         this.connection = entityPlayer.connection;
         this.capabilities = entityPlayer.capabilities;
         this.openContainer = entityPlayer.openContainer;
-        this.interactionManager.thisPlayerMP = entityPlayer;
+        this.interactionManager.player = entityPlayer;
     }
 
     private void openGui() {
@@ -50,13 +49,13 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP implements IPlayerWrap
     }
 
     @Override
-    public void addChatComponentMessage(@Nullable ITextComponent chatComponent) {
-        this.getEntityPlayer().addChatComponentMessage(chatComponent);
+    public void sendStatusMessage(@Nullable ITextComponent chatComponent, boolean actionBar) {
+        this.getEntityPlayer().sendStatusMessage(chatComponent, actionBar);
     }
 
     @Override
-    public boolean canCommandSenderUseCommand(int p_70003_1_, String p_70003_2_) {
-        return false;
+    public boolean canUseCommand(int permLevel, String commandName) {
+        return this.getEntityPlayer().canUseCommand(permLevel, commandName);
     }
 
     @Override
@@ -178,13 +177,13 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP implements IPlayerWrap
     }
 
     @Override
-    @Nonnull
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nonnull EnumFacing facing) {
+    @Nullable
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
         return this.getEntityPlayer().getCapability(capability, facing);
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nonnull EnumFacing facing) {
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
         return this.getEntityPlayer().hasCapability(capability, facing);
     }
 
@@ -198,11 +197,6 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP implements IPlayerWrap
     @Nonnull
     public UUID getPersistentID() {
         return this.getEntityPlayer().getPersistentID();
-    }
-
-    @Override
-    public void addChatMessage(@Nonnull ITextComponent component) {
-        this.getEntityPlayer().addChatMessage(component);
     }
 
     @Override

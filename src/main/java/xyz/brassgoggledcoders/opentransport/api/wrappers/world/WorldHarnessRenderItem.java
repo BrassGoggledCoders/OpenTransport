@@ -1,9 +1,13 @@
 package xyz.brassgoggledcoders.opentransport.api.wrappers.world;
 
+import com.teamacronymcoders.base.client.ClientHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 
+@SideOnly(Side.CLIENT)
 public class WorldHarnessRenderItem implements IWorldHarness {
     private IBlockWrapper blockWrapper;
 
@@ -18,7 +22,7 @@ public class WorldHarnessRenderItem implements IWorldHarness {
 
     @Override
     public World getRealWorld() {
-        return Minecraft.getMinecraft().theWorld;
+        return ClientHelper.world();
     }
 
     @Override

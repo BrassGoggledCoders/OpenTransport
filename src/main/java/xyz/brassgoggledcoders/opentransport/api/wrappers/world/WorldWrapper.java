@@ -32,7 +32,7 @@ public class WorldWrapper extends World {
     }
 
     protected WorldWrapper(World world, IWorldHarness worldHarness) {
-        super(world.getSaveHandler(), world.getWorldInfo(), world.provider, world.theProfiler, world.isRemote);
+        super(world.getSaveHandler(), world.getWorldInfo(), world.provider, world.profiler, world.isRemote);
         this.worldHarness = worldHarness;
     }
 
@@ -146,11 +146,11 @@ public class WorldWrapper extends World {
     }
 
     @Override
-    public boolean spawnEntityInWorld(@Nonnull Entity entity) {
+    public boolean spawnEntity(@Nonnull Entity entity) {
         entity.posX += this.getPosX();
         entity.posY += this.getPosY();
         entity.posZ += this.getPosZ();
-        return this.getWorld().spawnEntityInWorld(entity);
+        return this.getWorld().spawnEntity(entity);
     }
 
     public IBlockWrapper getBlockWrapper() {
@@ -193,6 +193,6 @@ public class WorldWrapper extends World {
     }
 
     public void notifyBlocks() {
-        this.notifyBlockOfStateChange(BlockPos.ORIGIN, this.getBlockState(BlockPos.ORIGIN).getBlock());
+        this.observedNeighborChanged(BlockPos.ORIGIN, this.getBlockState(BlockPos.ORIGIN).getBlock(), BlockPos.ORIGIN);
     }
 }

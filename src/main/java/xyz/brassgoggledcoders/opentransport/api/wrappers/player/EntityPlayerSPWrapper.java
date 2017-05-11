@@ -34,12 +34,12 @@ public class EntityPlayerSPWrapper extends EntityPlayerSP implements IPlayerWrap
     protected IBlockWrapper blockWrapper;
 
     public EntityPlayerSPWrapper(EntityPlayerSP entityPlayer, IHolderEntity holderEntity) {
-        super(Minecraft.getMinecraft(), entityPlayer.worldObj, entityPlayer.connection,
+        super(Minecraft.getMinecraft(), entityPlayer.getEntityWorld(), entityPlayer.connection,
                 entityPlayer.getStatFileWriter());
         this.entityPlayer = entityPlayer;
         this.holderEntity = holderEntity;
         this.blockWrapper = holderEntity.getBlockWrapper();
-        this.worldObj = entityPlayer.worldObj;
+        this.world = entityPlayer.getEntityWorld();
     }
 
     private void openGui() {
@@ -47,13 +47,13 @@ public class EntityPlayerSPWrapper extends EntityPlayerSP implements IPlayerWrap
     }
 
     @Override
-    public void addChatComponentMessage(@Nullable ITextComponent chatComponent) {
-        this.getEntityPlayer().addChatComponentMessage(chatComponent);
+    public void sendStatusMessage(@Nullable ITextComponent chatComponent, boolean actionBar) {
+        this.getEntityPlayer().sendStatusMessage(chatComponent, actionBar);
     }
 
     @Override
-    public boolean canCommandSenderUseCommand(int p_70003_1_, String p_70003_2_) {
-        return false;
+    public boolean canUseCommand(int permLevel, String commandName) {
+        return this.getEntityPlayer().canUseCommand(permLevel, commandName);
     }
 
     @Override
@@ -71,11 +71,12 @@ public class EntityPlayerSPWrapper extends EntityPlayerSP implements IPlayerWrap
     }
 
     @Override
-    public void setItemStackToSlot(@Nonnull EntityEquipmentSlot slot, @Nullable ItemStack stack) {
+    public void setItemStackToSlot(@Nonnull EntityEquipmentSlot slot, @Nonnull ItemStack stack) {
         this.getEntityPlayer().setItemStackToSlot(slot, stack);
     }
 
     @Override
+    @Nonnull
     public ItemStack getHeldItem(EnumHand hand) {
         return this.getEntityPlayer().getHeldItem(hand);
     }
@@ -176,11 +177,6 @@ public class EntityPlayerSPWrapper extends EntityPlayerSP implements IPlayerWrap
     }
 
     @Override
-    public void addChatMessage(@Nonnull ITextComponent component) {
-        this.getEntityPlayer().addChatMessage(component);
-    }
-
-    @Override
     @Nonnull
     public FoodStats getFoodStats() {
         return this.getEntityPlayer().getFoodStats();
@@ -192,13 +188,13 @@ public class EntityPlayerSPWrapper extends EntityPlayerSP implements IPlayerWrap
     }
 
     @Override
-    @Nonnull
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nonnull EnumFacing facing) {
+    @Nullable
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
         return this.getEntityPlayer().getCapability(capability, facing);
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nonnull EnumFacing facing) {
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
         return this.getEntityPlayer().hasCapability(capability, facing);
     }
 

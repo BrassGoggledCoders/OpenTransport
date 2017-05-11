@@ -20,7 +20,7 @@ public class WorldHarnessEntity implements IWorldHarness {
 
     @Override
     public World getRealWorld() {
-        return this.entity.getEntity().worldObj;
+        return this.entity.getEntity().getEntityWorld();
     }
 
     @Override
@@ -28,7 +28,7 @@ public class WorldHarnessEntity implements IWorldHarness {
         this.entity.getEntity().setDead();
         if(!this.getRealWorld().isRemote) {
             Entity emptyEntity = this.entity.getEmptyEntity();
-            this.getRealWorld().spawnEntityInWorld(emptyEntity);
+            this.getRealWorld().spawnEntity(emptyEntity);
         }
     }
 
