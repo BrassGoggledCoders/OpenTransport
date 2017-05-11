@@ -2,6 +2,7 @@ package xyz.brassgoggledcoders.opentransport.boats.entities;
 
 import com.google.common.base.Optional;
 import com.teamacronymcoders.base.guisystem.IHasGui;
+import com.teamacronymcoders.base.util.ItemStackUtils;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
@@ -32,7 +33,7 @@ import javax.annotation.Nullable;
 public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<EntityBoatHolder>, IHasGui {
     private static final DataParameter<String> BLOCK_WRAPPER_NAME =
             EntityDataManager.createKey(EntityBoatHolder.class, DataSerializers.STRING);
-    private static final DataParameter<Optional<ItemStack>> ITEM_BOAT =
+    private static final DataParameter<ItemStack> ITEM_BOAT =
             EntityDataManager.createKey(EntityBoatHolder.class, DataSerializers.OPTIONAL_ITEM_STACK);
     IBlockWrapper blockWrapper;
 
@@ -44,7 +45,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
     protected void entityInit() {
         super.entityInit();
         this.dataManager.register(BLOCK_WRAPPER_NAME, "");
-        this.dataManager.register(ITEM_BOAT, Optional.<ItemStack>absent());
+        this.dataManager.register(ITEM_BOAT, ItemStack.EMPTY);
     }
 
     @Override
@@ -61,16 +62,16 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
     @Override
     @Nonnull
     public Item getItemBoat() {
-        Optional<ItemStack> itemStackBoat = this.dataManager.get(ITEM_BOAT);
-        if (itemStackBoat.isPresent()) {
-            return itemStackBoat.get().getItem();
+        ItemStack itemStackBoat = this.dataManager.get(ITEM_BOAT);
+        if (ItemStackUtils.isValid(itemStackBoat)) {
+            return itemStackBoat.getItem();
         }
         return Items.BOAT;
     }
 
     public void setItemBoat(@Nonnull ItemStack itemBoatStack) {
         if (itemBoatStack.getItem() instanceof ItemBoatHolder) {
-            this.dataManager.set(ITEM_BOAT, Optional.of(itemBoatStack));
+            this.dataManager.set(ITEM_BOAT, itemBoatStack);
         }
     }
 
@@ -118,10 +119,10 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
     public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
         super.writeToNBT(nbtTagCompound);
 
-        Optional<ItemStack> itemStackBoat = this.dataManager.get(ITEM_BOAT);
-        if (itemStackBoat.isPresent()) {
+        ItemStack itemStackBoat = this.dataManager.get(ITEM_BOAT);
+        if (ItemStackUtils.isValid(itemStackBoat)) {
             NBTTagCompound itemBoat = new NBTTagCompound();
-            nbtTagCompound.setTag("ITEM_BOAT", itemStackBoat.get().writeToNBT(itemBoat));
+            nbtTagCompound.setTag("ITEM_BOAT", itemStackBoat.writeToNBT(itemBoat));
         }
         nbtTagCompound.setString("WRAPPER_NAME", this.dataManager.get(BLOCK_WRAPPER_NAME));
         if (blockWrapper != null) {
@@ -138,7 +139,7 @@ public class EntityBoatHolder extends EntityBoatBase implements IHolderEntity<En
         String wrapperName = nbtTagCompound.getString("WRAPPER_NAME");
         this.dataManager.set(BLOCK_WRAPPER_NAME, wrapperName);
         this.setBlockWrapper(OpenTransportAPI.getBlockWrapperRegistry().getBlockWrapper(wrapperName));
-        this.setItemBoat(ItemStack.loadItemStackFromNBT(nbtTagCompound.getCompoundTag("ITEM_BOAT")));
+        this.setItemBoat(new ItemStack(nbtTagCompound.getCompoundTag("ITEM_BOAT")));
         blockWrapper.setHolder(this);
         blockWrapper.readFromNBT(nbtTagCompound.getCompoundTag("CONTAINER"));
     }

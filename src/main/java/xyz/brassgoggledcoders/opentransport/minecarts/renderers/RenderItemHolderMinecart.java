@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.opentransport.minecarts.renderers;
 
+import com.teamacronymcoders.base.client.ClientHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelMinecart;
 import net.minecraft.client.renderer.GlStateManager;
@@ -73,12 +74,12 @@ public class RenderItemHolderMinecart extends TileEntitySpecialRenderer<RenderIt
         GlStateManager.rotate(180, 0, 0, 1);
         GlStateManager.rotate(90, 0, 1, 0);
         Minecraft.getMinecraft().renderEngine.bindTexture(minecartTexture);
-        modelMinecart.render(Minecraft.getMinecraft().thePlayer, 0, 0, 0, 0, 0, 0.1F);
+        modelMinecart.render(ClientHelper.player(), 0, 0, 0, 0, 0, 0.1F);
         GlStateManager.popMatrix();
     }
 
     protected void renderBlockWrapper(IBlockWrapper blockWrapper) {
-        renderBlock.renderEntity(Minecraft.getMinecraft().thePlayer, blockWrapper, Minecraft.getMinecraft().getRenderPartialTicks());
+        renderBlock.renderEntity(ClientHelper.player(), blockWrapper, Minecraft.getMinecraft().getRenderPartialTicks());
     }
 
     public static class DummyTile extends TileEntity {

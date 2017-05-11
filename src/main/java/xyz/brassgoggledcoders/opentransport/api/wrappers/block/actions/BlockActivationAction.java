@@ -20,6 +20,6 @@ public class BlockActivationAction extends ActionBase {
     public boolean actionOccurred(@Nullable EntityPlayer entityPlayer, @Nullable EnumHand hand, @Nullable ItemStack itemStack,
                                   @Nonnull IHolderEntity holderEntity, @Nonnull IBlockWrapper blockWrapper) {
         return blockWrapper.getBlock().onBlockActivated(this.getWorldWrapper(holderEntity), BlockPos.ORIGIN,
-                blockWrapper.getBlockState(), entityPlayer, hand, itemStack, EnumFacing.UP, 0F, 0F, 0F);
+                blockWrapper.getBlockState(), entityPlayer, hand, EnumFacing.UP, 0F, 0F, 0F);
     }
 }

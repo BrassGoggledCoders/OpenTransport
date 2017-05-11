@@ -15,7 +15,6 @@ import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.TransportType;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.player.EntityPlayerMPWrapper;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.world.WorldHarnessRenderItem;
 
 import java.util.List;
 
@@ -30,11 +29,11 @@ public class CommonProxy {
     }
 
     public World getWorld(MessageContext ctx) {
-        return ctx.getServerHandler().playerEntity.getEntityWorld();
+        return ctx.getServerHandler().player.getEntityWorld();
     }
 
     public IThreadListener getIThreadListener(MessageContext messageContext) {
-        return (WorldServer) messageContext.getServerHandler().playerEntity.getEntityWorld();
+        return (WorldServer) messageContext.getServerHandler().player.getEntityWorld();
     }
 
     public List<ITransportType> getTransportTypes(ASMDataTable dataTable) {

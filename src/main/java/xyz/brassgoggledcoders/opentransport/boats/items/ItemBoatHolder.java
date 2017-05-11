@@ -2,10 +2,8 @@ package xyz.brassgoggledcoders.opentransport.boats.items;
 
 import com.teamacronymcoders.base.client.models.IHasModel;
 import net.minecraft.block.Block;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.item.EntityBoat.Type;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -19,10 +17,12 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -46,8 +46,8 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel {
 
     @Override
     @Nonnull
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack itemStack, World world,
-                                                    EntityPlayer entityPlayer, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityPlayer, @Nonnull EnumHand hand) {
+        ItemStack itemStack = entityPlayer.getHeldItem(hand);
         float f = 1.0F;
         float f1 = entityPlayer.prevRotationPitch + (entityPlayer.rotationPitch - entityPlayer.prevRotationPitch) * f;
         float f2 = entityPlayer.prevRotationYaw + (entityPlayer.rotationYaw - entityPlayer.prevRotationYaw) * f;
@@ -109,11 +109,11 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel {
                     return new ActionResult<>(EnumActionResult.FAIL, itemStack);
                 } else {
                     if (!entityPlayer.capabilities.isCreativeMode) {
-                        --itemStack.stackSize;
+                        itemStack.shrink(1);
                     }
 
                     if (!world.isRemote) {
-                        world.spawnEntityInWorld(entityBoatHolder);
+                        world.spawnEntity(entityBoatHolder);
                         entityBoatHolder.getBlockWrapper().onPlace(entityPlayer, hand, itemStack);
                     }
 
@@ -132,13 +132,14 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel {
 
     @Override
     @Nonnull
+    @SuppressWarnings("deprecation")
     public String getItemStackDisplayName(@Nonnull ItemStack boatItemStack) {
         String displayName = "";
 
         displayName += this.getBoatItem(boatItemStack).getItemStackDisplayName(boatItemStack);
 
         ItemStack wrapperItemStack = this.getBlockWrapper(boatItemStack).getItemStack();
-        displayName += " " + I18n.format("separator.with") + " ";
+        displayName += " " + I18n.translateToLocal("separator.with") + " ";
         displayName += wrapperItemStack.getItem().getItemStackDisplayName(wrapperItemStack);
 
         return displayName;
@@ -200,7 +201,7 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> itemStacks) {
+    public void getSubItems(@Nonnull Item item, CreativeTabs tab, NonNullList<ItemStack> itemStacks) {
         itemStacks.addAll(this.getAllSubItems(new ArrayList<>()));
     }
 
@@ -216,7 +217,7 @@ public class ItemBoatHolder extends ItemBoat implements IHasModel {
 
     public static ItemStack getItemStackForBlockWrapper(Type type, IBlockWrapper blockWrapper) {
         ItemStack itemStack = new ItemStack(BoatTransport.itemBoatHolder, 1, type.ordinal());
-        NBTTagCompound nbtTagCompound = itemStack.getSubCompound("blockWrapper", true);
+        NBTTagCompound nbtTagCompound = itemStack.getOrCreateSubCompound("blockWrapper");
         nbtTagCompound.setString("name", blockWrapper.getUnlocalizedName());
         return itemStack;
     }

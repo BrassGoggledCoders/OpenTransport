@@ -28,7 +28,7 @@ public class OpenTransport extends BaseModFoundation<OpenTransport> {
     public static OpenTransport instance;
 
     @SidedProxy(clientSide = "xyz.brassgoggledcoders.opentransport.proxies.ClientProxy",
-            serverSide = "xyz.brassgoggledcoders.opentransport.proxies.CommonProxy")
+            serverSide = "xyz.brassgoggledcoders.opentransport.proxies.ServerProxy")
     public static CommonProxy proxy;
 
     public static TransportTypeHandler transportTypeHandler;

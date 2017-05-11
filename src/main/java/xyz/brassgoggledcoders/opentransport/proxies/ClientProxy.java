@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.opentransport.proxies;
 
+import com.teamacronymcoders.base.client.ClientHelper;
 import com.teamacronymcoders.base.util.ClassLoading;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -8,6 +9,9 @@ import net.minecraft.util.IThreadListener;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ClientTransportType;
@@ -22,18 +26,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
     @Override
     public EntityPlayer getEntityPlayerWrapper(EntityPlayer entityPlayer, IHolderEntity containerHolder) {
         if (entityPlayer instanceof EntityPlayerSP) {
             return new EntityPlayerSPWrapper((EntityPlayerSP) entityPlayer, containerHolder);
         }
-        return super.getEntityPlayerWrapper(entityPlayer, containerHolder);
+        OpenTransport.instance.getLogger()
+                .fatal("EntityPlayer(" + entityPlayer.getClass().toString() + ") not Wrapped.");
+        return null;
     }
 
     @Override
     public World getWorld(MessageContext ctx) {
-        return Minecraft.getMinecraft().theWorld;
+        return ClientHelper.world();
     }
 
     @Override
@@ -72,7 +79,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public IBlockWrapper getLoadedBlockWrapper(String name) {
         IBlockWrapper blockWrapper;
-        if (Minecraft.getMinecraft().theWorld != null) {
+        if (ClientHelper.world() != null) {
             if (loadedBlockWrapperMap.containsKey(name)) {
                 blockWrapper = loadedBlockWrapperMap.get(name);
             } else {

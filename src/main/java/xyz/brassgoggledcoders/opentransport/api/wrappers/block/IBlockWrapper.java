@@ -49,7 +49,7 @@ public interface IBlockWrapper {
 
     IGuiInterface getInterface();
 
-    boolean onPlace(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack);
+    void onPlace(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack);
 
     boolean onInteract(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack);
 
@@ -79,6 +79,7 @@ public interface IBlockWrapper {
 
     boolean hasCapability(Capability<?> capability, EnumFacing facing);
 
+    @Nonnull
     <T> T getCapability(Capability<T> capability, EnumFacing facing);
 
     IBlockWrapper copy();

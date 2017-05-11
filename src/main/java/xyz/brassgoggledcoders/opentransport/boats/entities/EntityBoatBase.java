@@ -28,7 +28,7 @@ public class EntityBoatBase extends EntityBoat {
     }
 
     @Override
-    public boolean processInitialInteract(@Nonnull EntityPlayer player, @Nullable ItemStack stack, EnumHand hand) {
+    public boolean processInitialInteract(@Nonnull EntityPlayer player, EnumHand hand) {
         return true;
     }
 
@@ -40,7 +40,7 @@ public class EntityBoatBase extends EntityBoat {
     public boolean attackEntityFrom(@Nonnull DamageSource source, float amount) {
         if (this.isEntityInvulnerable(source)) {
             return false;
-        } else if (!this.worldObj.isRemote && !this.isDead) {
+        } else if (!this.getEntityWorld().isRemote && !this.isDead) {
             if (source instanceof EntityDamageSourceIndirect && source.getEntity() != null && this.isPassenger(source.getEntity())) {
                 return false;
             } else {
@@ -51,7 +51,7 @@ public class EntityBoatBase extends EntityBoat {
                 boolean flag = source.getEntity() instanceof EntityPlayer && ((EntityPlayer) source.getEntity()).capabilities.isCreativeMode;
 
                 if (flag || this.getDamageTaken() > 40.0F) {
-                    if (!flag && this.worldObj.getGameRules().getBoolean("doEntityDrops")) {
+                    if (!flag && this.getEntityWorld().getGameRules().getBoolean("doEntityDrops")) {
                         this.entityDropItem(this.getBoatItemStack(), 0.0F);
                     }
 

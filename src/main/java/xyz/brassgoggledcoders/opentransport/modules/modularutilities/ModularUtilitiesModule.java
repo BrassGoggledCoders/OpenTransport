@@ -10,7 +10,7 @@ import xyz.brassgoggledcoders.opentransport.OpenTransport;
 
 import java.util.List;
 
-@Module(OpenTransport.MODID)
+//TODO: Bring back MoU @Module(OpenTransport.MODID)
 public class ModularUtilitiesModule extends ModuleBase {
     @Override
     public String getName() {

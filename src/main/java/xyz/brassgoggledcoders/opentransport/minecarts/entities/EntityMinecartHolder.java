@@ -3,6 +3,7 @@ package xyz.brassgoggledcoders.opentransport.minecarts.entities;
 import com.google.common.base.Optional;
 import com.teamacronymcoders.base.entities.EntityMinecartBase;
 import com.teamacronymcoders.base.guisystem.IHasGui;
+import com.teamacronymcoders.base.util.ItemStackUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.Entity;
@@ -23,7 +24,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
@@ -36,7 +36,7 @@ public class EntityMinecartHolder extends EntityMinecartBase
         implements IHolderEntity<EntityMinecartHolder>, IHasGui {
     private static final DataParameter<String> BLOCK_WRAPPER_NAME =
             EntityDataManager.createKey(EntityMinecartHolder.class, DataSerializers.STRING);
-    private static final DataParameter<Optional<ItemStack>> ITEM_CART =
+    private static final DataParameter<ItemStack> ITEM_CART =
             EntityDataManager.createKey(EntityMinecartHolder.class, DataSerializers.OPTIONAL_ITEM_STACK);
 
     private IBlockWrapper blockWrapper;
@@ -51,16 +51,16 @@ public class EntityMinecartHolder extends EntityMinecartBase
     protected void entityInit() {
         super.entityInit();
         this.dataManager.register(BLOCK_WRAPPER_NAME, "");
-        this.dataManager.register(ITEM_CART, Optional.absent());
+        this.dataManager.register(ITEM_CART, ItemStack.EMPTY);
     }
 
     @Override
     public void onUpdate() {
         super.onUpdate();
         this.getBlockWrapper().onUpdate();
-        if(poweredReset > 0) {
+        if (poweredReset > 0) {
             poweredReset--;
-            if(poweredReset == 0) {
+            if (poweredReset == 0) {
                 isPowered = false;
             }
         }
@@ -77,7 +77,7 @@ public class EntityMinecartHolder extends EntityMinecartBase
     public ItemStack getCartItem() {
         ItemStack cartItemStack = ItemMinecartHolder.getStackForBlockWrapper(this.getBlockWrapper());
 
-        if(this.hasCustomName()) {
+        if (this.hasCustomName()) {
             cartItemStack.setStackDisplayName(this.getName());
         }
 
@@ -87,16 +87,16 @@ public class EntityMinecartHolder extends EntityMinecartBase
     @Nonnull
     @Override
     public ItemMinecart getItem() {
-        Optional<ItemStack> itemStackCart = this.dataManager.get(ITEM_CART);
-        if (itemStackCart.isPresent()) {
-            return (ItemMinecart) itemStackCart.get().getItem();
+        ItemStack itemStackCart = this.dataManager.get(ITEM_CART);
+        if (ItemStackUtils.isValid(itemStackCart)) {
+            return (ItemMinecart) itemStackCart.getItem();
         }
         return (ItemMinecart) Items.MINECART;
     }
 
     public void setItemCart(@Nonnull ItemStack itemCartStack) {
         if (itemCartStack.getItem() instanceof ItemMinecartHolder) {
-            this.dataManager.set(ITEM_CART, Optional.of(itemCartStack));
+            this.dataManager.set(ITEM_CART, itemCartStack);
         }
     }
 
@@ -126,7 +126,7 @@ public class EntityMinecartHolder extends EntityMinecartBase
 
     @Override
     public Entity getEmptyEntity() {
-        EntityMinecartEmpty entityMinecartEmpty = new EntityMinecartEmpty(this.worldObj);
+        EntityMinecartEmpty entityMinecartEmpty = new EntityMinecartEmpty(this.getEntityWorld());
         entityMinecartEmpty.setRollingAmplitude(this.getRollingAmplitude());
         entityMinecartEmpty.setRollingDirection(this.getRollingDirection());
         entityMinecartEmpty.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
@@ -139,7 +139,7 @@ public class EntityMinecartHolder extends EntityMinecartBase
     }
 
     public void setRedstonePower(boolean isPowered) {
-        if(this.isPowered != isPowered) {
+        if (this.isPowered != isPowered) {
             this.isPowered = isPowered;
             this.getBlockWrapper().getWorldWrapper().notifyBlocks();
         }
@@ -147,7 +147,7 @@ public class EntityMinecartHolder extends EntityMinecartBase
 
     @Override
     public void onActivatorRailPass(int x, int y, int z, boolean isPowered) {
-        if(isPowered) {
+        if (isPowered) {
             this.setRedstonePower(true);
         }
     }
@@ -161,8 +161,8 @@ public class EntityMinecartHolder extends EntityMinecartBase
     }
 
     @Override
-    public boolean processInitialInteract(@Nonnull EntityPlayer entityPlayer, @Nullable ItemStack itemStack,
-                                          EnumHand hand) {
+    public boolean processInitialInteract(@Nonnull EntityPlayer entityPlayer, EnumHand hand) {
+        ItemStack itemStack = entityPlayer.getHeldItem(hand);
         return this.getBlockWrapper() != null && this.getBlockWrapper().onInteract(entityPlayer, hand, itemStack);
     }
 
@@ -176,11 +176,10 @@ public class EntityMinecartHolder extends EntityMinecartBase
             containerTag = blockWrapper.writeToNBT(containerTag);
             nbtTagCompound.setTag("CONTAINER", containerTag);
         }
-        Optional<ItemStack> itemStackCart = this.dataManager.get(ITEM_CART);
-        if (itemStackCart.isPresent()) {
-            NBTTagCompound itemCart = new NBTTagCompound();
-            nbtTagCompound.setTag("ITEM_MINECART", itemStackCart.get().writeToNBT(itemCart));
-        }
+        ItemStack itemStackCart = this.dataManager.get(ITEM_CART);
+        NBTTagCompound itemCart = new NBTTagCompound();
+        nbtTagCompound.setTag("ITEM_MINECART", itemStackCart.writeToNBT(itemCart));
+
 
         return nbtTagCompound;
     }
@@ -193,7 +192,7 @@ public class EntityMinecartHolder extends EntityMinecartBase
         this.setBlockWrapper(OpenTransportAPI.getBlockWrapperRegistry().getBlockWrapper(wrapperName));
         blockWrapper.setHolder(this);
         blockWrapper.readFromNBT(nbtTagCompound.getCompoundTag("CONTAINER"));
-        this.setItemCart(ItemStack.loadItemStackFromNBT(nbtTagCompound.getCompoundTag("ITEM_MINECART")));
+        this.setItemCart(new ItemStack(nbtTagCompound.getCompoundTag("ITEM_MINECART")));
     }
 
     @Override
@@ -213,7 +212,7 @@ public class EntityMinecartHolder extends EntityMinecartBase
 
     @SuppressWarnings("unchecked")
     @Override
-    @Nonnull
+    @Nullable
     public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
         return this.getBlockWrapper().hasCapability(capability, facing) ?
                 this.getBlockWrapper().getCapability(capability, facing) : super.getCapability(capability, facing);

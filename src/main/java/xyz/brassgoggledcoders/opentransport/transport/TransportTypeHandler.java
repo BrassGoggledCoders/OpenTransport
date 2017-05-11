@@ -1,7 +1,7 @@
 package xyz.brassgoggledcoders.opentransport.transport;
 
-import com.teamacronymcoders.base.registry.config.ConfigEntry;
-import com.teamacronymcoders.base.registry.config.ConfigRegistry;
+import com.teamacronymcoders.base.registrysystem.config.ConfigEntry;
+import com.teamacronymcoders.base.registrysystem.config.ConfigRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;

@@ -1,11 +1,11 @@
 package xyz.brassgoggledcoders.opentransport.minecarts;
 
-import com.teamacronymcoders.base.registry.EntityRegistry;
-import com.teamacronymcoders.base.registry.ItemRegistry;
+import com.teamacronymcoders.base.registrysystem.EntityRegistry;
+import com.teamacronymcoders.base.registrysystem.ItemRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.ITransportType;
 import xyz.brassgoggledcoders.opentransport.api.transporttypes.TransportType;
@@ -18,7 +18,7 @@ import java.util.Map;
 
 @TransportType
 public class MinecartTransport implements ITransportType<EntityMinecart> {
-    private CreativeTabs cartsTab = new MinecartsCreativeTab();
+    private CreativeTabs cartsTab = new MinecartCreativeTab();
     private boolean isActive = true;
 
     public static ItemMinecartHolder itemMinecartHolder;
@@ -62,15 +62,15 @@ public class MinecartTransport implements ITransportType<EntityMinecart> {
         this.isActive = isActive;
     }
 
-    private static class MinecartsCreativeTab extends CreativeTabs {
-        public MinecartsCreativeTab() {
+    private static class MinecartCreativeTab extends CreativeTabs {
+        public MinecartCreativeTab() {
             super("minecarts");
         }
 
         @Override
         @Nonnull
-        public Item getTabIconItem() {
-            return Items.MINECART;
+        public ItemStack getTabIconItem() {
+            return new ItemStack(Items.MINECART);
         }
     }
 }

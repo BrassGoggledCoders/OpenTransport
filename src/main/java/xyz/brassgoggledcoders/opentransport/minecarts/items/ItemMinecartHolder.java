@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -35,9 +36,9 @@ public class ItemMinecartHolder extends ItemMinecartBase {
 
     @Override
     @Nonnull
-    public EnumActionResult onItemUse(@Nonnull ItemStack itemStack, EntityPlayer player, World world,
-                                      @Nonnull BlockPos blockPos, EnumHand hand, EnumFacing facing, float hitX,
-                                      float hitY, float hitZ) {
+    public EnumActionResult onItemUse(@Nonnull EntityPlayer player, World world, @Nonnull BlockPos blockPos,
+                                      @Nonnull EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack itemStack = player.getHeldItem(hand);
         EntityMinecartHolder entityFromItem = this.getEntityFromItem(world, itemStack);
         EnumActionResult placed = placeCart(itemStack, world, blockPos, entityFromItem);
         if(placed == EnumActionResult.SUCCESS) {
@@ -92,7 +93,7 @@ public class ItemMinecartHolder extends ItemMinecartBase {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> itemStacks) {
+    public void getSubItems(@Nonnull Item item, CreativeTabs tab, NonNullList<ItemStack> itemStacks) {
         itemStacks.addAll(this.getAllSubItems(new ArrayList<>()));
     }
 
@@ -105,7 +106,7 @@ public class ItemMinecartHolder extends ItemMinecartBase {
 
     public static ItemStack getStackForBlockWrapper(IBlockWrapper blockWrapper) {
         ItemStack itemStack = new ItemStack(MinecartTransport.itemMinecartHolder, 1, 0);
-        NBTTagCompound nbtTagCompound = itemStack.getSubCompound("blockWrapper", true);
+        NBTTagCompound nbtTagCompound = itemStack.getOrCreateSubCompound("blockWrapper");
         nbtTagCompound.setString("name", blockWrapper.getUnlocalizedName());
         return itemStack;
     }

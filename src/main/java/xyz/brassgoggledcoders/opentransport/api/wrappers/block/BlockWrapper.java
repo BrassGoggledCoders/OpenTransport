@@ -157,8 +157,8 @@ public class BlockWrapper implements IBlockWrapper {
     }
 
     @Override
-    public boolean onPlace(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack) {
-        return iterateActionListeners(ActionType.PLACED, entityPlayer, hand, itemStack);
+    public void onPlace(EntityPlayer entityPlayer, EnumHand hand, ItemStack itemStack) {
+        iterateActionListeners(ActionType.PLACED, entityPlayer, hand, itemStack);
     }
 
     @Override
@@ -217,7 +217,7 @@ public class BlockWrapper implements IBlockWrapper {
     public TileEntity getTileEntity() {
         if (this.tileEntity == null && this.hasTileEntity()) {
             this.tileEntity = this.getBlock().createTileEntity(this.world, this.getBlockState());
-            this.tileEntity.setWorldObj(this.world);
+            this.tileEntity.setWorld(this.world);
             if(this.tileEntity instanceof ITickable && tileUpdateAction == null) {
                 this.tileUpdateAction = new TileUpdateAction((ITickable)this.getTileEntity());
                 this.addActionListener(tileUpdateAction);
@@ -287,6 +287,7 @@ public class BlockWrapper implements IBlockWrapper {
 
     @SuppressWarnings("unchecked")
     @Override
+    @Nonnull
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
         if(this.hasTileEntity) {
             return this.getTileEntity().getCapability(capability, facing);

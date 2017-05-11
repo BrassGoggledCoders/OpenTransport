@@ -1,5 +1,6 @@
 package xyz.brassgoggledcoders.opentransport.boats.renderers;
 
+import com.teamacronymcoders.base.client.ClientHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -74,12 +75,12 @@ public class RenderItemHolderBoat extends TileEntitySpecialRenderer<RenderItemHo
         GlStateManager.pushMatrix();
         GlStateManager.rotate(180, 0, 0, 1);
         Minecraft.getMinecraft().renderEngine.bindTexture(BOAT_TEXTURES[boatNumber]);
-        modelBoat.render(Minecraft.getMinecraft().thePlayer, 0, 0, 0, 0, 0, 0.1F);
+        modelBoat.render(ClientHelper.player(), 0, 0, 0, 0, 0, 0.1F);
         GlStateManager.popMatrix();
     }
 
     protected void renderBlockWrapper(IBlockWrapper blockWrapper) {
-        renderBlock.renderEntity(Minecraft.getMinecraft().thePlayer, blockWrapper, 0);
+        renderBlock.renderEntity(ClientHelper.player(), blockWrapper, 0);
     }
 
     public static class DummyTile extends TileEntity {

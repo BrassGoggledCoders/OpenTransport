@@ -18,7 +18,7 @@ public class EnderChestAction extends BlockActivationAction {
     @Override
     public boolean actionOccurred(@Nullable EntityPlayer entityPlayer, @Nullable EnumHand hand, @Nullable ItemStack itemStack,
                                   @Nonnull IHolderEntity holderEntity, @Nonnull IBlockWrapper blockWrapper) {
-        if (entityPlayer != null && !entityPlayer.worldObj.isRemote && !entityPlayer.isSneaking()) {
+        if (entityPlayer != null && !entityPlayer.getEntityWorld().isRemote && !entityPlayer.isSneaking()) {
             if(entityPlayer instanceof IPlayerWrapper) {
                 InventoryEnderChest inventoryenderchest = entityPlayer.getInventoryEnderChest();
                 ((IPlayerWrapper) entityPlayer).getEntityPlayer().displayGUIChest(inventoryenderchest);

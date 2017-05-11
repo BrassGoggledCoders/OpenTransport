@@ -35,7 +35,7 @@ public class BlockWrapperRegistry {
     }
 
     public IBlockWrapper getLoadedBlockWrapper(ItemStack itemStack) {
-        String blockWrapperName = itemStack.getSubCompound("blockWrapper", true).getString("name");
+        String blockWrapperName = itemStack.getOrCreateSubCompound("blockWrapper").getString("name");
         return OpenTransportAPI.getModWrapper().getLoadedBlockWrapper(blockWrapperName);
     }
 }

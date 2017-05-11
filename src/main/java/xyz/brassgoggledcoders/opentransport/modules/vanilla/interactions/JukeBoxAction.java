@@ -29,7 +29,7 @@ public class JukeBoxAction extends BlockActivationAction {
                 if (blockWrapper.getBlock() == Blocks.JUKEBOX && !blockWrapper.getBlockState().getValue(BlockJukebox.HAS_RECORD)) {
                     ((BlockJukebox) Blocks.JUKEBOX).insertRecord(blockWrapper.getWorldWrapper(), BlockPos.ORIGIN, blockWrapper.getBlockState(), itemStack);
                     blockWrapper.getWorldWrapper().playEvent(null, 1010, BlockPos.ORIGIN, Item.getIdFromItem(itemRecord));
-                    --itemStack.stackSize;
+                    itemStack.shrink(1);
                     entityPlayer.addStat(StatList.RECORD_PLAYED);
                     didSomething = true;
                 }
