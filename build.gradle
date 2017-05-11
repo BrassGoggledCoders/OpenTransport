@@ -25,6 +25,18 @@ repositories {
         name 'JEI/Tinkers'
         url "http://dvs1.progwml6.com/files/maven"
     }
+    ivy {
+        name "Botania"
+        artifactPattern "http://botaniamod.net/files/deobf/[module] [revision]-deobf.[ext]"
+    }
+    maven {
+        name 'CompatLayer/The One Probe'
+        url 'http://modmaven.k-4u.nl'
+    }
+    maven {
+        name 'Baubles'
+        url 'https://jitpack.io'
+    }
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -49,68 +61,19 @@ minecraft {
 }
 
 dependencies {
-    compile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}:deobf"
+    deobfCompile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}"
     deobfCompile "cpw.mods:ironchest:${minecraft_version}-${iron_chest_version}"
-    deobfCompile("xyz.brassgoggledcoders.modularutilities:ModularUtilities:${minecraft_version}-${modular_utilities_version}") {
+    /*deobfCompile("xyz.brassgoggledcoders.modularutilities:ModularUtilities:${minecraft_version}-${modular_utilities_version}") {
         exclude module: "base"
-    }
+    }*/
+    deobfCompile name: 'Botania', version: "${botania_version}", ext: 'jar'
     deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
     deobfCompile "slimeknights:TConstruct:${minecraft_version}-${tinkers_version}"
     deobfCompile "slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}"
-    compile "blusunrize:ImmersiveEngineering:${immersive_engineering_version}:deobf"
-}
-
-task getLibraries {
-    def libsFolder = new File('libs')
-    if (!libsFolder.isDirectory()) {
-        libsFolder.mkdirs()
-    }
-
-    def downloads = new ArrayList<Tuple>()
-
-    def railcraft = 'Railcraft_' + minecraft_version + '-' + railcraft_version + '-dev.jar'
-    def railcraftSource = 'http://www.railcraft.info/ivy/com.headlamp-games/Railcraft/' + railcraft_version + '/' + railcraft
-
-    def botania = 'Botania r' + botania_version + '-deobf.jar'
-    def botaniaSource = 'http://botaniamod.net/files/deobf/' + botania
-
-    def baubles = 'Baubles-' + minecraft_version + '-' + baubles_version + '-deobf.jar'
-    def baublesSource = 'https://dl.dropboxusercontent.com/u/47135879/' + baubles
-
-    downloads.add(new Tuple(railcraft, railcraftSource))
-    downloads.add(new Tuple(botania, botaniaSource))
-    downloads.add(new Tuple(baubles, baublesSource))
-
-    libsFolder.listFiles().each { file ->
-        def isInDownloadList = false;
-        downloads.each { download ->
-            if (file.name == download.get(0).toString()) {
-                isInDownloadList = true;
-            }
-        }
-        if (!isInDownloadList || file.size() < 5) {
-            println "Deleting file " + file.name
-            file.delete()
-        }
-    }
-
-    downloads.each { download ->
-        def fileLocation = new File('libs', download.get(0).toString())
-        if (!fileLocation.exists()) {
-            def downloadString = download.get(1).toString()
-            if (downloadString.contains(" ")) {
-                downloadString = downloadString.replace(" ", "%20");
-            }
-            if (!downloadString.equals("")) {
-                println "Downloading " + download.get(0).toString()
-                fileLocation.withOutputStream { out ->
-                    new URL(downloadString).withInputStream { from ->
-                        out << from;
-                    }
-                }
-            }
-        }
-    }
+    deobfCompile "blusunrize:ImmersiveEngineering:${immersive_engineering_version}"
+    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.1x-${top_version}"
+    deobfCompile "com.github.mcjty:compatlayer:${minecraft_version}-${compat_version}"
+    deobfCompile "com.github.Azanor:Baubles:${baubles_version}-SNAPSHOT"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
