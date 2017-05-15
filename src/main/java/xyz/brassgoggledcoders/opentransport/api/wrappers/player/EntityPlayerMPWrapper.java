@@ -7,6 +7,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.StatBase;
 import net.minecraft.tileentity.TileEntityCommandBlock;
@@ -32,8 +33,10 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP implements IPlayerWrap
     protected IHolderEntity holderEntity;
     protected IBlockWrapper blockWrapper;
 
+    public static EntityPlayerMP currentlySetting;
+
     public EntityPlayerMPWrapper(EntityPlayerMP entityPlayer, IHolderEntity holderEntity) {
-        super(entityPlayer.mcServer, entityPlayer.getServerWorld(), entityPlayer.getGameProfile(),
+        super(setPlayer(entityPlayer), entityPlayer.getServerWorld(), entityPlayer.getGameProfile(),
                 entityPlayer.interactionManager);
         this.entityPlayer = entityPlayer;
         this.holderEntity = holderEntity;
@@ -44,17 +47,22 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP implements IPlayerWrap
         this.interactionManager.player = entityPlayer;
     }
 
+    private static MinecraftServer setPlayer(EntityPlayerMP entityPlayer) {
+        currentlySetting = entityPlayer;
+        return entityPlayer.getServer();
+    }
+
     private void openGui() {
         OpenTransportAPI.getModWrapper().openGui(this.holderEntity, this.getEntityPlayer(), this.getEntityWorld());
     }
 
     @Override
-    public void sendStatusMessage(@Nullable ITextComponent chatComponent, boolean actionBar) {
+    public void sendStatusMessage(@Nonnull ITextComponent chatComponent, boolean actionBar) {
         this.getEntityPlayer().sendStatusMessage(chatComponent, actionBar);
     }
 
     @Override
-    public boolean canUseCommand(int permLevel, String commandName) {
+    public boolean canUseCommand(int permLevel, @Nonnull String commandName) {
         return this.getEntityPlayer().canUseCommand(permLevel, commandName);
     }
 
@@ -73,17 +81,18 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP implements IPlayerWrap
     }
 
     @Override
-    public void setItemStackToSlot(@Nonnull EntityEquipmentSlot slot, @Nullable ItemStack stack) {
+    public void setItemStackToSlot(@Nonnull EntityEquipmentSlot slot, @Nonnull ItemStack stack) {
         this.getEntityPlayer().setItemStackToSlot(slot, stack);
     }
 
     @Override
-    public ItemStack getHeldItem(EnumHand hand) {
+    @Nonnull
+    public ItemStack getHeldItem(@Nonnull EnumHand hand) {
         return this.getEntityPlayer().getHeldItem(hand);
     }
 
     @Override
-    @Nullable
+    @Nonnull
     public ItemStack getItemStackFromSlot(@Nonnull EntityEquipmentSlot slot) {
         return this.getEntityPlayer().getItemStackFromSlot(slot);
     }
@@ -95,7 +104,7 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP implements IPlayerWrap
     }
 
     @Override
-    public boolean canOpen(LockCode code) {
+    public boolean canOpen(@Nonnull LockCode code) {
         return this.getEntityPlayer().canOpen(code);
     }
 
@@ -120,17 +129,17 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP implements IPlayerWrap
     }
 
     @Override
-    public void displayGUIChest(IInventory iInventory) {
+    public void displayGUIChest(@Nonnull IInventory iInventory) {
         this.openGui();
     }
 
     @Override
-    public void displayGuiCommandBlock(TileEntityCommandBlock commandBlock) {
+    public void displayGuiCommandBlock(@Nonnull TileEntityCommandBlock commandBlock) {
         this.openGui();
     }
 
     @Override
-    public void displayGui(IInteractionObject guiOwner) {
+    public void displayGui(@Nonnull IInteractionObject guiOwner) {
         this.openGui();
     }
 
@@ -162,12 +171,12 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP implements IPlayerWrap
     }
 
     @Override
-    public void addStat(StatBase stat, int amount) {
+    public void addStat(@Nonnull StatBase stat, int amount) {
         this.getEntityPlayer().addStat(stat, amount);
     }
 
     @Override
-    public void takeStat(StatBase stat) {
+    public void takeStat(@Nonnull StatBase stat) {
         this.getEntityPlayer().takeStat(stat);
     }
 
@@ -188,7 +197,7 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP implements IPlayerWrap
     }
 
     @Override
-    public void sendContainerToPlayer(Container container) {
+    public void sendContainerToPlayer(@Nonnull Container container) {
         this.getEntityPlayer().openContainer = this.openContainer;
         this.getEntityPlayer().sendContainerToPlayer(container);
     }
@@ -207,7 +216,7 @@ public class EntityPlayerMPWrapper extends EntityPlayerMP implements IPlayerWrap
 
     @Override
     public EntityPlayerMP getEntityPlayer() {
-        return entityPlayer;
+        return entityPlayer != null ? entityPlayer : currentlySetting;
     }
 
     public Entity getEntity() {
