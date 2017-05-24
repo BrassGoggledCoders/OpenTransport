@@ -22,7 +22,7 @@ public class OpenTransport extends BaseModFoundation<OpenTransport> {
     public static final String MODNAME = "OpenTransport";
     public static final String VERSION = "@VERSION@";
     public static final String DEPENDENCIES = "after:ironchest;after:immersiveengineering;required-after:base@[0.0.0,);" +
-            "after:modularutilities;after:Botania;after:tconstruct";
+            "after:modularutilities;after:botania;after:tconstruct";
 
     @Instance(OpenTransport.MODID)
     public static OpenTransport instance;
