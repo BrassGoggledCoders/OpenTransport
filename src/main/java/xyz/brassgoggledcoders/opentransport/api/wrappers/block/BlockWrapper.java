@@ -179,7 +179,8 @@ public class BlockWrapper implements IBlockWrapper {
         if(entityPlayer != null) {
             entityPlayerWrapper = OpenTransportAPI.getModWrapper().getPlayerWrapper(entityPlayer, this.holderEntity);
         }
-        for(IActionListener listener : this.getActionListeners().get(actionType)) {
+        List<IActionListener> actionListeners = this.getActionListeners().get(actionType);
+        for(IActionListener listener : actionListeners) {
             result |= listener.actionOccurred(entityPlayerWrapper, hand, itemStack, this.holderEntity, this);
         }
         this.updateBlockWrapper();
