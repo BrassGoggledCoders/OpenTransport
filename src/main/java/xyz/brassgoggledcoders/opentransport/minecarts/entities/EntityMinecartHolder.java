@@ -67,7 +67,7 @@ public class EntityMinecartHolder extends EntityMinecartBase
     }
 
     @Override
-    public void killMinecart(DamageSource damageSource) {
+    public void killMinecart(@Nonnull DamageSource damageSource) {
         super.killMinecart(damageSource);
         this.getBlockWrapper().onBreak();
     }
