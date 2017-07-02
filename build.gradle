@@ -63,9 +63,9 @@ minecraft {
 dependencies {
     deobfCompile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}"
     deobfCompile "cpw.mods:ironchest:${minecraft_version}-${iron_chest_version}"
-    /*deobfCompile("xyz.brassgoggledcoders.modularutilities:ModularUtilities:${minecraft_version}-${modular_utilities_version}") {
+    deobfCompile("xyz.brassgoggledcoders.modularutilities:ModularUtilities:${minecraft_version}-${modular_utilities_version}") {
         exclude module: "base"
-    }*/
+    }
     deobfCompile name: 'Botania', version: "${botania_version}", ext: 'jar'
     deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
     deobfCompile "slimeknights:TConstruct:${minecraft_version}-${tinkers_version}"
