@@ -23,6 +23,7 @@ import xyz.brassgoggledcoders.opentransport.minecarts.MinecartTransport;
 import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
 
 import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +37,9 @@ public class ItemMinecartHolder extends ItemMinecartBase {
 
     @Override
     @Nonnull
-    public EnumActionResult onItemUse(@Nonnull EntityPlayer player, World world, @Nonnull BlockPos blockPos,
-                                      @Nonnull EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    @ParametersAreNonnullByDefault
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos blockPos, EnumHand hand,
+                                      EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack itemStack = player.getHeldItem(hand);
         EntityMinecartHolder entityFromItem = this.getEntityFromItem(world, itemStack);
         EnumActionResult placed = placeCart(itemStack, world, blockPos, entityFromItem);
