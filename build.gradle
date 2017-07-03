@@ -27,7 +27,7 @@ repositories {
     }
     ivy {
         name "Botania"
-        artifactPattern "http://botaniamod.net/files/deobf/[module] [revision]-deobf.[ext]"
+        artifactPattern "http://botaniamod.net/files/[module] [revision].[ext]"
     }
     maven {
         name 'CompatLayer/The One Probe'
@@ -66,14 +66,13 @@ dependencies {
     deobfCompile("xyz.brassgoggledcoders.modularutilities:ModularUtilities:${minecraft_version}-${modular_utilities_version}") {
         exclude module: "base"
     }
-    deobfCompile name: 'Botania', version: "${botania_version}", ext: 'jar'
+
     deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
     deobfCompile "slimeknights:TConstruct:${minecraft_version}-${tinkers_version}"
     deobfCompile "slimeknights.mantle:Mantle:${minecraft_version}-${mantle_version}"
     deobfCompile "blusunrize:ImmersiveEngineering:${immersive_engineering_version}"
     deobfCompile "mcjty.theoneprobe:TheOneProbe:1.1x-${top_version}"
     deobfCompile "com.github.mcjty:compatlayer:${minecraft_version}-${compat_version}"
-    deobfCompile "com.github.Azanor:Baubles:${baubles_version}-SNAPSHOT"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
