@@ -14,8 +14,8 @@ public class IronChestBlockWrappers {
     @SubscribeEvent
     public void registerWrappers(RegisterBlockWrappersEvent event) {
         Block ironChest = IronChest.ironChestBlock;
-        for(IronChestType type: IronChestType.values()) {
-            if(type != IronChestType.WOOD) {
+        for (IronChestType type : IronChestType.values()) {
+            if (type != IronChestType.WOOD) {
                 new BlockWrapper(ironChest).withProperty(BlockIronChest.VARIANT_PROP, type)
                         .setRenderType(RenderType.TESR).setGuiInterface(new IronChestInterface()).register();
             }

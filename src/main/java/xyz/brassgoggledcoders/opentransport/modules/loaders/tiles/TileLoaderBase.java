@@ -42,7 +42,7 @@ public abstract class TileLoaderBase extends TileEntitySidedBase implements ITic
 
                     if (provider == null) {
                         Iterator<WeakReference<Entity>> entities = foundEntities.iterator();
-                        while(entities.hasNext() && provider == null) {
+                        while (entities.hasNext() && provider == null) {
                             WeakReference<Entity> weakReference = entities.next();
                             Entity entity = weakReference.get();
                             if (entity != null) {

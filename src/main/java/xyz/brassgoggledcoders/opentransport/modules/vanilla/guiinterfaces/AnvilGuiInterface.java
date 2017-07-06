@@ -6,9 +6,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerRepair;
 import net.minecraft.util.math.BlockPos;
+import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.IGuiInterface;
-import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 import javax.annotation.Nonnull;
 
@@ -25,6 +25,7 @@ public class AnvilGuiInterface implements IGuiInterface {
 
     public class ContainerAnvilEntity extends ContainerRepair {
         private IHolderEntity holderEntity;
+
         public ContainerAnvilEntity(EntityPlayer entityPlayer, IHolderEntity holderEntity, IBlockWrapper blockWrapper) {
             super(entityPlayer.inventory, blockWrapper.getWorldWrapper(), BlockPos.ORIGIN, entityPlayer);
             this.holderEntity = holderEntity;

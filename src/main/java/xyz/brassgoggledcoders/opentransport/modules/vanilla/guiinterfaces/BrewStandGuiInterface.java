@@ -6,9 +6,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerBrewingStand;
 import net.minecraft.inventory.IInventory;
+import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.IGuiInterface;
-import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 import javax.annotation.Nonnull;
 
@@ -25,8 +25,9 @@ public class BrewStandGuiInterface implements IGuiInterface {
 
     public class ContainerBrewingStandEntity extends ContainerBrewingStand {
         public IHolderEntity holderEntity;
+
         public ContainerBrewingStandEntity(IHolderEntity holderEntity, EntityPlayer entityPlayer) {
-            super(entityPlayer.inventory, (IInventory)holderEntity.getBlockWrapper().getTileEntity());
+            super(entityPlayer.inventory, (IInventory) holderEntity.getBlockWrapper().getTileEntity());
             this.holderEntity = holderEntity;
         }
 

@@ -5,9 +5,9 @@ import net.minecraft.client.gui.inventory.GuiCrafting;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerWorkbench;
+import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.IGuiInterface;
-import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 import javax.annotation.Nonnull;
 
@@ -24,6 +24,7 @@ public class CraftingTableGuiInterface implements IGuiInterface {
 
     public class ContainerCraftingTableEntity extends ContainerWorkbench {
         private IHolderEntity holderEntity;
+
         public ContainerCraftingTableEntity(IHolderEntity holder, EntityPlayer entityPlayer) {
             super(entityPlayer.inventory, entityPlayer.getEntityWorld(), holder.getEntity().getPosition());
             holderEntity = holder;

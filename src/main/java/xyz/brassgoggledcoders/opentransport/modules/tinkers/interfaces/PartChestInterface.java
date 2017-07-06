@@ -7,9 +7,9 @@ import net.minecraft.util.math.BlockPos;
 import slimeknights.tconstruct.tools.common.client.GuiPartChest;
 import slimeknights.tconstruct.tools.common.inventory.ContainerPartChest;
 import slimeknights.tconstruct.tools.common.tileentity.TilePartChest;
+import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.IGuiInterface;
-import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 import javax.annotation.Nonnull;
 
@@ -27,6 +27,7 @@ public class PartChestInterface implements IGuiInterface {
 
     public class ContainerPartChestEntity extends ContainerPartChest {
         private IHolderEntity holderEntity;
+
         public ContainerPartChestEntity(EntityPlayer entityPlayer, IHolderEntity holderEntity) {
             super(entityPlayer.inventory, (TilePartChest) holderEntity.getBlockWrapper().getTileEntity());
             this.holderEntity = holderEntity;

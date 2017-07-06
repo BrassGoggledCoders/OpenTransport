@@ -1,6 +1,5 @@
 package xyz.brassgoggledcoders.opentransport.minecarts.entities;
 
-import com.google.common.base.Optional;
 import com.teamacronymcoders.base.entities.EntityMinecartBase;
 import com.teamacronymcoders.base.guisystem.IHasGui;
 import com.teamacronymcoders.base.util.ItemStackUtils;

@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.actions.BlockActivationAction;
@@ -23,7 +22,7 @@ public class JukeBoxAction extends BlockActivationAction {
     public boolean actionOccurred(@Nullable EntityPlayer entityPlayer, @Nullable EnumHand hand, @Nullable ItemStack itemStack,
                                   @Nonnull IHolderEntity holderEntity, @Nonnull IBlockWrapper blockWrapper) {
         boolean didSomething = false;
-        if(itemStack != null && entityPlayer != null) {
+        if (itemStack != null && entityPlayer != null) {
             if (!blockWrapper.getWorldWrapper().isRemote && ItemStackUtils.isItemInstanceOf(itemStack, ItemRecord.class)) {
                 ItemRecord itemRecord = (ItemRecord) itemStack.getItem();
                 if (blockWrapper.getBlock() == Blocks.JUKEBOX && !blockWrapper.getBlockState().getValue(BlockJukebox.HAS_RECORD)) {

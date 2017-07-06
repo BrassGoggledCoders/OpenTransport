@@ -1,7 +1,6 @@
 package xyz.brassgoggledcoders.opentransport.modules.loaders.tiles;
 
 import com.teamacronymcoders.base.blocks.properties.SideType;
-import javafx.geometry.Side;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class DirectionalEnergyWrapper implements IEnergyStorage {

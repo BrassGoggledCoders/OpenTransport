@@ -17,7 +17,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
-import xyz.brassgoggledcoders.opentransport.api.wrappers.block.BlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.minecarts.MinecartTransport;
 import xyz.brassgoggledcoders.opentransport.minecarts.entities.EntityMinecartHolder;
@@ -43,7 +42,7 @@ public class ItemMinecartHolder extends ItemMinecartBase {
         ItemStack itemStack = player.getHeldItem(hand);
         EntityMinecartHolder entityFromItem = this.getEntityFromItem(world, itemStack);
         EnumActionResult placed = placeCart(itemStack, world, blockPos, entityFromItem);
-        if(placed == EnumActionResult.SUCCESS) {
+        if (placed == EnumActionResult.SUCCESS) {
             entityFromItem.getBlockWrapper().onPlace(player, hand, itemStack);
         }
         return placed;

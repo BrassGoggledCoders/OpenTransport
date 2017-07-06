@@ -10,7 +10,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class EntityBoatBase extends EntityBoat {
     public EntityBoatBase(World world) {

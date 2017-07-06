@@ -1,7 +1,6 @@
 package xyz.brassgoggledcoders.opentransport.api.wrappers.world;
 
 import com.teamacronymcoders.base.client.ClientHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

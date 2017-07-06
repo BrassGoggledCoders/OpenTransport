@@ -23,7 +23,7 @@ public class TESRModelLoader implements ICustomModelLoader {
 
     @Override
     public boolean accepts(ResourceLocation modelLocation) {
-        if(modelLocation.getResourceDomain().equalsIgnoreCase(MODID)) {
+        if (modelLocation.getResourceDomain().equalsIgnoreCase(MODID)) {
             modelLocation = new ResourceLocation(MODID, modelLocation.getResourcePath().replace("models/item/", ""));
         }
         return modelMap.containsKey(modelLocation);
@@ -31,7 +31,7 @@ public class TESRModelLoader implements ICustomModelLoader {
 
     @Override
     public IModel loadModel(ResourceLocation modelLocation) throws Exception {
-        if(modelLocation.getResourceDomain().equalsIgnoreCase(MODID)) {
+        if (modelLocation.getResourceDomain().equalsIgnoreCase(MODID)) {
             modelLocation = new ResourceLocation(MODID, modelLocation.getResourcePath().replace("model/item/", ""));
         }
         return modelMap.get(modelLocation);

@@ -26,7 +26,7 @@ public class WorldHarnessEntity implements IWorldHarness {
     @Override
     public void setBlockToAir() {
         this.entity.getEntity().setDead();
-        if(!this.getRealWorld().isRemote) {
+        if (!this.getRealWorld().isRemote) {
             Entity emptyEntity = this.entity.getEmptyEntity();
             this.getRealWorld().spawnEntity(emptyEntity);
         }

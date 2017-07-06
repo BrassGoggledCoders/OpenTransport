@@ -4,7 +4,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderBoat;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import xyz.brassgoggledcoders.opentransport.boats.entities.EntityBoatHolder;

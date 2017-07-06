@@ -6,9 +6,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerEnchantment;
 import net.minecraft.util.math.BlockPos;
+import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.IBlockWrapper;
 import xyz.brassgoggledcoders.opentransport.api.wrappers.block.guiinterfaces.IGuiInterface;
-import xyz.brassgoggledcoders.opentransport.api.entities.IHolderEntity;
 
 import javax.annotation.Nonnull;
 
@@ -25,6 +25,7 @@ public class EnchantingTableGuiInterface implements IGuiInterface {
 
     public class ContainerEnchantingTableEntity extends ContainerEnchantment {
         public IHolderEntity holderEntity;
+
         public ContainerEnchantingTableEntity(IHolderEntity holderEntity, EntityPlayer entityPlayer) {
             super(entityPlayer.inventory, holderEntity.getBlockWrapper().getWorldWrapper(), BlockPos.ORIGIN);
             this.holderEntity = holderEntity;

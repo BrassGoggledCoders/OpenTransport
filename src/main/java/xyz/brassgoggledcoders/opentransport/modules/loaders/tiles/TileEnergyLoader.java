@@ -25,7 +25,7 @@ public class TileEnergyLoader extends TileLoaderBase {
 
     @Override
     public void interactWith(ICapabilityProvider provider, EnumFacing enumFacing, boolean loadingOther) {
-        IEnergyStorage  otherEnergyStorage = provider.getCapability(ENERGY_STORAGE, enumFacing);
+        IEnergyStorage otherEnergyStorage = provider.getCapability(ENERGY_STORAGE, enumFacing);
         if (otherEnergyStorage != null) {
             IEnergyStorage pullFrom;
             IEnergyStorage pushTo;

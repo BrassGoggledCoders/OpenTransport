@@ -1,6 +1,5 @@
 package xyz.brassgoggledcoders.opentransport.modules.base.items;
 
-import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.entities.EntityMinecartBase;
 import com.teamacronymcoders.base.items.IHasItemColor;
 import com.teamacronymcoders.base.items.minecarts.ItemMinecartBase;

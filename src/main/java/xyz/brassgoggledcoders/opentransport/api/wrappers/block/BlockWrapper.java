@@ -138,7 +138,7 @@ public class BlockWrapper implements IBlockWrapper {
 
     public BlockWrapper addActionListener(IActionListener actionListener) {
         for (ActionType actionType : ActionType.values()) {
-            if(actionListener.hasActionForType(actionType)) {
+            if (actionListener.hasActionForType(actionType)) {
                 this.actionListeners.get(actionType).add(actionListener);
             }
         }
@@ -176,11 +176,11 @@ public class BlockWrapper implements IBlockWrapper {
         boolean result = false;
         this.updateBlockWrapper();
         EntityPlayer entityPlayerWrapper = null;
-        if(entityPlayer != null) {
+        if (entityPlayer != null) {
             entityPlayerWrapper = OpenTransportAPI.getModWrapper().getPlayerWrapper(entityPlayer, this.holderEntity);
         }
         List<IActionListener> actionListeners = this.getActionListeners().get(actionType);
-        for(IActionListener listener : actionListeners) {
+        for (IActionListener listener : actionListeners) {
             result |= listener.actionOccurred(entityPlayerWrapper, hand, itemStack, this.holderEntity, this);
         }
         this.updateBlockWrapper();
@@ -219,8 +219,8 @@ public class BlockWrapper implements IBlockWrapper {
         if (this.tileEntity == null && this.hasTileEntity()) {
             this.tileEntity = this.getBlock().createTileEntity(this.world, this.getBlockState());
             this.tileEntity.setWorld(this.world);
-            if(this.tileEntity instanceof ITickable && tileUpdateAction == null) {
-                this.tileUpdateAction = new TileUpdateAction((ITickable)this.getTileEntity());
+            if (this.tileEntity instanceof ITickable && tileUpdateAction == null) {
+                this.tileUpdateAction = new TileUpdateAction((ITickable) this.getTileEntity());
                 this.addActionListener(tileUpdateAction);
             }
         }
@@ -253,9 +253,9 @@ public class BlockWrapper implements IBlockWrapper {
     }
 
     public void changeItemStack() {
-        if(this.itemStackChange) {
+        if (this.itemStackChange) {
             Item item = Item.getItemFromBlock(block);
-            if(item != null) {
+            if (item != null) {
                 this.itemStack = new ItemStack(item, 1, block.getMetaFromState(this.blockState));
             }
         }
@@ -290,7 +290,7 @@ public class BlockWrapper implements IBlockWrapper {
     @Override
     @Nonnull
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-        if(this.hasTileEntity) {
+        if (this.hasTileEntity) {
             return this.getTileEntity().getCapability(capability, facing);
         }
         return null;

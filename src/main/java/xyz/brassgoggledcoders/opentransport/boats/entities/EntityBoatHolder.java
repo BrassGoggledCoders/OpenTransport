@@ -1,12 +1,10 @@
 package xyz.brassgoggledcoders.opentransport.boats.entities;
 
-import com.google.common.base.Optional;
 import com.teamacronymcoders.base.guisystem.IHasGui;
 import com.teamacronymcoders.base.util.ItemStackUtils;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
