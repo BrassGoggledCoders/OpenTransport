@@ -41,14 +41,14 @@ public class EntityBoatBase extends EntityBoat {
         if (this.isEntityInvulnerable(source)) {
             return false;
         } else if (!this.getEntityWorld().isRemote && !this.isDead) {
-            if (source instanceof EntityDamageSourceIndirect && source.getEntity() != null && this.isPassenger(source.getEntity())) {
+            if (source instanceof EntityDamageSourceIndirect && source.getTrueSource() != null && this.isPassenger(source.getTrueSource())) {
                 return false;
             } else {
                 this.setForwardDirection(-this.getForwardDirection());
                 this.setTimeSinceHit(10);
                 this.setDamageTaken(this.getDamageTaken() + amount * 10.0F);
                 this.setBeenAttacked();
-                boolean flag = source.getEntity() instanceof EntityPlayer && ((EntityPlayer) source.getEntity()).capabilities.isCreativeMode;
+                boolean flag = source.getTrueSource() instanceof EntityPlayer && ((EntityPlayer) source.getTrueSource()).capabilities.isCreativeMode;
 
                 if (flag || this.getDamageTaken() > 40.0F) {
                     if (!flag && this.getEntityWorld().getGameRules().getBoolean("doEntityDrops")) {
