@@ -7,7 +7,7 @@ pipeline {
             steps {
                 echo 'Cleaning Project'
                 sh 'chmod +x gradlew'
-                sh './gradlew clean'
+                sh './gradlew cleanCache'
             }
         }
         stage('Setup') {
