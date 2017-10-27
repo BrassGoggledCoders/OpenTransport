@@ -18,28 +18,8 @@ buildscript {
 
 repositories {
     maven {
-        name "Base/MoU/IE"
+        name "Base"
         url "http://maven.blamejared.com"
-    }
-    maven {
-        name 'JEI/Tinkers'
-        url "http://dvs1.progwml6.com/files/maven"
-    }
-    ivy {
-        name "Botania"
-        artifactPattern "http://botaniamod.net/files/[module] [revision].[ext]"
-    }
-    maven {
-        name 'CompatLayer/The One Probe'
-        url 'http://modmaven.k-4u.nl'
-    }
-    maven {
-        name 'CoFH Maven'
-        url "http://maven.covers1624.net/"
-    }
-    maven {
-        name 'Baubles'
-        url 'https://jitpack.io'
     }
 }
 
@@ -65,11 +45,7 @@ minecraft {
 }
 
 dependencies {
-    deobfCompile "com.teamacronymcoders.base:base:${minecraft_version}-${base_version}"
-    deobfCompile "cpw.mods:ironchest:${minecraft_version}-${iron_chest_version}"
-    deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
-    deobfCompile "blusunrize:ImmersiveEngineering:${immersive_engineering_version}"
-    deobfCompile "mcjty.theoneprobe:TheOneProbe-${minecraft_version}:${minecraft_version}-${top_version}"
+    deobfCompile "com.teamacronymcoders.base:base:1.12-${base_version}"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
