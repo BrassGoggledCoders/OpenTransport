@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.RegistryBuilder;
 import xyz.brassgoggledcoders.opentransport.OpenTransport;
 import xyz.brassgoggledcoders.opentransport.api.entity.minecart.CustomMinecart;
+import xyz.brassgoggledcoders.opentransport.api.entity.minecart.DefaultMinecart;
 import xyz.brassgoggledcoders.opentransport.vehicle.minecart.entity.EntityMinecartCarrier;
 import xyz.brassgoggledcoders.opentransport.vehicle.minecart.item.ItemMinecartCarrier;
 
@@ -48,5 +49,10 @@ public class ModuleMinecart extends ModuleBase {
                 .setType(CustomMinecart.class)
                 .setDefaultKey(new ResourceLocation("minecraft","minecart"))
                 .create();
+    }
+
+    @SubscribeEvent
+    public static void registerCustomMinecarts(RegistryEvent.Register<CustomMinecart> customMinecartRegistryEvent) {
+        customMinecartRegistryEvent.getRegistry().register(new DefaultMinecart());
     }
 }

@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class DefaultMinecart extends CustomMinecart<ItemMinecart, EntityMinecart> {
+public class DefaultMinecart extends CustomMinecart {
     public DefaultMinecart() {
         this.setRegistryName("minecraft","minecart");
     }
