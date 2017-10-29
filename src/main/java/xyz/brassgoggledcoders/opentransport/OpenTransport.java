@@ -3,17 +3,26 @@ package xyz.brassgoggledcoders.opentransport;
 import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.BaseModFoundation;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.IRegistry;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistry;
+import net.minecraftforge.registries.RegistryBuilder;
+import xyz.brassgoggledcoders.opentransport.api.block.ICarriedBlock;
 
 import java.util.List;
 
 import static xyz.brassgoggledcoders.opentransport.OpenTransport.*;
 
 @Mod(modid = ID, name = NAME, version = VERSION, dependencies = DEPENDENCIES)
+@EventBusSubscriber
 public class OpenTransport extends BaseModFoundation<OpenTransport> {
     public static final String ID = "opentransport";
     public static final String NAME = "OpenTransport";
@@ -57,5 +66,13 @@ public class OpenTransport extends BaseModFoundation<OpenTransport> {
     @Override
     public OpenTransport getInstance() {
         return this;
+    }
+
+    @SubscribeEvent
+    public static void buildCarriedBlockRegistry(RegistryEvent.NewRegistry newRegistryEvent) {
+        new RegistryBuilder<ICarriedBlock>()
+                .setName(new ResourceLocation(ID, "carried_blocks"))
+                .setType(ICarriedBlock.class)
+                .create();
     }
 }
