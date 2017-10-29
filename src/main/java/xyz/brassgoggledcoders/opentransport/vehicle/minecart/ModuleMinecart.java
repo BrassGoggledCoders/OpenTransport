@@ -9,10 +9,18 @@ import com.teamacronymcoders.base.registrysystem.config.ConfigRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.registries.RegistryBuilder;
+import xyz.brassgoggledcoders.opentransport.OpenTransport;
+import xyz.brassgoggledcoders.opentransport.api.entity.minecart.CustomMinecart;
 import xyz.brassgoggledcoders.opentransport.vehicle.minecart.entity.EntityMinecartCarrier;
 import xyz.brassgoggledcoders.opentransport.vehicle.minecart.item.ItemMinecartCarrier;
 
 @Module("vehicle")
+@EventBusSubscriber(modid = OpenTransport.ID)
 public class ModuleMinecart extends ModuleBase {
     public static final CreativeTabs MINECART_CARRIERS = new CreativeTabBase("carrier.minecart",
             () -> new ItemStack((Items.MINECART)));
@@ -30,5 +38,15 @@ public class ModuleMinecart extends ModuleBase {
     @Override
     public void registerEntities(ConfigRegistry configRegistry, EntityRegistry entityRegistry) {
         entityRegistry.register(EntityMinecartCarrier.class);
+    }
+
+    @SubscribeEvent
+    @SuppressWarnings("unchecked")
+    public static void buildCustomMinecartRegistry(RegistryEvent.NewRegistry newRegistryEvent) {
+        new RegistryBuilder<CustomMinecart>()
+                .setName(new ResourceLocation(OpenTransport.ID, "custom_minecart"))
+                .setType(CustomMinecart.class)
+                .setDefaultKey(new ResourceLocation("minecraft","minecart"))
+                .create();
     }
 }
