@@ -20,8 +20,10 @@ import xyz.brassgoggledcoders.opentransport.api.entity.minecart.DefaultMinecart;
 import xyz.brassgoggledcoders.opentransport.vehicle.minecart.entity.EntityMinecartCarrier;
 import xyz.brassgoggledcoders.opentransport.vehicle.minecart.item.ItemMinecartCarrier;
 
+import static xyz.brassgoggledcoders.opentransport.OpenTransport.ID;
+
 @Module("vehicle")
-@EventBusSubscriber(modid = OpenTransport.ID)
+@EventBusSubscriber(modid = ID)
 public class ModuleMinecart extends ModuleBase {
     public static final CreativeTabs MINECART_CARRIERS = new CreativeTabBase("carrier.minecart",
             () -> new ItemStack((Items.MINECART)));
@@ -45,9 +47,9 @@ public class ModuleMinecart extends ModuleBase {
     @SuppressWarnings("unchecked")
     public static void buildCustomMinecartRegistry(RegistryEvent.NewRegistry newRegistryEvent) {
         new RegistryBuilder<CustomMinecart>()
-                .setName(new ResourceLocation(OpenTransport.ID, "custom_minecart"))
+                .setName(new ResourceLocation(ID, "custom_minecart"))
                 .setType(CustomMinecart.class)
-                .setDefaultKey(new ResourceLocation("minecraft","minecart"))
+                .setDefaultKey(new ResourceLocation(ID,"minecart"))
                 .create();
     }
 

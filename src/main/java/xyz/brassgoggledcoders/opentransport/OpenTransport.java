@@ -6,9 +6,11 @@ import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.IRegistry;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -31,8 +33,11 @@ public class OpenTransport extends BaseModFoundation<OpenTransport> {
 
     private ModuleHandler vehicleHandler;
 
+    @Instance
+    public static OpenTransport instance;
+
     public OpenTransport() {
-        super(ID, NAME, VERSION, null);
+        super(ID, NAME, VERSION, null, true);
     }
 
     @EventHandler

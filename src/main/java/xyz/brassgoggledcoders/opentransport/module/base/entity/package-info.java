@@ -1,0 +1,4 @@
+@ParametersAreNonnullByDefault
+package xyz.brassgoggledcoders.opentransport.module.base.entity;
+
+import javax.annotation.ParametersAreNonnullByDefault;
