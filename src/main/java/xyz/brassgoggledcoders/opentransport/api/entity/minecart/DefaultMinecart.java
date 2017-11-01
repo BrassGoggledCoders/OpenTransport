@@ -5,18 +5,19 @@ import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.item.EntityMinecartEmpty;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemMinecart;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class DefaultMinecart extends CustomMinecart {
     public DefaultMinecart() {
-        this.setRegistryName("minecraft","minecart");
+        this.setRegistryName("opentransport","minecart");
     }
 
     @Override
-    public ItemMinecart getItemMinecart() {
-        return (ItemMinecart) Items.MINECART;
+    public ItemStack getItemMinecart() {
+        return new ItemStack(Items.MINECART);
     }
 
     @Override
