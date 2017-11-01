@@ -9,6 +9,10 @@ import xyz.brassgoggledcoders.opentransport.vehicle.minecart.entity.EntityMineca
 
 @EntityRenderer(module = "minecart", handler = "vehicle")
 public class RenderMinecartCarrier extends RenderMinecartBase<EntityMinecartCarrier> implements IEntityRenderer<EntityMinecartCarrier> {
+    public RenderMinecartCarrier() {
+        super(null);
+    }
+
     public RenderMinecartCarrier(RenderManager renderManagerIn) {
         super(renderManagerIn);
     }

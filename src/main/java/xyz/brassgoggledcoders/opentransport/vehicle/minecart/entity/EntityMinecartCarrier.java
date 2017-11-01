@@ -16,7 +16,7 @@ public class EntityMinecartCarrier extends EntityMinecartBase {
     private static ItemMinecartCarrier itemMinecartCarrier;
 
     @ObjectHolder(OpenTransport.ID + ":minecart")
-    private CustomMinecart customMinecart;
+    private static CustomMinecart customMinecart;
 
     public EntityMinecartCarrier(World world) {
         super(world);
