@@ -2,14 +2,6 @@
 build/
 run/
 libs/
-saves/
-/config/
-logs/
-crash-reports/
-asm/
-options.txt
-usercache.json
-usernamecache.json
 
 # Package Files #
 *.jar
