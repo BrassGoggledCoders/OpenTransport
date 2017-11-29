@@ -4,9 +4,7 @@ import com.google.common.collect.Lists;
 import com.teamacronymcoders.base.BaseModFoundation;
 import com.teamacronymcoders.base.modulesystem.ModuleHandler;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.IRegistry;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -15,21 +13,20 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
-import xyz.brassgoggledcoders.opentransport.api.block.ICarriedBlock;
+import xyz.brassgoggledcoders.opentransport.api.block.CarriedBlock;
 
 import java.util.List;
 
 import static xyz.brassgoggledcoders.opentransport.OpenTransport.*;
 
-@Mod(modid = ID, name = NAME, version = VERSION, dependencies = DEPENDENCIES)
+@Mod(modid = MODID, name = NAME, version = VERSION, dependencies = DEPENDENCIES)
 @EventBusSubscriber
 public class OpenTransport extends BaseModFoundation<OpenTransport> {
-    public static final String ID = "opentransport";
     public static final String NAME = "OpenTransport";
     public static final String VERSION = "@VERSION@";
     public static final String DEPENDENCIES = "required-after:base@[0.0.0,);";
+    public static final String MODID = "opentransport";
 
     private ModuleHandler vehicleHandler;
 
@@ -37,7 +34,7 @@ public class OpenTransport extends BaseModFoundation<OpenTransport> {
     public static OpenTransport instance;
 
     public OpenTransport() {
-        super(ID, NAME, VERSION, null, true);
+        super(MODID, NAME, VERSION, null);
     }
 
     @EventHandler
@@ -75,9 +72,9 @@ public class OpenTransport extends BaseModFoundation<OpenTransport> {
 
     @SubscribeEvent
     public static void buildCarriedBlockRegistry(RegistryEvent.NewRegistry newRegistryEvent) {
-        new RegistryBuilder<ICarriedBlock>()
-                .setName(new ResourceLocation(ID, "carried_blocks"))
-                .setType(ICarriedBlock.class)
+        new RegistryBuilder<CarriedBlock>()
+                .setName(new ResourceLocation(MODID, "carried_blocks"))
+                .setType(CarriedBlock.class)
                 .create();
     }
 }
