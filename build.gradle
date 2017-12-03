@@ -51,24 +51,19 @@ dependencies {
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-processResources
-        {
-            inputs.property "version", project.version
-            inputs.property "mcversion", project.minecraft.version
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
 
-            from(sourceSets.main.resources.srcDirs) {
-                include 'mcmod.info'
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
 
-                expand 'version': project.version, 'mcversion': project.minecraft.version
-            }
+        expand 'version': project.version, 'mcversion': project.minecraft.version
+    }
 
-            from(sourceSets.main.resources.srcDirs) {
-                exclude 'mcmod.info'
-            }
-        }
-
-jar {
-    classifier = ""
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
 }
 
 task deobfJar(type: Jar) {
@@ -97,7 +92,7 @@ uploadArchives {
                 version = project.version
                 artifactId = project.archivesBaseName
                 project {
-                    name project.archivesBaseName
+                    name archivesBaseName
                     packaging 'jar'
                     description project.archivesBaseName
                     url ''
@@ -135,11 +130,11 @@ String getVersion() {
     String branch = System.getenv("branch") != null ? System.getenv("branch") : ""
     println "Version: " + version
     println "Branch : " + branch
-    if(branch != "") {
+    if (branch != "") {
         version += "-" + branch
 
         String buildNumber = getBuildNumber()
-        if(buildNumber != "") {
+        if (buildNumber != "") {
             version += "." + buildNumber
         }
         println "Build Number: " + buildNumber
@@ -150,7 +145,7 @@ String getVersion() {
 
 static String getBuildNumber() {
     String buildNumber = System.getenv("BUILD_NUMBER") != null ? System.getenv("BUILD_NUMBER") : ""
-    if(buildNumber == "") {
+    if (buildNumber == "") {
         buildNumber = System.getenv("bamboo_buildNumber") != null ? "." + System.getenv("bamboo_buildNumber") : ""
     }
     return buildNumber
