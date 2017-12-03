@@ -34,6 +34,10 @@ public class CarriedBlock extends IForgeRegistryEntry.Impl<CarriedBlock> {
         return new CarriedBlockInstance(this, world);
     }
 
+    public CarriedBlockInstance getNewInstance() {
+        return new CarriedBlockInstance(this);
+    }
+
     public ItemStack getItemStackFor(CarriedBlockInstance carriedBlockInstance) {
         return itemStackFunction.apply(carriedBlockInstance);
     }

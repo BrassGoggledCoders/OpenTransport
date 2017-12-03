@@ -1,6 +1,8 @@
 package xyz.brassgoggledcoders.opentransport.api.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -14,8 +16,11 @@ import java.util.Optional;
 
 public class CarriedBlockInstance implements ICapabilityProvider {
     private CarriedBlock carriedBlock;
-
     private TileEntity tileEntity;
+
+    public CarriedBlockInstance(CarriedBlock carriedBlock) {
+        this.carriedBlock = carriedBlock;
+    }
 
     public CarriedBlockInstance(CarriedBlock carriedBlock, World world) {
         this.carriedBlock = carriedBlock;
@@ -25,12 +30,20 @@ public class CarriedBlockInstance implements ICapabilityProvider {
         }
     }
 
+    public IBlockState getBlockState() {
+        return this.getCarriedBlock().getBlockState();
+    }
+
     public Optional<TileEntity> getTileEntity() {
         return Optional.ofNullable(tileEntity);
     }
 
     public CarriedBlock getCarriedBlock() {
         return carriedBlock;
+    }
+
+    public ItemStack getItemStack() {
+        return this.getCarriedBlock().getItemStackFor(this);
     }
 
     @Override

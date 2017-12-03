@@ -3,14 +3,10 @@ package xyz.brassgoggledcoders.opentransport.api.world;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeProvider;
-import net.minecraft.world.chunk.IChunkProvider;
-import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
-import xyz.brassgoggledcoders.opentransport.api.entity.IBlockCarrier;
+import xyz.brassgoggledcoders.opentransport.api.entity.IBlockCarrierEntity;
 
 public abstract class WorldWrapper extends World {
-    private IBlockCarrier<Entity> blockCarrier;
+    private IBlockCarrierEntity<Entity> blockCarrier;
 
     public WorldWrapper(World world) {
         super(world.getSaveHandler(), world.getWorldInfo(), world.provider, world.profiler, world.isRemote);
@@ -32,11 +28,11 @@ public abstract class WorldWrapper extends World {
         return this.getBlockCarrier().getWorld();
     }
 
-    public IBlockCarrier<Entity> getBlockCarrier() {
+    public IBlockCarrierEntity<Entity> getBlockCarrier() {
         return blockCarrier;
     }
 
-    public void setBlockCarrier(IBlockCarrier<Entity> blockCarrier) {
+    public void setBlockCarrier(IBlockCarrierEntity<Entity> blockCarrier) {
         this.blockCarrier = blockCarrier;
     }
 }

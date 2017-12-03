@@ -1,0 +1,4 @@
+@ParametersAreNonnullByDefault
+package xyz.brassgoggledcoders.opentransport.vehicle.minecart.item;
+
+import javax.annotation.ParametersAreNonnullByDefault;
