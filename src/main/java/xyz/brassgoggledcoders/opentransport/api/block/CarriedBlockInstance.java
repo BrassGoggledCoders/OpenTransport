@@ -17,13 +17,15 @@ import java.util.Optional;
 public class CarriedBlockInstance implements ICapabilityProvider {
     private CarriedBlock carriedBlock;
     private TileEntity tileEntity;
+    private ItemStack itemStack;
 
     public CarriedBlockInstance(CarriedBlock carriedBlock) {
         this.carriedBlock = carriedBlock;
+        itemStack = carriedBlock.getItemStackFor(this);
     }
 
     public CarriedBlockInstance(CarriedBlock carriedBlock, World world) {
-        this.carriedBlock = carriedBlock;
+        this(carriedBlock);
         Block block = carriedBlock.getBlock();
         if (block.hasTileEntity(carriedBlock.getBlockState())) {
             this.tileEntity = block.createTileEntity(world, carriedBlock.getBlockState());
@@ -43,18 +45,22 @@ public class CarriedBlockInstance implements ICapabilityProvider {
     }
 
     public ItemStack getItemStack() {
-        return this.getCarriedBlock().getItemStackFor(this);
+        return itemStack;
     }
 
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-        return this.getTileEntity().map(tile -> tile.hasCapability(capability, facing)).orElse(false);
+        return this.getTileEntity()
+                .map(tile -> tile.hasCapability(capability, facing))
+                .orElse(false);
     }
 
     @Nullable
     @Override
     public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-        return this.getTileEntity().map(tile -> tile.getCapability(capability, facing)).orElse(null);
+        return this.getTileEntity()
+                .map(tile -> tile.getCapability(capability, facing))
+                .orElse(null);
     }
 
     public void readFromNBT(NBTTagCompound nbtTagCompound) {
@@ -62,6 +68,8 @@ public class CarriedBlockInstance implements ICapabilityProvider {
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound) {
-        return this.getTileEntity().map(tile -> tile.writeToNBT(nbtTagCompound)).orElse(nbtTagCompound);
+        return this.getTileEntity()
+                .map(tile -> tile.writeToNBT(nbtTagCompound))
+                .orElse(nbtTagCompound);
     }
 }

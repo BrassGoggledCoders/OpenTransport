@@ -1,4 +1,4 @@
-itemGroup.boats=OpenTransport:Łódki
-itemGroup.minecarts=OpenTransport:Wagoniki
+itemGroup.carrier.boat=OpenTransport:Łódki
+itemGroup.carrier.minecart=OpenTransport:Wagoniki
 
-separator.with=z
+opentransport.carrier.name=%s z %s

@@ -1,4 +1,3 @@
-itemGroup.boats=OpenTransport:Boats
-itemGroup.minecarts=OpenTransport:Minecarts
+itemGroup.carrier.minecart=OpenTransport:Minecarts
 
-separator.with=With
+opentransport.carrier.name=%s with %s

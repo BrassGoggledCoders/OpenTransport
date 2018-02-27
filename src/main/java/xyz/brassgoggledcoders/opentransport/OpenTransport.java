@@ -14,6 +14,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.RegistryBuilder;
+import xyz.brassgoggledcoders.opentransport.api.OpenTransportAPI;
+import xyz.brassgoggledcoders.opentransport.api.OpenTransportRegistries;
 import xyz.brassgoggledcoders.opentransport.api.block.CarriedBlock;
 import xyz.brassgoggledcoders.opentransport.api.capability.blockcarrier.CapabilityBlockCarrier;
 
@@ -75,9 +77,9 @@ public class OpenTransport extends BaseModFoundation<OpenTransport> {
     @SubscribeEvent
     public static void buildCarriedBlockRegistry(RegistryEvent.NewRegistry newRegistryEvent) {
         new RegistryBuilder<CarriedBlock>()
-                .setName(new ResourceLocation(MODID, "carried_blocks"))
+                .setName(OpenTransportAPI.CARRIED_BLOCKS_NAME)
                 .setType(CarriedBlock.class)
-                .setDefaultKey(new ResourceLocation(MODID, "air"))
+                .setDefaultKey(new ResourceLocation(MODID, "minecraft_air"))
                 .create();
     }
 }
